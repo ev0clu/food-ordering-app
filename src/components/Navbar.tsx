@@ -28,8 +28,12 @@ const Navbar = () => {
         <Link href="/menu" className="hover:text-cyan-500">
           Menu
         </Link>
-        <Link href="/contact">Contact</Link>
-        <Link href="/about">About</Link>
+        <Link href="/contact" className="hover:text-cyan-500">
+          Contact
+        </Link>
+        <Link href="/about" className="hover:text-cyan-500">
+          About
+        </Link>
       </div>
 
       {/* Mobile Navigation */}
