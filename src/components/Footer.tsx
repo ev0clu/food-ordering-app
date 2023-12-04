@@ -12,7 +12,7 @@ const Footer = () => {
         target="_blank"
         rel="noreferrer"
       >
-        <FaGithub />
+        <FaGithub className="hover:opacity-80 dark:text-white" />
       </a>
     </footer>
   );
