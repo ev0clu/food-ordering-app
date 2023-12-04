@@ -7,20 +7,29 @@ import {
   MenubarItem,
   MenubarMenu,
   MenubarSeparator,
-  MenubarShortcut,
   MenubarTrigger
 } from '@/components/ui/menubar';
 import { Menu } from 'lucide-react';
+import logo from '../../public/logo.png';
+import Image from 'next/image';
+import Link from 'next/link';
 
 const Navbar = () => {
   return (
-    <div className="flex flex-row items-center justify-between gap-2 text-lg">
+    <nav className="flex flex-row items-center justify-between gap-2 text-lg">
       {/* Desktop Navigation Start*/}
       <div className="hidden flex-row items-center gap-3 md:flex">
-        <div>Home</div>
-        <div>Menu</div>
-        <div>Contact</div>
-        <div>About</div>
+        <Link href="/">
+          <Image src={logo} alt="Logo" width={50} height={50} />
+        </Link>
+        <Link href="/" className="hover:text-cyan-500">
+          Home
+        </Link>
+        <Link href="/menu" className="hover:text-cyan-500">
+          Menu
+        </Link>
+        <Link href="/contact">Contact</Link>
+        <Link href="/about">About</Link>
       </div>
 
       {/* Mobile Navigation */}
@@ -31,11 +40,19 @@ const Navbar = () => {
               <Menu />
             </MenubarTrigger>
             <MenubarContent>
-              <MenubarItem>Home</MenubarItem>
-              <MenubarItem>Menu</MenubarItem>
+              <MenubarItem>
+                <Link href="/">Home</Link>
+              </MenubarItem>
+              <MenubarItem>
+                <Link href="/menu">Menu</Link>
+              </MenubarItem>
               <MenubarSeparator />
-              <MenubarItem>Contact</MenubarItem>
-              <MenubarItem>About</MenubarItem>
+              <MenubarItem>
+                <Link href="/contact">Contact</Link>
+              </MenubarItem>
+              <MenubarItem>
+                <Link href="/about">About</Link>
+              </MenubarItem>
             </MenubarContent>
           </MenubarMenu>
         </Menubar>
@@ -44,10 +61,10 @@ const Navbar = () => {
         <ToggleTheme />
         <div className="flex flex-row items-center gap-3">
           <div>Name</div>
-          <div>Login</div>
+          <Link href="/login">Log in</Link>
         </div>
       </div>
-    </div>
+    </nav>
   );
 };
 
