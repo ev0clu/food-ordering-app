@@ -18,33 +18,35 @@ const Navbar = () => {
   return (
     <nav className="flex flex-row items-center justify-between gap-2 text-lg">
       {/* Desktop Navigation Start*/}
-      <div className="hidden flex-row items-center gap-3 md:flex">
+      <div className="hidden flex-row items-center gap-6 md:flex">
         <Link href="/">
           <Image src={logo} alt="Logo" width={50} height={50} />
         </Link>
-        <Link href="/" className="hover:text-cyan-500">
-          Home
-        </Link>
-        <Link href="/menu" className="hover:text-cyan-500">
-          Menu
-        </Link>
-        <Link href="/contact" className="hover:text-cyan-500">
-          Contact
-        </Link>
-        <Link href="/about" className="hover:text-cyan-500">
-          About
-        </Link>
+        <div className="flex flex-row items-center gap-3">
+          <Link href="/" className="hover:text-cyan-500">
+            Home
+          </Link>
+          <Link href="/menu" className="hover:text-cyan-500">
+            Menu
+          </Link>
+          <Link href="/contact" className="hover:text-cyan-500">
+            Contact
+          </Link>
+          <Link href="/about" className="hover:text-cyan-500">
+            About
+          </Link>
+        </div>
       </div>
 
       {/* Mobile Navigation */}
-      <div className="flex flex-row items-center justify-between gap-2 text-lg md:hidden">
+      <div className="flex flex-row items-center justify-between gap-2 text-lg md:hidden ">
         <Menubar>
           <MenubarMenu>
             <MenubarTrigger>
               <Menu />
             </MenubarTrigger>
             <MenubarContent>
-              <MenubarItem>
+              <MenubarItem asChild>
                 <Link href="/">Home</Link>
               </MenubarItem>
               <MenubarItem>
@@ -54,7 +56,7 @@ const Navbar = () => {
               <MenubarItem>
                 <Link href="/contact">Contact</Link>
               </MenubarItem>
-              <MenubarItem>
+              <MenubarItem asChild>
                 <Link href="/about">About</Link>
               </MenubarItem>
             </MenubarContent>
