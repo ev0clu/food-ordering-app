@@ -1,5 +1,7 @@
 'use client';
 
+import Image from 'next/image';
+import Link from 'next/link';
 import { ToggleTheme } from '@/components/ToggleTheme';
 import {
   Menubar,
@@ -11,8 +13,8 @@ import {
 } from '@/components/ui/menubar';
 import { Menu } from 'lucide-react';
 import logo from '../../public/logo.png';
-import Image from 'next/image';
-import Link from 'next/link';
+import { cn } from '@/lib/utils';
+import { buttonVariants } from '@/components/ui/button';
 
 const Navbar = () => {
   return (
@@ -22,17 +24,41 @@ const Navbar = () => {
         <Link href="/">
           <Image src={logo} alt="Logo" width={50} height={50} />
         </Link>
-        <div className="flex flex-row items-center gap-3">
-          <Link href="/" className="hover:text-cyan-500">
+        <div className="flex flex-row items-center gap-2">
+          <Link
+            href="/"
+            className={cn(
+              buttonVariants({ variant: 'ghost' }),
+              'w-16'
+            )}
+          >
             Home
           </Link>
-          <Link href="/menu" className="hover:text-cyan-500">
+          <Link
+            href="/menu"
+            className={cn(
+              buttonVariants({ variant: 'ghost' }),
+              'w-16'
+            )}
+          >
             Menu
           </Link>
-          <Link href="/contact" className="hover:text-cyan-500">
+          <Link
+            href="/contact"
+            className={cn(
+              buttonVariants({ variant: 'ghost' }),
+              'w-16'
+            )}
+          >
             Contact
           </Link>
-          <Link href="/about" className="hover:text-cyan-500">
+          <Link
+            href="/about"
+            className={cn(
+              buttonVariants({ variant: 'ghost' }),
+              'w-16'
+            )}
+          >
             About
           </Link>
         </div>
