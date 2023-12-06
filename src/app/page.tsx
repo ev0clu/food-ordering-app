@@ -38,7 +38,7 @@ export default function Home() {
           alt="home picture"
           width={300}
           height={300}
-          className="rounded-full"
+          className="mx-auto rounded-full"
         />
       </div>
       <div className="mb-6 mt-6">
