@@ -93,7 +93,24 @@ const Navbar = () => {
         <ToggleTheme />
         <div className="flex flex-row items-center gap-3">
           <div>Name</div>
-          <Link href="/login">Log in</Link>
+          <Link
+            href="/auth/login"
+            className={cn(
+              buttonVariants({ variant: 'ghost' }),
+              'w-16'
+            )}
+          >
+            Log in
+          </Link>
+          <Link
+            href="/auth/register"
+            className={cn(
+              buttonVariants({ variant: 'ghost' }),
+              'w-16'
+            )}
+          >
+            Register
+          </Link>
         </div>
       </div>
     </nav>
