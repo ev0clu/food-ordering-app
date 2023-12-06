@@ -1,11 +1,11 @@
 import Image from 'next/image';
-import about from '../../../public/about.jpg';
+import aboutPic from '../../../public/about.jpg';
 
 const About = () => {
   return (
     <div className="mt-8 flex flex-row gap-10 p-5">
       <Image
-        src={about}
+        src={aboutPic}
         alt="about picture"
         className="hidden max-w-[30%] md:block"
       />
