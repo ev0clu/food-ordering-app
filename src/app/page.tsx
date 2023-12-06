@@ -47,33 +47,47 @@ export default function Home() {
         </h2>
         <div className="flex flex-col gap-3">
           <div>
-            <b>Unrivaled Variety:</b> From beloved neighborhood gems
-            to hidden culinary treasures, our platform showcases a
-            wide array of restaurants to suit every palate.
+            <b>Unrivaled Variety:</b>{' '}
+            <span className="text-muted-foreground">
+              From beloved neighborhood gems to hidden culinary
+              treasures, our platform showcases a wide array of
+              restaurants to suit every palate.
+            </span>
           </div>
           <div>
-            <b>Effortless Ordering:</b> Our user-friendly interface
-            makes ordering your favorite dishes a breeze. Browse
-            menus, customize your selections, and place an order with
-            just a few clicks - it's that simple!
+            <b>Effortless Ordering:</b>{' '}
+            <span className="text-muted-foreground">
+              Our user-friendly interface makes ordering your favorite
+              dishes a breeze. Browse menus, customize your
+              selections, and place an order with just a few clicks -
+              it's that simple!
+            </span>
           </div>
           <div>
-            <b>Local Love, Global Flavors:</b> We celebrate local
-            culinary talent while also offering a global feast for
-            your senses. Explore a world of tastes without leaving the
-            comfort of your home.
+            <b>Local Love, Global Flavors:</b>{' '}
+            <span className="text-muted-foreground">
+              We celebrate local culinary talent while also offering a
+              global feast for your senses. Explore a world of tastes
+              without leaving the comfort of your home.
+            </span>
           </div>
           <div>
-            <b>Speedy Delivery:</b> We understand the anticipation
-            that comes with a delicious meal. Our dedicated delivery
-            partners work tirelessly to ensure your order arrives
-            fresh and timely.
+            <b>Speedy Delivery:</b>{' '}
+            <span className="text-muted-foreground">
+              We understand the anticipation that comes with a
+              delicious meal. Our dedicated delivery partners work
+              tirelessly to ensure your order arrives fresh and
+              timely.
+            </span>
           </div>
           <div>
-            <b>Exclusive Deals:</b> Enjoy exclusive discounts,
-            promotions, and loyalty rewards when you order through
-            Fooder. Your satisfaction is our priority, and we love
-            treating our customers to a little extra delight.
+            <b>Exclusive Deals:</b>{' '}
+            <span className="text-muted-foreground">
+              Enjoy exclusive discounts, promotions, and loyalty
+              rewards when you order through Fooder. Your satisfaction
+              is our priority, and we love treating our customers to a
+              little extra delight.
+            </span>
           </div>
         </div>
       </div>
