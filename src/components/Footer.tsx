@@ -1,59 +1,98 @@
-'use client';
-
 import { Facebook, Instagram } from 'lucide-react';
 import { FaGithub } from 'react-icons/fa';
+import { cn } from '@/lib/utils';
+import { buttonVariants } from '@/components/ui/button';
 
 const Footer = () => {
   return (
     <footer className="flex flex-col items-center gap-10 border-t-2">
-      <div className="mt-10 flex flex-row gap-7 md:gap-14">
-        <div className="flex flex-col gap-5">
-          <label className="font-bold opacity-60">
-            Partner with Fooder
+      <div className="mt-10 flex flex-col gap-3 md:flex-row md:gap-14">
+        <div className="flex flex-col gap-1 md:gap-5">
+          <label className="text-center font-bold opacity-60">
+            Partner with us
           </label>
-          <ul className="flex flex-col gap-2">
+          <ul className="flex flex-col gap-1">
             <li>
-              <a href="#" target="_blank" rel="noreferrer">
+              <a
+                href="#"
+                target="_blank"
+                rel="noreferrer"
+                className={cn(buttonVariants({ variant: 'link' }))}
+              >
                 For couriers
               </a>
             </li>
             <li>
-              <a href="#" target="_blank" rel="noreferrer">
+              <a
+                href="#"
+                target="_blank"
+                rel="noreferrer"
+                className={cn(buttonVariants({ variant: 'link' }))}
+              >
                 For restaurant
               </a>
             </li>
           </ul>
         </div>
-        <div className="flex flex-col gap-5">
-          <label className="font-bold opacity-60">Useful Links</label>
-          <ul className="flex flex-col gap-2">
+        <div className="flex flex-col gap-1 md:gap-5">
+          <label className="text-center font-bold opacity-60">
+            Useful Links
+          </label>
+          <ul className="flex flex-col gap-1">
             <li>
-              <a href="#" target="_blank" rel="noreferrer">
+              <a
+                href="#"
+                target="_blank"
+                rel="noreferrer"
+                className={cn(buttonVariants({ variant: 'link' }))}
+              >
                 Support
               </a>
             </li>
             <li>
-              <a href="#" target="_blank" rel="noreferrer">
+              <a
+                href="#"
+                target="_blank"
+                rel="noreferrer"
+                className={cn(buttonVariants({ variant: 'link' }))}
+              >
                 Promo codes
               </a>
             </li>
             <li>
-              <a href="#" target="_blank" rel="noreferrer">
+              <a
+                href="#"
+                target="_blank"
+                rel="noreferrer"
+                className={cn(buttonVariants({ variant: 'link' }))}
+              >
                 Developers
               </a>
             </li>
           </ul>
         </div>
-        <div className="flex flex-col gap-5">
-          <label className="font-bold opacity-60">Follow us</label>
-          <div className="flex flex-col gap-2">
-            <a href="#" target="_blank" rel="noreferrer">
+        <div className="flex flex-col gap-1 md:gap-5">
+          <label className="text-center font-bold opacity-60">
+            Follow us
+          </label>
+          <div className="flex flex-col gap-1">
+            <a
+              href="#"
+              target="_blank"
+              rel="noreferrer"
+              className={cn(buttonVariants({ variant: 'link' }))}
+            >
               <span className="flex flex-row gap-1">
                 <Facebook />
                 <p>Facebook</p>
               </span>
             </a>
-            <a href="#" target="_blank" rel="noreferrer">
+            <a
+              href="#"
+              target="_blank"
+              rel="noreferrer"
+              className={cn(buttonVariants({ variant: 'link' }))}
+            >
               <span className="flex flex-row gap-1">
                 <Instagram />
                 <p>Instagram</p>
