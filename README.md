@@ -55,13 +55,22 @@ A food ordering app has built with Next.js framework. The app allows users to lo
 - [Tailwind CSS](https://tailwindcss.com/)
 - [Next.js](https://nextjs.org/)
 - [Next Auth](https://next-auth.js.org/)
+- [Next Theme](https://www.npmjs.com/package/next-themes)
 - [Prisma](https://www.prisma.io/)
 - [Prisma Adapter](https://authjs.dev/reference/adapter/prisma)
 - [bcrypt](https://www.npmjs.com/package/bcrypt)
 - [React Hook Form](https://react-hook-form.com/)
 - [@hookform/resolvers](https://www.npmjs.com/package/@hookform/resolvers)
 - [Zod](https://zod.dev/)
+- [Sonner toaster](https://sonner.emilkowal.ski/)
+- [shadcn ui](https://ui.shadcn.com/)
 
 ### Layout
 
 ![layout picture](https://github.com/ev0clu/next-blog/blob/main/layout.png?raw=true)
+
+### Assets
+
+[Home page picture from Flo Dahm on Pexels](https://www.pexels.com/photo/dinnerware-on-table-541216/)<br>
+[About page picture from Mat Brown on Pexels](https://www.pexels.com/photo/close-up-photo-of-dinnerware-set-on-top-of-table-with-glass-cups-1395967/)<br>
+[Contact page picture from Igor Starkov on Pexels](https://www.pexels.com/photo/two-green-potted-plants-791810/)<br>
