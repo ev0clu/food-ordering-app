@@ -36,9 +36,9 @@ export default function Home() {
         <Image
           src={homePic}
           alt="home picture"
-          width={300}
-          height={300}
-          className="mx-auto rounded-full"
+          width="0"
+          height="0"
+          className="mx-auto h-auto w-72 rounded-full"
         />
       </div>
       <div className="mb-6 mt-6">
