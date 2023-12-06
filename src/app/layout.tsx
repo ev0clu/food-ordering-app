@@ -5,6 +5,7 @@ import { cn } from '@/lib/utils';
 import { ThemeProvider } from '@/components/ThemeProvider';
 import Footer from '@/components/Footer';
 import Navbar from '@/components/Navbar';
+import AuthProvider from '@/components/AuthProvider';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -26,18 +27,20 @@ export default function RootLayout({
           inter.className
         )}
       >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <main className="relative mx-auto flex min-h-screen max-w-screen-xl flex-col px-5 py-2">
-            <Navbar />
-            <div className="flex-grow">{children}</div>
-            <Footer />
-          </main>
-        </ThemeProvider>
+        <AuthProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <main className="relative mx-auto flex min-h-screen max-w-screen-xl flex-col px-5 py-2">
+              <Navbar />
+              <div className="flex-grow">{children}</div>
+              <Footer />
+            </main>
+          </ThemeProvider>
+        </AuthProvider>
       </body>
     </html>
   );
