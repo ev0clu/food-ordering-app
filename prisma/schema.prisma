@@ -1,0 +1,88 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Account {
+  id                String  @id @default(cuid()) @map("_id")
+  userId            String
+  username          String  @unique
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid()) @map("_id")
+  sessionToken String   @unique
+  userId       String
+  username     String   @unique
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model User {
+  id        String    @id @default(cuid()) @map("_id")
+  username  String    @unique
+  password  String
+  email     String    @unique
+  street    String
+  city      String
+  phone     String
+  image     String?
+  role      Role      @default(USER)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime
+  accounts  Account[]
+  sessions  Session[]
+}
+
+model Category {
+  id        String   @id @default(cuid()) @map("_id")
+  createdAt DateTime @default(now())
+  updatedAt DateTime
+  name      String
+  menus     Menu[]   @relation(fields: [menusId], references: [id])
+  menusId   String[]
+}
+
+model Menu {
+  id           String     @id @default(cuid()) @map("_id")
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime
+  name         String
+  description  String
+  price        Int        @default(0)
+  categories   Category[] @relation(fields: [categoriesId], references: [id])
+  categoriesId String[]
+}
+
+model VerificationToken {
+  identifier String   @id @map("_id")
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+enum Role {
+  USER
+  ADMIN
+}
