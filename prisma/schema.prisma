@@ -13,7 +13,6 @@ datasource db {
 model Account {
   id                String  @id @default(cuid()) @map("_id")
   userId            String
-  username          String  @unique
   type              String
   provider          String
   providerAccountId String
@@ -41,15 +40,15 @@ model Session {
 model User {
   id        String    @id @default(cuid()) @map("_id")
   username  String    @unique
-  password  String
+  password  String?
   email     String    @unique
-  street    String
-  city      String
-  phone     String
+  street    String?
+  city      String?
+  phone     String?
   image     String?
   role      Role      @default(USER)
   createdAt DateTime  @default(now())
-  updatedAt DateTime
+  updatedAt DateTime  @default(now())
   accounts  Account[]
   sessions  Session[]
 }
