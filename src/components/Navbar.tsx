@@ -11,18 +11,28 @@ import {
   MenubarSeparator,
   MenubarTrigger
 } from '@/components/ui/menubar';
-import { Menu } from 'lucide-react';
+import { LogOut, Menu } from 'lucide-react';
 import logo from '../../public/logo.png';
 import { cn } from '@/lib/utils';
-import { buttonVariants } from '@/components/ui/button';
+import { Button, buttonVariants } from '@/components/ui/button';
+import { signOut, useSession } from 'next-auth/react';
+import { Separator } from '@/components/ui/separator';
 
 const Navbar = () => {
+  const { data: session } = useSession();
+
   return (
     <nav className="flex flex-row items-center justify-between gap-2 text-lg">
       {/* Desktop Navigation Start*/}
       <div className="hidden flex-row items-center gap-6 md:flex">
         <Link href="/">
-          <Image src={logo} alt="Logo" width={50} height={50} />
+          <Image
+            src={logo}
+            alt="Logo"
+            width={50}
+            height={50}
+            priority={true}
+          />
         </Link>
         <div className="flex flex-row items-center gap-2">
           <Link
@@ -90,27 +100,47 @@ const Navbar = () => {
         </Menubar>
       </div>
       <div className="flex flex-row items-center gap-3">
-        <ToggleTheme />
-        <div className="flex flex-row items-center gap-3">
-          <div>Name</div>
-          <Link
-            href="/auth/login"
-            className={cn(
-              buttonVariants({ variant: 'ghost' }),
-              'w-16'
-            )}
-          >
-            Log in
-          </Link>
-          <Link
-            href="/auth/register"
-            className={cn(
-              buttonVariants({ variant: 'ghost' }),
-              'w-16'
-            )}
-          >
-            Register
-          </Link>
+        <div className="flex h-7 flex-row items-center gap-3">
+          {session?.user ? (
+            <>
+              <div>{session?.user.username}</div>
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={async () => {
+                  await signOut({
+                    redirect: true,
+                    callbackUrl: '/'
+                  });
+                }}
+              >
+                <LogOut />
+              </Button>
+            </>
+          ) : (
+            <>
+              <Link
+                href="/auth/login"
+                className={cn(
+                  buttonVariants({ variant: 'ghost' }),
+                  'w-16'
+                )}
+              >
+                Log in
+              </Link>
+              <Link
+                href="/auth/register"
+                className={cn(
+                  buttonVariants({ variant: 'ghost' }),
+                  'w-16'
+                )}
+              >
+                Register
+              </Link>
+            </>
+          )}
+          <Separator orientation="vertical" />
+          <ToggleTheme />
         </div>
       </div>
     </nav>
