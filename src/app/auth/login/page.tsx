@@ -82,7 +82,7 @@ const Login = () => {
       {error && toast.error(error)}
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="mx-auto mb-8 mt-5 flex max-w-sm flex-col gap-3"
+        className="mx-auto mt-5 flex max-w-sm flex-col gap-3"
       >
         <div className="flex flex-col space-y-2">
           <Label htmlFor="email">Email</Label>
