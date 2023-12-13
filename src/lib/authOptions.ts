@@ -1,8 +1,9 @@
 import CredentialsProvider from 'next-auth/providers/credentials';
+import GoogleProvider from 'next-auth/providers/google';
 import prisma from '../../prisma/client';
 import { PrismaAdapter } from '@auth/prisma-adapter';
 import { compare } from 'bcrypt';
-import { NextAuthOptions } from 'next-auth';
+import { Account, NextAuthOptions, Profile } from 'next-auth';
 import { Adapter } from 'next-auth/adapters';
 
 export const authOptions: NextAuthOptions = {
@@ -10,10 +11,17 @@ export const authOptions: NextAuthOptions = {
   session: { strategy: 'jwt' },
   secret: process.env.NEXTAUTH_SECRET,
   pages: {
-    signIn: '/login',
+    signIn: '/',
     signOut: '/'
   },
   providers: [
+    GoogleProvider({
+      id: 'google',
+      name: 'Google',
+      clientId: process.env.GOOGLE_CLIENT_ID as string,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+      allowDangerousEmailAccountLinking: true
+    }),
     CredentialsProvider({
       // The name to display on the sign in form (e.g. "Sign in with...")
       name: 'Credentials',
@@ -56,7 +64,7 @@ export const authOptions: NextAuthOptions = {
 
         const passwordMatch = await compare(
           credentials.password,
-          existUserByEmail.password
+          existUserByEmail.password!
         );
 
         if (!passwordMatch) {
@@ -97,6 +105,33 @@ export const authOptions: NextAuthOptions = {
           role: token.role
         }
       };
+    },
+    async signIn({ account, profile }) {
+      if (account?.provider === 'google') {
+        try {
+          const existUserByEmail = await prisma.user.findUnique({
+            where: {
+              email: profile?.email
+            }
+          });
+
+          if (!existUserByEmail) {
+            const newUser = await prisma.user.create({
+              data: {
+                id: profile?.sub,
+                username: profile?.name as string,
+                email: profile?.email as string,
+                image: profile?.image
+              }
+            });
+          }
+          return true;
+        } catch (error) {
+          console.log('Error is occured: ', error);
+          return false;
+        }
+      }
+      return true; // Do different verification for other providers that don't have `email_verified`
     }
   }
 };
