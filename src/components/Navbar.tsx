@@ -103,7 +103,15 @@ const Navbar = () => {
         <div className="flex h-7 flex-row items-center gap-3">
           {session?.user ? (
             <>
-              <div>{session?.user.username}</div>
+              <Link
+                href="/user/profile"
+                className={cn(
+                  buttonVariants({ variant: 'ghost' }),
+                  'w-16'
+                )}
+              >
+                {session?.user.username}
+              </Link>
               <Button
                 variant="outline"
                 size="icon"
