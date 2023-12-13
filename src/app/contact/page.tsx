@@ -10,6 +10,7 @@ const Contact = () => {
         width="0"
         height="0"
         className="mx-auto mt-5 h-auto max-w-full"
+        priority={true}
       />
       <div className="mb-8 mt-8 flex flex-col gap-4">
         <div>
