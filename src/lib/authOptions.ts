@@ -75,7 +75,8 @@ export const authOptions: NextAuthOptions = {
           id: existUserByEmail.id,
           username: existUserByEmail.username,
           email: existUserByEmail.email,
-          role: existUserByEmail.role
+          role: existUserByEmail.role,
+          login: existUserByEmail.login
         };
       }
     })
@@ -86,7 +87,9 @@ export const authOptions: NextAuthOptions = {
         return {
           ...token,
           username: user.username,
-          role: user.role
+          role: user.role,
+          id: user.id,
+          login: user.login
         };
       }
 
@@ -102,7 +105,9 @@ export const authOptions: NextAuthOptions = {
         user: {
           ...session.user,
           username: token.username,
-          role: token.role
+          role: token.role,
+          id: token.id,
+          login: token.login
         }
       };
     },
@@ -121,7 +126,8 @@ export const authOptions: NextAuthOptions = {
                 id: profile?.sub,
                 username: profile?.name as string,
                 email: profile?.email as string,
-                image: profile?.image
+                image: profile?.image,
+                login: 'GOOGLE'
               }
             });
           }
