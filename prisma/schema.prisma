@@ -47,6 +47,7 @@ model User {
   phone     String?
   image     String?
   role      Role      @default(USER)
+  login     Login     @default(CREDENTIALS)
   createdAt DateTime  @default(now())
   updatedAt DateTime  @default(now())
   accounts  Account[]
@@ -84,4 +85,9 @@ model VerificationToken {
 enum Role {
   USER
   ADMIN
+}
+
+enum Login {
+  GOOGLE
+  CREDENTIALS
 }
