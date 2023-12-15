@@ -16,20 +16,9 @@ import { Label } from '@/components/ui/label';
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
 import googleLogo from '../../../../public/google_logo.svg';
+import { loginFormSchema } from '@/lib/validation/loginFormSchema';
 
-const formSchema = z.object({
-  email: z
-    .string()
-    .min(1, 'Email is required')
-    .email('Invalid email')
-    .trim(),
-  password: z
-    .string()
-    .min(1, 'Password is required')
-    .min(3, 'Password must have min 3 characters')
-});
-
-type formType = z.infer<typeof formSchema>;
+type formType = z.infer<typeof loginFormSchema>;
 
 const Login = () => {
   const router = useRouter();
@@ -47,14 +36,14 @@ const Login = () => {
     handleSubmit,
     formState: { errors }
   } = useForm<formType>({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(loginFormSchema),
     defaultValues: {
       email: '',
       password: ''
     }
   });
 
-  const onSubmit = async (data: z.infer<typeof formSchema>) => {
+  const onSubmit = async (data: z.infer<typeof loginFormSchema>) => {
     try {
       setSubmittingCredentials(true);
       const response = await signIn('credentials', {

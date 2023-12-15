@@ -13,36 +13,9 @@ import { Loader2 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { cn } from '@/lib/utils';
+import { registerFormSchema } from '@/lib/validation/registerFormSchema';
 
-const formSchema = z
-  .object({
-    username: z
-      .string()
-      .min(1, 'Username is required')
-      .max(10)
-      .trim(),
-    email: z
-      .string()
-      .min(1, 'Email is required')
-      .email('Invalid email')
-      .trim(),
-    street: z.string().min(1, 'Street is required').max(10).trim(),
-    city: z.string().min(1, 'City is required').max(10).trim(),
-    phone: z.string().min(1, 'Phone is required').max(10),
-    password: z
-      .string()
-      .min(1, 'Password is required')
-      .min(3, 'Password must have min 3 characters'),
-    confirmPassword: z
-      .string()
-      .min(1, 'Password confirmation is required')
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    path: ['confirmPassword'],
-    message: 'Password do not match'
-  });
-
-type formType = z.infer<typeof formSchema>;
+type formType = z.infer<typeof registerFormSchema>;
 
 const Register = () => {
   const router = useRouter();
@@ -53,7 +26,7 @@ const Register = () => {
     handleSubmit,
     formState: { errors }
   } = useForm<formType>({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(registerFormSchema),
     defaultValues: {
       username: '',
       email: '',
@@ -65,7 +38,9 @@ const Register = () => {
     }
   });
 
-  const onSubmit = async (data: z.infer<typeof formSchema>) => {
+  const onSubmit = async (
+    data: z.infer<typeof registerFormSchema>
+  ) => {
     try {
       setSubmitting(true);
       const response = await fetch('/api/auth/register', {

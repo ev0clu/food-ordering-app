@@ -1,29 +1,13 @@
 import { NextResponse } from 'next/server';
 import { hash } from 'bcrypt';
 import prisma from '../../../../../prisma/client';
-import { z } from 'zod';
-
-const userSchema = z.object({
-  username: z.string().min(1, 'Username is required').max(10).trim(),
-  email: z
-    .string()
-    .min(1, 'Email is required')
-    .email('Invalid email')
-    .trim(),
-  street: z.string().min(1, 'Street is required').max(10).trim(),
-  city: z.string().min(1, 'City is required').max(10).trim(),
-  phone: z.string().min(1, 'Phone is required').max(10),
-  password: z
-    .string()
-    .min(1, 'Password is required')
-    .min(3, 'Password must have min 3 characters')
-});
+import { registerFormSchema } from '@/lib/validation/registerFormSchema';
 
 export async function POST(req: Request) {
   try {
     const body = await req.json();
     const { username, email, street, city, phone, password } =
-      userSchema.parse(body);
+      registerFormSchema.parse(body);
 
     // Validation with safeParse
     /* const validation = userSchema.safeParse(body);
