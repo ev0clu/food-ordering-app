@@ -29,9 +29,10 @@ type ProfileProps = {
   };
 };
 
-const Profile = () => {
+const Profile = ({ params }: { params: { id: string } }) => {
   const router = useRouter();
-  const { status } = useSession();
+  const { status, data: session } = useSession();
+  const { id } = params;
 
   const [isSubmitting, setSubmitting] = useState(false);
   const [isError, setIsError] = useState(false);
@@ -61,7 +62,7 @@ const Profile = () => {
     const fetchData = async () => {
       try {
         setIsLoading(true);
-        const response = await fetch('/api/user/profile', {
+        const response = await fetch(`/api/user/${id}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json'
@@ -76,8 +77,6 @@ const Profile = () => {
           setValue('street', data.profile.street);
           setValue('city', data.profile.city);
           setValue('phone', data.profile.phone);
-          setValue('password', data.profile.password);
-          setValue('confirmPassword', data.profile.confirmPassword);
         } else {
           setIsError(true);
           toast.error('An unexpected error occurred');
@@ -137,7 +136,7 @@ const Profile = () => {
   if (status === 'unauthenticated') {
     return router.push('/login');
   }
-
+  console.log(session?.user.login);
   return (
     <div className="flex flex-grow flex-col">
       <h1 className="text-top text-4xl font-bold">Profile</h1>
@@ -146,30 +145,36 @@ const Profile = () => {
           onSubmit={handleSubmit(onSubmit)}
           className="mx-auto mb-8 mt-5 flex max-w-md flex-col gap-3"
         >
-          <div className="flex flex-col">
-            <Label htmlFor="username">Username</Label>
-            <Input
-              disabled={!isEdit}
-              id="username"
-              autoComplete="username"
-              type="text"
-              placeholder="Username"
-              {...register('username')}
-            />
-            <ErrorMessage>{errors.username?.message}</ErrorMessage>
-          </div>
-          <div className="flex flex-col space-y-2">
-            <Label htmlFor="email">Email</Label>
-            <Input
-              disabled={!isEdit}
-              id="email"
-              autoComplete="email"
-              type="email"
-              placeholder="email@example.com"
-              {...register('email')}
-            />
-            <ErrorMessage>{errors.email?.message}</ErrorMessage>
-          </div>
+          {session?.user.login !== 'GOOGLE' && (
+            <>
+              <div className="flex flex-col">
+                <Label htmlFor="username">Username</Label>
+                <Input
+                  disabled={!isEdit}
+                  id="username"
+                  autoComplete="username"
+                  type="text"
+                  placeholder="Username"
+                  {...register('username')}
+                />
+                <ErrorMessage>
+                  {errors.username?.message}
+                </ErrorMessage>
+              </div>
+              <div className="flex flex-col space-y-2">
+                <Label htmlFor="email">Email</Label>
+                <Input
+                  disabled={!isEdit}
+                  id="email"
+                  autoComplete="email"
+                  type="email"
+                  placeholder="email@example.com"
+                  {...register('email')}
+                />
+                <ErrorMessage>{errors.email?.message}</ErrorMessage>
+              </div>
+            </>
+          )}
           <div className="flex flex-col space-y-2">
             <Label htmlFor="street">Street</Label>
             <Input
@@ -206,33 +211,41 @@ const Profile = () => {
             />
             <ErrorMessage>{errors.phone?.message}</ErrorMessage>
           </div>
-          <div className="flex flex-col space-y-2">
-            <Label htmlFor="password">Password</Label>
-            <Input
-              disabled={!isEdit}
-              id="password"
-              autoComplete="off"
-              type="password"
-              placeholder="Password"
-              {...register('password')}
-            />
-            <ErrorMessage>{errors.password?.message}</ErrorMessage>
-          </div>
-          <div className="flex flex-col space-y-2">
-            <Label htmlFor="confirmPassword">Confirm Password</Label>
-            <Input
-              disabled={!isEdit}
-              id="confirmPassword"
-              autoComplete="off"
-              type="password"
-              placeholder="Confirm Password"
-              {...register('confirmPassword')}
-            />
-            <ErrorMessage>
-              {errors.confirmPassword?.message}
-            </ErrorMessage>
-            <ErrorMessage>{errors.root?.message}</ErrorMessage>
-          </div>
+          {session?.user.login !== 'GOOGLE' && (
+            <>
+              <div className="flex flex-col space-y-2">
+                <Label htmlFor="password">Password</Label>
+                <Input
+                  disabled={!isEdit}
+                  id="password"
+                  autoComplete="off"
+                  type="password"
+                  placeholder="Password"
+                  {...register('password')}
+                />
+                <ErrorMessage>
+                  {errors.password?.message}
+                </ErrorMessage>
+              </div>
+              <div className="flex flex-col space-y-2">
+                <Label htmlFor="confirmPassword">
+                  Confirm Password
+                </Label>
+                <Input
+                  disabled={!isEdit}
+                  id="confirmPassword"
+                  autoComplete="off"
+                  type="password"
+                  placeholder="Confirm Password"
+                  {...register('confirmPassword')}
+                />
+                <ErrorMessage>
+                  {errors.confirmPassword?.message}
+                </ErrorMessage>
+                <ErrorMessage>{errors.root?.message}</ErrorMessage>
+              </div>
+            </>
+          )}
 
           {!isEdit ? (
             <div className="my-5 text-right">

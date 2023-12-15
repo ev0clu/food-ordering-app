@@ -104,7 +104,7 @@ const Navbar = () => {
           {session?.user ? (
             <>
               <Link
-                href="/user/profile"
+                href={`/user/${session.user.id}`}
                 className={cn(
                   buttonVariants({ variant: 'ghost' }),
                   'w-16'
