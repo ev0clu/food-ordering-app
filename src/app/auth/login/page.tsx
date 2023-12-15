@@ -33,7 +33,6 @@ type formType = z.infer<typeof formSchema>;
 
 const Login = () => {
   const router = useRouter();
-  const [error, setError] = useState('');
   const [isSubmittingCredentials, setSubmittingCredentials] =
     useState(false);
   const [isSubmittingGoogle, setSubmittingGoogle] = useState(false);
@@ -57,7 +56,6 @@ const Login = () => {
 
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
     try {
-      setError('');
       setSubmittingCredentials(true);
       const response = await signIn('credentials', {
         email: data.email,
@@ -69,17 +67,16 @@ const Login = () => {
       }
       if (response?.error) {
         setSubmittingCredentials(false);
-        setError(`${response.status}: Email or password is wrong`);
+        toast.error('Email or password is wrong');
       }
     } catch (error) {
-      setError('An unexpected error is occured');
+      toast.error('An unexpected error is occured');
       setSubmittingCredentials(false);
     }
   };
 
   return (
     <>
-      {error && toast.error(error)}
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="mx-auto mt-5 flex max-w-sm flex-col gap-3"

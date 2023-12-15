@@ -46,7 +46,6 @@ type formType = z.infer<typeof formSchema>;
 
 const Register = () => {
   const router = useRouter();
-  const [error, setError] = useState('');
   const [isSubmitting, setSubmitting] = useState(false);
 
   const {
@@ -68,7 +67,6 @@ const Register = () => {
 
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
     try {
-      setError('');
       setSubmitting(true);
       const response = await fetch('/api/auth/register', {
         method: 'POST',
@@ -88,20 +86,19 @@ const Register = () => {
         setSubmitting(false);
         const body = await response.json();
         if (body.message) {
-          setError(body.message);
+          toast.error(body.message);
         } else {
-          setError('An unexpected error occurred');
+          toast.error('An unexpected error occurred');
         }
       }
     } catch (error) {
-      setError('An unexpected error is occured');
+      toast.error('An unexpected error is occured');
       setSubmitting(false);
     }
   };
 
   return (
     <>
-      {error && toast.error(error)}
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="mx-auto mb-8 mt-5 flex max-w-sm flex-col gap-3"
