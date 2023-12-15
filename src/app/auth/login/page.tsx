@@ -22,6 +22,7 @@ type formType = z.infer<typeof loginFormSchema>;
 
 const Login = () => {
   const router = useRouter();
+
   const [isSubmittingCredentials, setSubmittingCredentials] =
     useState(false);
   const [isSubmittingGoogle, setSubmittingGoogle] = useState(false);
@@ -75,7 +76,7 @@ const Login = () => {
           <Input
             id="email"
             autoComplete="email"
-            className="rounded px-2 py-1 text-slate-950"
+            className="rounded px-2 py-1"
             type="email"
             placeholder="email@example.com"
             {...register('email')}
