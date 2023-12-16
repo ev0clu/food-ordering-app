@@ -8,7 +8,7 @@ import { z } from 'zod';
 import ErrorMessage from '@/components/ErrorMessage';
 import { toast } from 'sonner';
 import Link from 'next/link';
-import { signIn } from 'next-auth/react';
+import { signIn, useSession } from 'next-auth/react';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { Loader2 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
@@ -22,6 +22,7 @@ type formType = z.infer<typeof loginFormSchema>;
 
 const Login = () => {
   const router = useRouter();
+  const { status } = useSession();
 
   const [isSubmittingCredentials, setSubmittingCredentials] =
     useState(false);
