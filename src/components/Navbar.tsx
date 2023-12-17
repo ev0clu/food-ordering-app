@@ -11,6 +11,12 @@ import {
   MenubarSeparator,
   MenubarTrigger
 } from '@/components/ui/menubar';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger
+} from '@/components/ui/dropdown-menu';
 import { LogOut, Menu } from 'lucide-react';
 import logo from '../../public/logo.png';
 import { cn } from '@/lib/utils';
@@ -103,15 +109,42 @@ const Navbar = () => {
         <div className="flex h-7 flex-row items-center gap-3">
           {session?.user ? (
             <>
-              <Link
-                href={`/user/${session.user.id}`}
-                className={cn(
-                  buttonVariants({ variant: 'ghost' }),
-                  'w-16'
-                )}
-              >
-                {session?.user.username}
-              </Link>
+              <DropdownMenu>
+                <DropdownMenuTrigger>
+                  {session?.user.username}
+                </DropdownMenuTrigger>
+                <DropdownMenuContent
+                  align="start"
+                  sideOffset={12}
+                  className="min-w-[8rem]"
+                >
+                  <DropdownMenuItem
+                    asChild
+                    className="hover:cursor-pointer hover:bg-accent hover:text-accent-foreground"
+                  >
+                    <Link
+                      className="w-full"
+                      href={`/user/${session.user.id}/profile`}
+                    >
+                      Profile
+                    </Link>
+                  </DropdownMenuItem>
+                  {session.user.role === 'ADMIN' && (
+                    <DropdownMenuItem
+                      asChild
+                      className="hover:cursor-pointer hover:bg-accent hover:text-accent-foreground"
+                    >
+                      <Link
+                        className="w-full"
+                        href={`/user/${session.user.id}/admin`}
+                      >
+                        Admin
+                      </Link>
+                    </DropdownMenuItem>
+                  )}
+                </DropdownMenuContent>
+              </DropdownMenu>
+
               <Button
                 variant="outline"
                 size="icon"
