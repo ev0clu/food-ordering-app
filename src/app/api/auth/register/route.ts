@@ -6,15 +6,8 @@ import { registerFormSchema } from '@/lib/validation/registerFormSchema';
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const {
-      username,
-      email,
-      street,
-      city,
-      phone,
-      password,
-      confirmPassword
-    } = registerFormSchema.parse(body);
+    const { username, email, street, city, phone, password } =
+      registerFormSchema.parse(body);
 
     // Validation with safeParse
     /* const validation = userSchema.safeParse(body);
