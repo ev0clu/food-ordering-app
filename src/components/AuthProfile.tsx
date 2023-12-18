@@ -16,11 +16,11 @@ import { AuthProfileProps } from '@/types/profile';
 
 type formType = z.infer<typeof authFormSchema>;
 
-type AuthProps = {
+interface AuthProps {
   id: string;
   authProfile: AuthProfileProps;
   handleUpdateAuth: (username: string, email: string) => void;
-};
+}
 
 const AuthProfile = ({
   id,

@@ -15,7 +15,7 @@ import { ContactProfileProps } from '@/types/profile';
 
 type formType = z.infer<typeof contactFormSchema>;
 
-type ContactProps = {
+interface ContactProps {
   id: string;
   contactProfile: ContactProfileProps;
   handleUpdateContact: (
@@ -23,7 +23,7 @@ type ContactProps = {
     city: string,
     phone: string
   ) => void;
-};
+}
 
 const ContactProfile = ({
   id,
