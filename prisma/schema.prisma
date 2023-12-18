@@ -57,8 +57,8 @@ model User {
 model Category {
   id        String   @id @default(cuid()) @map("_id")
   createdAt DateTime @default(now())
-  updatedAt DateTime
-  name      String
+  updatedAt DateTime @default(now())
+  name      String   @unique
   menus     Menu[]   @relation(fields: [menusId], references: [id])
   menusId   String[]
 }
@@ -66,8 +66,8 @@ model Category {
 model Menu {
   id           String     @id @default(cuid()) @map("_id")
   createdAt    DateTime   @default(now())
-  updatedAt    DateTime
-  name         String
+  updatedAt    DateTime   @default(now())
+  name         String     @unique
   description  String
   price        Int        @default(0)
   categories   Category[] @relation(fields: [categoriesId], references: [id])
