@@ -5,6 +5,7 @@ import { PrismaAdapter } from '@auth/prisma-adapter';
 import { compare } from 'bcrypt';
 import { NextAuthOptions } from 'next-auth';
 import { Adapter } from 'next-auth/adapters';
+import { loginFormSchema } from './validation/loginFormSchema';
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma) as Adapter,
@@ -49,35 +50,42 @@ export const authOptions: NextAuthOptions = {
         // e.g. return { id: 1, name: 'J Smith', email: 'jsmith@example.com' }
         // You can also use the `req` object to obtain additional parameters
         // (i.e., the request IP address)
-        if (!credentials?.email || !credentials.password) {
-          return null;
-        }
-        const existUserByEmail = await prisma.user.findUnique({
-          where: {
-            email: credentials.email
+        const parsedCredentials =
+          loginFormSchema.safeParse(credentials);
+
+        if (parsedCredentials.success) {
+          const { email, password } = parsedCredentials.data;
+          if (!email || !password) {
+            return null;
           }
-        });
 
-        if (!existUserByEmail) {
-          return null;
-        }
+          const existUserByEmail = await prisma.user.findUnique({
+            where: {
+              email: email
+            }
+          });
 
-        const passwordMatch = await compare(
-          credentials.password,
-          existUserByEmail.password!
-        );
+          if (!existUserByEmail) {
+            return null;
+          }
 
-        if (!passwordMatch) {
-          return null;
-        }
+          const passwordMatch = await compare(
+            password,
+            existUserByEmail.password!
+          );
 
-        return {
-          id: existUserByEmail.id,
-          username: existUserByEmail.username,
-          email: existUserByEmail.email,
-          role: existUserByEmail.role,
-          provider: existUserByEmail.provider
-        };
+          if (!passwordMatch) {
+            return null;
+          }
+
+          return {
+            id: existUserByEmail.id,
+            username: existUserByEmail.username,
+            email: existUserByEmail.email,
+            role: existUserByEmail.role,
+            provider: existUserByEmail.provider
+          };
+        } else return null;
       }
     })
   ],
@@ -140,6 +148,7 @@ export const authOptions: NextAuthOptions = {
           return false;
         }
       }
+
       return true; // Do different verification for other providers that don't have `email_verified`
     }
   }
