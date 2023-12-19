@@ -6,14 +6,33 @@ import { registerFormSchema } from '@/lib/validation/registerFormSchema';
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const { username, email, street, city, phone, password } =
-      registerFormSchema.parse(body);
+    const {
+      username,
+      email,
+      street,
+      city,
+      phone,
+      password,
+      confirmPassword
+    } = registerFormSchema.parse(body);
 
     // Validation with safeParse
     /* const validation = userSchema.safeParse(body);
     if (!validation.success) {
       NextResponse.json(validation.error.format(), { status: 400 });
     }*/
+
+    if (password !== confirmPassword) {
+      return NextResponse.json(
+        {
+          user: null,
+          message: 'Confirm password does not match'
+        },
+        {
+          status: 409
+        }
+      );
+    }
 
     const existUserByName = await prisma.user.findUnique({
       where: {

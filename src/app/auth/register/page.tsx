@@ -52,7 +52,8 @@ const Register = () => {
           street: data.street,
           city: data.city,
           phone: data.phone,
-          password: data.password
+          password: data.password,
+          confirmPassword: data.confirmPassword
         })
       });
       if (response.ok) {
