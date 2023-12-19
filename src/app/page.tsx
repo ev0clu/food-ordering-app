@@ -39,7 +39,8 @@ export default function Home() {
           width="0"
           height="0"
           className="mx-auto h-auto w-72 rounded-full"
-          priority={true}
+          placeholder="blur"
+          blurDataURL={`${homePic}`}
         />
       </div>
       <div className="mb-6 mt-6">

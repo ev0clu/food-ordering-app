@@ -37,7 +37,8 @@ const Navbar = () => {
             alt="Logo"
             width={50}
             height={50}
-            priority={true}
+            placeholder="blur"
+            blurDataURL={`${logo}`}
           />
         </Link>
         <div className="flex flex-row items-center gap-2">

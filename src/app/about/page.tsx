@@ -8,7 +8,8 @@ const About = () => {
         src={aboutPic}
         alt="about picture"
         className="hidden max-w-[30%] md:block"
-        priority={true}
+        placeholder="blur"
+        blurDataURL={`${aboutPic}`}
       />
       <div className="flex flex-col justify-center gap-10">
         <h1 className="text-center text-2xl font-bold">About Us</h1>
