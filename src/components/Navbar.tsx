@@ -31,7 +31,7 @@ const Navbar = () => {
     <nav className="flex flex-row items-center justify-between gap-2 text-lg">
       {/* Desktop Navigation Start*/}
       <div className="hidden flex-row items-center gap-6 md:flex">
-        <Link href="/">
+        <Link href="/" as={'image'}>
           <Image
             src={logo}
             alt="Logo"
