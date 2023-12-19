@@ -1,7 +1,6 @@
 import { NextResponse } from 'next/server';
 import { hash } from 'bcrypt';
 import prisma from '../../../../../../../prisma/client';
-import { getServerSession } from 'next-auth';
 import { authFormSchema } from '@/lib/validation/authFormSchema';
 import { AuthProfileProps } from '@/types/profile';
 
@@ -11,7 +10,6 @@ export async function PUT(
 ) {
   try {
     const body: AuthProfileProps = await req.json();
-    const session = await getServerSession();
 
     // Validation with safeParse
     const validation = authFormSchema.safeParse(body);

@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server';
 import prisma from '../../../../../../../prisma/client';
-import { getServerSession } from 'next-auth';
 import { ContactProfileProps } from '@/types/profile';
 import { contactFormSchema } from '@/lib/validation/contactFormSchema';
 
@@ -10,7 +9,6 @@ export async function PUT(
 ) {
   try {
     const body: ContactProfileProps = await req.json();
-    const session = await getServerSession();
 
     // Validation with safeParse
     const validation = contactFormSchema.safeParse(body);
