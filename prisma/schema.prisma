@@ -69,7 +69,8 @@ model Menu {
   updatedAt    DateTime   @updatedAt
   name         String     @unique
   description  String
-  price        Int        @default(0)
+  size         String
+  price        String
   categories   Category[] @relation(fields: [categoriesId], references: [id])
   categoriesId String[]
 }
