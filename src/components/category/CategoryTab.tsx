@@ -40,9 +40,9 @@ const CategoryTab = () => {
       setIsLoading(false);
     } catch (error) {
       setIsError(true);
-      toast.error('An unexpected error is occured');
       setIsLoading(false);
       setIsRefetch(false);
+      toast.error('An unexpected error is occured');
     }
   };
 
@@ -70,7 +70,7 @@ const CategoryTab = () => {
         {isLoading ? (
           <Loading />
         ) : categoryList.length === 0 ? (
-          <p className="m-auto text-lg">
+          <p className="m-auto my-5 text-lg">
             There is still no any category
           </p>
         ) : !isError ? (

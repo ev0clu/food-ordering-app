@@ -9,6 +9,7 @@ import {
   TabsTrigger
 } from '@/components/ui/tabs';
 import CategoryTab from '@/components/category/CategoryTab';
+import MenuTab from '@/components/menu/MenuTab';
 
 const Admin = ({ params }: { params: { id: string } }) => {
   const router = useRouter();
@@ -34,7 +35,9 @@ const Admin = ({ params }: { params: { id: string } }) => {
         <TabsContent value="category">
           <CategoryTab />
         </TabsContent>
-        <TabsContent value="menu">Menu</TabsContent>
+        <TabsContent value="menu">
+          <MenuTab />
+        </TabsContent>
       </Tabs>
     </div>
   );
