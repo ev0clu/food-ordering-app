@@ -75,17 +75,19 @@ const CategoryItem = ({
         setIsEdit(false);
         setSubmitting(false);
         handleCategoryRefetch();
-        toast.dismiss(toastId);
         toast.success(
-          `Category: ${data.categoryName} has been updated successfully`
+          `Category: ${data.categoryName} has been updated successfully`,
+          { id: toastId }
         );
       } else {
         setSubmitting(false);
         const body = await response.json();
         if (body.message) {
-          toast.error(body.message);
+          toast.error(body.message, { id: toastId });
         } else {
-          toast.error('An unexpected error occurred');
+          toast.error('An unexpected error occurred', {
+            id: toastId
+          });
         }
       }
       handleCategoryEdit('');
