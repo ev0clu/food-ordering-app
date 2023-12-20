@@ -10,7 +10,7 @@ import { categoryFormSchema } from '@/lib/validation/categoryFormSchema';
 import { Category } from '@prisma/client';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import DeleteModal from '@/components/DeleteModal';
+import DeleteCategoryModal from '@/components/DeleteCategoryModal';
 import ErrorMessage from '@/components/ErrorMessage';
 import {
   Tooltip,
@@ -137,7 +137,7 @@ const CategoryItem = ({
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
-          <DeleteModal
+          <DeleteCategoryModal
             category={category}
             handleCategoryRefetch={handleCategoryRefetch}
           />

@@ -18,19 +18,18 @@ import {
   TooltipTrigger
 } from '@/components/ui/tooltip';
 import { Category } from '@prisma/client';
-import { Loader2, Trash2 } from 'lucide-react';
-import { useState } from 'react';
+import { Trash2 } from 'lucide-react';
 import { toast } from 'sonner';
 
-type DeleteModalProps = {
+type DeleteCategoryModalProps = {
   category: Category;
   handleCategoryRefetch: () => void;
 };
 
-const DeleteModal = ({
+const DeleteCategoryModal = ({
   category,
   handleCategoryRefetch
-}: DeleteModalProps) => {
+}: DeleteCategoryModalProps) => {
   const deleteFetch = () =>
     fetch(`/api/category/${category.id}/delete`, {
       method: 'DELETE',
@@ -93,4 +92,4 @@ const DeleteModal = ({
   );
 };
 
-export default DeleteModal;
+export default DeleteCategoryModal;
