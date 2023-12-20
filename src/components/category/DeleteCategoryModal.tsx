@@ -2,15 +2,16 @@
 
 import { Button } from '@/components/ui/button';
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-  DialogClose
-} from '@/components/ui/dialog';
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger
+} from '@/components/ui/alert-dialog';
 import {
   Tooltip,
   TooltipContent,
@@ -52,42 +53,37 @@ const DeleteCategoryModal = ({
 
   return (
     <>
-      <Dialog>
+      <AlertDialog>
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
-              <DialogTrigger asChild>
+              <AlertDialogTrigger asChild>
                 <Button type="button" variant="outline" size="icon">
                   <Trash2 />
                 </Button>
-              </DialogTrigger>
+              </AlertDialogTrigger>
             </TooltipTrigger>
             <TooltipContent>
               <p>Delete</p>
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>
-        <DialogContent className="max-w-[325px] md:max-w-[425px]">
-          <DialogHeader>
-            <DialogTitle>{`Delete: ${category.name}`}</DialogTitle>
-            <DialogDescription>
+        <AlertDialogContent className="max-w-[325px] md:max-w-[425px]">
+          <AlertDialogHeader>
+            <AlertDialogTitle>{`Delete: ${category.name}`}</AlertDialogTitle>
+            <AlertDialogDescription>
               Are you sure you want to delete this comment? You can't
               undo this.
-            </DialogDescription>
-          </DialogHeader>
-          <DialogFooter>
-            <DialogClose>
-              <Button
-                type="button"
-                className="mx-auto w-28"
-                onClick={handleDeleteClick}
-              >
-                Delete
-              </Button>
-            </DialogClose>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={handleDeleteClick}>
+              Delete
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </>
   );
 };
