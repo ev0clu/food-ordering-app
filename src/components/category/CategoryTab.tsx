@@ -31,7 +31,7 @@ const CategoryTab = () => {
 
       if (response.ok) {
         const data: ListProps = await response.json();
-        setCategoryList(data.categoryList);
+        setCategoryList(data.categoryList || []);
       } else {
         setIsError(true);
         toast.error('An unexpected error occurred');
@@ -60,16 +60,25 @@ const CategoryTab = () => {
     setEditId(id);
   };
 
+  if (isLoading) {
+    return (
+      <div className="m-auto mt-20">
+        <Loading />
+      </div>
+    );
+  }
+
   return (
     <div className="my-5">
+      <h1 className="text-top my-5 text-lg font-medium">
+        New Category
+      </h1>
       <CategoryCreate handleCategoryRefetch={handleCategoryRefetch} />
-      <div>
-        <h1 className="text-top my-5 text-sm font-medium">
+      <div className="my-5">
+        <h1 className="text-top my-5 text-lg font-medium">
           Existing categories
         </h1>
-        {isLoading ? (
-          <Loading />
-        ) : categoryList.length === 0 ? (
+        {categoryList.length === 0 ? (
           <p className="m-auto my-5 text-lg">
             There is still no any category
           </p>
