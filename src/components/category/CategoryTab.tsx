@@ -61,7 +61,7 @@ const CategoryTab = () => {
   };
 
   return (
-    <div>
+    <div className="my-5">
       <CategoryCreate handleCategoryRefetch={handleCategoryRefetch} />
       <div>
         <h1 className="text-top my-5 text-sm font-medium">
