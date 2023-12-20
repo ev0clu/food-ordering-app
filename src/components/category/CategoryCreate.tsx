@@ -78,7 +78,6 @@ const CategoryCreate = ({
       className="mx-auto mb-8 mt-5 flex max-w-md flex-col gap-3"
     >
       <div className="flex flex-col space-y-2">
-        <Label htmlFor="categoryName">New Category</Label>
         <Input
           disabled={isSubmitting}
           id="categoryName"
