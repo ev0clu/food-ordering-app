@@ -8,7 +8,7 @@ import {
   TabsList,
   TabsTrigger
 } from '@/components/ui/tabs';
-import CategoryTab from '@/components/CategoryTab';
+import CategoryTab from '@/components/category/CategoryTab';
 
 const Admin = ({ params }: { params: { id: string } }) => {
   const router = useRouter();

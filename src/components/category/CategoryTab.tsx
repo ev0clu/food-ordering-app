@@ -3,8 +3,8 @@
 import { useEffect, useState } from 'react';
 import { Category } from '@prisma/client';
 import { toast } from 'sonner';
-import CategoryCreate from '@/components/CategoryCreate';
-import CategoryItem from '@/components/CategoryItem';
+import CategoryCreate from '@/components/category/CategoryCreate';
+import CategoryItem from '@/components/category/CategoryItem';
 import Loading from '@/components/Loading';
 
 type ListProps = {

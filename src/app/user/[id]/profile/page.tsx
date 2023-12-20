@@ -4,8 +4,8 @@ import { useEffect, useState } from 'react';
 import Loading from '@/components/Loading';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import ContactProfile from '@/components/ContactProfile';
-import AuthProfile from '@/components/AuthProfile';
+import ContactProfile from '@/components/profile/ContactProfile';
+import AuthProfile from '@/components/profile/AuthProfile';
 import {
   AuthProfileProps,
   ContactProfileProps

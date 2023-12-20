@@ -10,7 +10,7 @@ import { categoryFormSchema } from '@/lib/validation/categoryFormSchema';
 import { Category } from '@prisma/client';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import DeleteCategoryModal from '@/components/DeleteCategoryModal';
+import DeleteCategoryModal from '@/components/category/DeleteCategoryModal';
 import ErrorMessage from '@/components/ErrorMessage';
 import {
   Tooltip,
