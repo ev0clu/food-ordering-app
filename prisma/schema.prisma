@@ -59,20 +59,20 @@ model Category {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   name      String   @unique
-  menus     Menu[]   @relation(fields: [menusId], references: [id])
-  menusId   String[]
+  menus     Menu[]   @relation(fields: [menuIDs], references: [id])
+  menuIDs   String[]
 }
 
 model Menu {
-  id           String     @id @default(cuid()) @map("_id")
-  createdAt    DateTime   @default(now())
-  updatedAt    DateTime   @updatedAt
-  name         String     @unique
-  description  String
-  size         String
-  price        String
-  categories   Category[] @relation(fields: [categoriesId], references: [id])
-  categoriesId String[]
+  id          String     @id @default(cuid()) @map("_id")
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  name        String     @unique
+  description String
+  size        Size
+  price       String
+  categories  Category[] @relation(fields: [categoryIDs], references: [id])
+  categoryIDs String[]
 }
 
 model VerificationToken {
@@ -91,4 +91,9 @@ enum Role {
 enum Provider {
   GOOGLE
   CREDENTIALS
+}
+
+enum Size {
+  SMALL
+  NORMAL
 }
