@@ -66,6 +66,12 @@ const Login = () => {
     }
   };
 
+  if (status === 'authenticated') {
+    return (
+      <p className="m-auto my-5 text-lg">You already logged in.</p>
+    );
+  }
+
   return (
     <>
       <form
