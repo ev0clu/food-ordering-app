@@ -10,6 +10,7 @@ import {
 } from '@/components/ui/tabs';
 import CategoryTab from '@/components/category/CategoryTab';
 import MenuTab from '@/components/menu/MenuTab';
+import Loading from '@/components/Loading';
 
 const Admin = () => {
   const router = useRouter();
@@ -17,6 +18,10 @@ const Admin = () => {
 
   if (status === 'unauthenticated') {
     return router.push('/login');
+  }
+
+  if (status === 'loading') {
+    return <Loading />;
   }
 
   if (session?.user.role !== 'ADMIN') {

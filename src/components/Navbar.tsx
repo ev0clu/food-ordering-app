@@ -23,9 +23,10 @@ import { cn } from '@/lib/utils';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { signOut, useSession } from 'next-auth/react';
 import { Separator } from '@/components/ui/separator';
+import Loading from './Loading';
 
 const Navbar = () => {
-  const { data: session } = useSession();
+  const { status, data: session } = useSession();
 
   return (
     <nav className="flex flex-row items-center justify-between gap-2 text-lg">
@@ -106,9 +107,12 @@ const Navbar = () => {
           </MenubarMenu>
         </Menubar>
       </div>
+      {/* Authentication Navigation */}
       <div className="flex flex-row items-center gap-3">
         <div className="flex h-7 flex-row items-center gap-3">
-          {session?.user ? (
+          {status === 'loading' ? (
+            <Loading className="h-5 w-5" />
+          ) : session?.user ? (
             <>
               <DropdownMenu>
                 <DropdownMenuTrigger>
