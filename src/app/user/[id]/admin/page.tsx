@@ -11,17 +11,20 @@ import {
 import CategoryTab from '@/components/category/CategoryTab';
 import MenuTab from '@/components/menu/MenuTab';
 
-const Admin = ({ params }: { params: { id: string } }) => {
+const Admin = () => {
   const router = useRouter();
   const { status, data: session } = useSession();
-  const { id } = params;
 
   if (status === 'unauthenticated') {
     return router.push('/login');
   }
 
   if (session?.user.role !== 'ADMIN') {
-    return router.push(`/user/${id}/profile`);
+    return (
+      <p className="text-base opacity-50">
+        You do not have <b>ADMIN</b> permission do view this page
+      </p>
+    );
   }
 
   return (
