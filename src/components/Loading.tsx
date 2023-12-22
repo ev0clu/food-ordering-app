@@ -1,6 +1,17 @@
-const Loading = () => {
+import { cn } from '@/lib/utils';
+
+const Loading = ({
+  className
+}: {
+  className?: string | undefined;
+}) => {
   return (
-    <div className="flex flex-1 flex-col items-center justify-center">
+    <div
+      className={cn(
+        'flex flex-1 flex-col items-center justify-center',
+        className
+      )}
+    >
       <svg
         aria-hidden="true"
         className="h-10 w-10 animate-spin fill-blue-600 text-gray-400"
