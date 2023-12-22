@@ -65,7 +65,6 @@ const MenuCreate = ({
   }, [form.formState.isSubmitSuccessful]);
 
   const onSubmit = async (data: z.infer<typeof menuFormSchema>) => {
-    console.log(data);
     try {
       setSubmitting(true);
 
@@ -78,16 +77,12 @@ const MenuCreate = ({
           menuSize: data.menuSize,
           menuCategory: data.menuCategory,
           menuPrice: data.menuPrice
-          /* menuPrice: formatPrice(data.menuPrice, {
-            currency: 'EUR',
-            notation: 'compact'
-          })*/
         })
       });
 
       if (response.ok) {
         setSubmitting(false);
-        // handleMenuRefetch();
+        handleMenuRefetch();
         toast.success(
           `Menu: ${data.menuName} has been created successfully`
         );
