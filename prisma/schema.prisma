@@ -71,8 +71,16 @@ model Menu {
   description String
   size        Size
   price       String
+  images      Image[]
   categories  Category[] @relation(fields: [categoryIDs], references: [id])
   categoryIDs String[]
+}
+
+model Image {
+  id     String @id @default(cuid()) @map("_id")
+  url    String
+  menu   Menu   @relation(fields: [menuId], references: [id])
+  menuId String
 }
 
 model VerificationToken {
