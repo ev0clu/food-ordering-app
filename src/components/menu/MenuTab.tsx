@@ -1,14 +1,15 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Category, Menu } from '@prisma/client';
+import { Category } from '@prisma/client';
 import { toast } from 'sonner';
 import MenuCreate from '@/components/menu/MenuCreate';
-//import MenuItem from '@/components/menu/MenuItem';
+import MenuItem from '@/components/menu/MenuItem';
 import Loading from '@/components/Loading';
+import { ExtendedMenu } from '@/types/menu';
 
 type ListMenuProps = {
-  menuList: Menu[];
+  menuList: ExtendedMenu[];
 };
 
 type ListCategoryProps = {
@@ -18,7 +19,7 @@ type ListCategoryProps = {
 const MenuTab = () => {
   const [isError, setIsError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [menuList, setMenuList] = useState<Menu[]>([]);
+  const [menuList, setMenuList] = useState<ExtendedMenu[]>([]);
   const [categoryList, setCategoryList] = useState<Category[]>([]);
   const [isRefetch, setIsRefetch] = useState(true);
 
@@ -122,17 +123,14 @@ const MenuTab = () => {
                 There is still no any menu.
               </p>
             ) : !isError ? (
-              menuList.map((menu) => (
-                <div key={menu.id}>
-                  {JSON.stringify(menu)}
-                  {/*<MenuItem
-                menu={menu}
-                editId={editId}
-                handleMenuRefetch={handleMenuRefetch}
-                handleMenuEdit={handleMenuEdit}
-          />*/}
-                </div>
-              ))
+              <div className="min-w-300 max-w-1050 m-5 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+                {menuList.map((menu) => (
+                  <div key={menu.id}>
+                    {JSON.stringify(menu.name)}
+                    {/*<MenuItem menu={menu} />*/}
+                  </div>
+                ))}
+              </div>
             ) : (
               <p className="m-auto text-lg">Something went wrong</p>
             )}

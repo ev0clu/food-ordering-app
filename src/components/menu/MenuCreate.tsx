@@ -8,6 +8,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -15,9 +16,9 @@ import {
 } from '@/components/ui/form';
 import { toast } from 'sonner';
 import { z } from 'zod';
-import { useForm } from 'react-hook-form';
+import { useFieldArray, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Loader2 } from 'lucide-react';
+import { Loader2, MinusCircle, PlusCircle } from 'lucide-react';
 import { menuFormSchema } from '@/lib/validation/menuFormSchema';
 import {
   Select,
@@ -46,17 +47,36 @@ const MenuCreate = ({
     defaultValues: {
       menuName: '',
       menuDescription: '',
+      menuImage: [],
       menuSize: undefined,
       menuCategory: [],
       menuPrice: ''
     }
   });
 
+  const { fields, append, remove } = useFieldArray({
+    control: form.control,
+    name: 'menuImage'
+  });
+
+  const handleImgAddClick = () => {
+    if (fields.length < 3) {
+      append({ url: '' });
+    }
+  };
+
+  const handleImgRemoveClick = (index: number) => {
+    if (fields.length > 0) {
+      remove(index);
+    }
+  };
+
   useEffect(() => {
     if (form.formState.isSubmitSuccessful) {
       form.reset({
         menuName: '',
         menuDescription: '',
+        menuImage: [],
         menuSize: undefined,
         menuCategory: [],
         menuPrice: ''
@@ -74,6 +94,7 @@ const MenuCreate = ({
         body: JSON.stringify({
           menuName: data.menuName,
           menuDescription: data.menuDescription,
+          menuImage: data.menuImage,
           menuSize: data.menuSize,
           menuCategory: data.menuCategory,
           menuPrice: data.menuPrice
@@ -142,6 +163,67 @@ const MenuCreate = ({
                 />
               </FormControl>
               <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="menuImage"
+          render={() => (
+            <FormItem>
+              <div className="mb-4 flex flex-row justify-between">
+                <div>
+                  <FormLabel className="mb-4 text-base">
+                    Image URL
+                  </FormLabel>
+                  <FormDescription>
+                    Maximum 3 URLs can be add
+                  </FormDescription>
+                </div>
+                <Button
+                  type="button"
+                  size="icon"
+                  onClick={handleImgAddClick}
+                >
+                  <PlusCircle />
+                </Button>
+              </div>
+              {fields.map((image, index) => (
+                <FormField
+                  key={image.id}
+                  control={form.control}
+                  name={`menuImage.${index}.url`}
+                  render={({ field }) => {
+                    return (
+                      <FormItem
+                        key={image.id}
+                        className="flex flex-col items-stretch space-x-3 space-y-0"
+                      >
+                        <div className="flex flex-grow flex-row gap-4">
+                          <FormControl>
+                            <Input
+                              disabled={isSubmitting}
+                              placeholder="https://example.com/image1.jpg"
+                              type="text"
+                              {...field}
+                            />
+                          </FormControl>
+                          <Button
+                            type="button"
+                            size="icon"
+                            onClick={() =>
+                              handleImgRemoveClick(index)
+                            }
+                          >
+                            <MinusCircle />
+                          </Button>
+                        </div>
+                        <FormMessage />
+                      </FormItem>
+                    );
+                  }}
+                />
+              ))}
             </FormItem>
           )}
         />

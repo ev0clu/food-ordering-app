@@ -11,13 +11,13 @@ export async function GET(req: Request) {
       NextResponse.json(validation.error.format(), { status: 400 });
     }*/
 
-    const allMenu = await prisma.menu.findMany({
-      include: { categories: true }
+    const menuList = await prisma.menu.findMany({
+      include: { images: true, categories: true }
     });
 
     return NextResponse.json(
       {
-        menu: allMenu,
+        menuList: menuList,
         message: 'All menu with records are returned'
       },
       { status: 201 }

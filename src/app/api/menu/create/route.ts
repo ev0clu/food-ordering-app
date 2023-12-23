@@ -10,6 +10,7 @@ export async function POST(req: Request) {
     const {
       menuName,
       menuDescription,
+      menuImage,
       menuSize,
       menuCategory,
       menuPrice
@@ -39,9 +40,11 @@ export async function POST(req: Request) {
       );
     }
 
-    const categoryIds = menuCategory.map((categoryId) => ({
-      id: categoryId
-    }));
+    const categoryIds: { id: string }[] = menuCategory.map(
+      (categoryId) => ({
+        id: categoryId
+      })
+    );
 
     const formattedPrice = formatPrice(menuPrice, {
       currency: 'EUR',
@@ -52,6 +55,7 @@ export async function POST(req: Request) {
       data: {
         name: menuName,
         description: menuDescription,
+        images: { create: menuImage },
         size: menuSize,
         price: formattedPrice,
         categories: {
