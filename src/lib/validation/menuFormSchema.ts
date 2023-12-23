@@ -7,6 +7,13 @@ export const menuFormSchema = z.object({
     .min(1, 'Menu description is required')
     .max(20)
     .trim(),
+  menuImage: z
+    .array(
+      z.object({
+        url: z.string().url({ message: 'Invalid URL' })
+      })
+    )
+    .max(3, 'Maximum 3 piece of image can be set'),
   menuSize: z.enum(['SMALL', 'NORMAL']),
   menuCategory: z
     .array(z.string())
