@@ -123,11 +123,15 @@ const MenuTab = () => {
                 There is still no any menu.
               </p>
             ) : !isError ? (
-              <div className="min-w-300 max-w-1050 m-5 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+              <div className="flex flex-col gap-3">
                 {menuList.map((menu) => (
                   <div key={menu.id}>
-                    {JSON.stringify(menu.name)}
-                    {/*<MenuItem menu={menu} />*/}
+                    {
+                      <MenuItem
+                        menu={menu}
+                        handleMenuRefetch={handleMenuRefetch}
+                      />
+                    }
                   </div>
                 ))}
               </div>
