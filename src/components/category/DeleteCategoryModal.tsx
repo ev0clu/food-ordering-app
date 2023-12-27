@@ -72,7 +72,7 @@ const DeleteCategoryModal = ({
           <AlertDialogHeader>
             <AlertDialogTitle>{`Delete: ${category.name}`}</AlertDialogTitle>
             <AlertDialogDescription>
-              Are you sure you want to delete this comment? You can't
+              Are you sure you want to delete this category? You can't
               undo this.
             </AlertDialogDescription>
           </AlertDialogHeader>

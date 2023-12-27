@@ -5,7 +5,7 @@ import { toast } from 'sonner';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Check, Loader2, Pencil, X } from 'lucide-react';
+import { Check, Pencil, X } from 'lucide-react';
 import { categoryFormSchema } from '@/lib/validation/categoryFormSchema';
 import { Category } from '@prisma/client';
 import { Input } from '@/components/ui/input';
