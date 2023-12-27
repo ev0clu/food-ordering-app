@@ -10,7 +10,13 @@ export const menuFormSchema = z.object({
   menuImage: z
     .array(
       z.object({
-        url: z.string().url({ message: 'Invalid URL' })
+        url: z
+          .string()
+          .url({ message: 'Invalid URL' })
+          .startsWith('https://www.allrecipes.com/thmb/', {
+            message:
+              "URL must start: 'https://www.allrecipes.com/thmb/'"
+          })
       })
     )
     .max(3, 'Maximum 3 piece of image can be set'),
