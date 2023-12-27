@@ -60,7 +60,7 @@ const MenuItem = ({ menu, handleMenuRefetch }: MenuItemProps) => {
           <Tooltip>
             <TooltipTrigger asChild>
               <Link
-                href={`/api/menu/${menu.id}/update`}
+                href={`/menu/${menu.id}/update`}
                 className={cn(
                   buttonVariants({
                     variant: 'outline',
