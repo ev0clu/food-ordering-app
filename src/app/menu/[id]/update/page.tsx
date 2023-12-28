@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { Category } from '@prisma/client';
 import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
+import { Button, buttonVariants } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import {
   Form,
@@ -32,6 +32,8 @@ import { ExtendedMenu } from '@/types/menu';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import Loading from '@/components/Loading';
+import Link from 'next/link';
+import { cn } from '@/lib/utils';
 
 type MenuProps = {
   menuItem: ExtendedMenu;
@@ -348,7 +350,7 @@ const MenuEdit = ({ params }: { params: { id: string } }) => {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Size</FormLabel>
-                <Select onValueChange={field.onChange}>
+                <Select onValueChange={field.onChange} {...field}>
                   <FormControl>
                     <SelectTrigger>
                       <SelectValue placeholder="Select a size to display" />
@@ -436,7 +438,18 @@ const MenuEdit = ({ params }: { params: { id: string } }) => {
               </FormItem>
             )}
           />
-          <div className="flex justify-end">
+          <div className="flex flex-row justify-between gap-1">
+            <Link
+              href={`/user/${session.user.id}/admin`}
+              className={cn(
+                buttonVariants({
+                  variant: 'default'
+                }),
+                'flex w-28 gap-1 text-right'
+              )}
+            >
+              Cancel
+            </Link>
             <Button
               type="submit"
               className="flex w-28 gap-1 text-right"
