@@ -54,6 +54,7 @@ const MenuEdit = ({ params }: { params: { id: string } }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [menuItem, setMenuItem] = useState<ExtendedMenu>();
   const [categoryList, setCategoryList] = useState<Category[]>([]);
+  const [isButtonDisable, setIsButtonDisable] = useState(false);
 
   const form = useForm<formType>({
     resolver: zodResolver(menuFormSchema),
@@ -135,15 +136,21 @@ const MenuEdit = ({ params }: { params: { id: string } }) => {
     if (!isLoading) {
       form.setValue('menuName', menuItem!.name);
       form.setValue('menuDescription', menuItem!.description);
-      /*  menuItem!.images.forEach((image) => {
-        append({ url: image.url });
-      });*/
       form.setValue('menuImage', menuItem!.images);
       form.setValue('menuSize', menuItem!.size);
       form.setValue('menuCategory', menuItem!.categoryIDs);
       form.setValue('menuPrice', menuItem!.price);
     }
   }, [isLoading]);
+
+  useEffect(() => {
+    if (fields.length >= 3) {
+      setIsButtonDisable(true);
+    }
+    if (fields.length < 3) {
+      setIsButtonDisable(false);
+    }
+  }, [fields.length]);
 
   const handleImgAddClick = () => {
     if (fields.length < 3) {
@@ -301,6 +308,7 @@ const MenuEdit = ({ params }: { params: { id: string } }) => {
                     type="button"
                     size="icon"
                     onClick={handleImgAddClick}
+                    disabled={isButtonDisable}
                   >
                     <PlusCircle />
                   </Button>

@@ -41,6 +41,7 @@ const MenuCreate = ({
   categoryList
 }: MenuCreateProps) => {
   const [isSubmitting, setSubmitting] = useState(false);
+  const [isButtonDisable, setIsButtonDisable] = useState(false);
 
   const form = useForm<formType>({
     resolver: zodResolver(menuFormSchema),
@@ -58,6 +59,15 @@ const MenuCreate = ({
     control: form.control,
     name: 'menuImage'
   });
+
+  useEffect(() => {
+    if (fields.length >= 3) {
+      setIsButtonDisable(true);
+    }
+    if (fields.length < 3) {
+      setIsButtonDisable(false);
+    }
+  }, [fields.length]);
 
   const handleImgAddClick = () => {
     if (fields.length < 3) {
