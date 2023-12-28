@@ -6,6 +6,12 @@ export async function DELETE(
   { params }: { params: { id: string } }
 ) {
   try {
+    const deleteMenuImage = await prisma.image.deleteMany({
+      where: {
+        menuId: params.id
+      }
+    });
+
     const deleteMenuItem = await prisma.menu.delete({
       where: {
         id: params.id
