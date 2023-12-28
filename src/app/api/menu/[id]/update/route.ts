@@ -22,7 +22,7 @@ export async function PUT(
     } = menuFormSchema.parse(body);
 
     const categoryIds: { id: string }[] = menuCategory.map(
-      (categoryId) => ({
+      (categoryId: string) => ({
         id: categoryId
       })
     );
