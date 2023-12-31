@@ -82,16 +82,14 @@ const MenuCreate = ({
   };
 
   useEffect(() => {
-    if (form.formState.isSubmitSuccessful) {
-      form.reset({
-        menuName: '',
-        menuDescription: '',
-        menuImage: [],
-        menuSize: undefined,
-        menuCategory: [],
-        menuPrice: ''
-      });
-    }
+    form.reset({
+      menuName: '',
+      menuDescription: '',
+      menuImage: [],
+      menuSize: undefined,
+      menuCategory: [],
+      menuPrice: ''
+    });
   }, [form.formState.isSubmitSuccessful]);
 
   const onSubmit = async (data: z.infer<typeof menuFormSchema>) => {
@@ -194,6 +192,7 @@ const MenuCreate = ({
                   type="button"
                   size="icon"
                   onClick={handleImgAddClick}
+                  disabled={isButtonDisable}
                 >
                   <PlusCircle />
                 </Button>
