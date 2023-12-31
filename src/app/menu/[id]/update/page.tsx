@@ -165,29 +165,14 @@ const MenuEdit = ({ params }: { params: { id: string } }) => {
   };
 
   useEffect(() => {
-    if (form.formState.isSubmitSuccessful) {
-      form.reset({
-        menuName: '',
-        menuDescription: '',
-        menuImage: [],
-        menuSize: undefined,
-        menuCategory: [],
-        menuPrice: ''
-      });
-      /*  for (let i = 0; i < fields.length; i++) {
-        remove();
-      }*/
-
-      /* setMenuItem({
-        id:'',createdAt:'',updatedAt:'',
-        name: '',
-        description: '',
-        categoryIDs: [],
-        price: '',
-        images: [],
-        size: 'SMALL'
-      });*/
-    }
+    form.reset({
+      menuName: '',
+      menuDescription: '',
+      menuImage: [],
+      menuSize: undefined,
+      menuCategory: [],
+      menuPrice: ''
+    });
   }, [form.formState.isSubmitSuccessful]);
 
   const onSubmit = async (data: z.infer<typeof menuFormSchema>) => {
@@ -358,7 +343,10 @@ const MenuEdit = ({ params }: { params: { id: string } }) => {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Size</FormLabel>
-                <Select onValueChange={field.onChange} {...field}>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
                   <FormControl>
                     <SelectTrigger>
                       <SelectValue placeholder="Select a size to display" />
