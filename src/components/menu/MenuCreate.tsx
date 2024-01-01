@@ -5,6 +5,7 @@ import { Category } from '@prisma/client';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
+import { Textarea } from '@/components/ui/textarea';
 import {
   Form,
   FormControl,
@@ -145,10 +146,10 @@ const MenuCreate = ({
             <FormItem>
               <FormLabel>Name</FormLabel>
               <FormControl>
-                <Input
+                <Textarea
                   disabled={isSubmitting}
-                  placeholder="Menu name"
-                  type="text"
+                  placeholder="Menu description"
+                  className="resize-none"
                   {...field}
                 />
               </FormControl>
