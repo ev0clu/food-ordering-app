@@ -5,7 +5,6 @@ export const menuFormSchema = z.object({
   menuDescription: z
     .string()
     .min(1, 'Menu description is required')
-    .max(20)
     .trim(),
   menuImage: z
     .array(
