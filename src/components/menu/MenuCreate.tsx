@@ -21,14 +21,6 @@ import { useFieldArray, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Loader2, MinusCircle, PlusCircle } from 'lucide-react';
 import { menuFormSchema } from '@/lib/validation/menuFormSchema';
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue
-} from '@/components/ui/select';
 
 type formType = z.infer<typeof menuFormSchema>;
 
@@ -50,7 +42,6 @@ const MenuCreate = ({
       menuName: '',
       menuDescription: '',
       menuImage: [],
-      menuSize: undefined,
       menuCategory: [],
       menuPrice: ''
     }
@@ -87,7 +78,6 @@ const MenuCreate = ({
       menuName: '',
       menuDescription: '',
       menuImage: [],
-      menuSize: undefined,
       menuCategory: [],
       menuPrice: ''
     });
@@ -104,7 +94,6 @@ const MenuCreate = ({
           menuName: data.menuName,
           menuDescription: data.menuDescription,
           menuImage: data.menuImage,
-          menuSize: data.menuSize,
           menuCategory: data.menuCategory,
           menuPrice: data.menuPrice
         })
@@ -146,10 +135,10 @@ const MenuCreate = ({
             <FormItem>
               <FormLabel>Name</FormLabel>
               <FormControl>
-                <Textarea
+                <Input
                   disabled={isSubmitting}
-                  placeholder="Menu description"
-                  className="resize-none"
+                  placeholder="Menu name"
+                  type="text"
                   {...field}
                 />
               </FormControl>
@@ -164,10 +153,10 @@ const MenuCreate = ({
             <FormItem>
               <FormLabel>Description</FormLabel>
               <FormControl>
-                <Input
+                <Textarea
                   disabled={isSubmitting}
                   placeholder="Menu description"
-                  type="text"
+                  className="resize-none"
                   {...field}
                 />
               </FormControl>
@@ -239,32 +228,6 @@ const MenuCreate = ({
         />
         <FormField
           control={form.control}
-          name="menuSize"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Size</FormLabel>
-              <Select
-                onValueChange={field.onChange}
-                defaultValue={field.value}
-              >
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select a size to display" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  <SelectGroup>
-                    <SelectItem value="SMALL">Small</SelectItem>
-                    <SelectItem value="NORMAL">Normal</SelectItem>
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
           name="menuCategory"
           render={() => (
             <FormItem>
@@ -285,6 +248,7 @@ const MenuCreate = ({
                         >
                           <FormControl>
                             <Checkbox
+                              disabled={isSubmitting}
                               checked={field.value?.includes(
                                 category.id
                               )}

@@ -16,7 +16,6 @@ export async function PUT(
       menuName,
       menuDescription,
       menuImage, // Assuming menuImage is an array of objects with id and url properties
-      menuSize,
       menuCategory,
       menuPrice
     } = menuFormSchema.parse(body);
@@ -83,7 +82,6 @@ export async function PUT(
       data: {
         name: menuName,
         description: menuDescription,
-        size: menuSize,
         price: formattedPrice,
         categories: {
           set: categoryIds

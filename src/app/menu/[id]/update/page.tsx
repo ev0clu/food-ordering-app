@@ -21,14 +21,6 @@ import { useFieldArray, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Loader2, MinusCircle, PlusCircle } from 'lucide-react';
 import { menuFormSchema } from '@/lib/validation/menuFormSchema';
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue
-} from '@/components/ui/select';
 import { ExtendedMenu } from '@/types/menu';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
@@ -63,7 +55,6 @@ const MenuEdit = ({ params }: { params: { id: string } }) => {
       menuName: '',
       menuDescription: '',
       menuImage: [],
-      menuSize: undefined,
       menuCategory: [],
       menuPrice: ''
     }
@@ -138,7 +129,6 @@ const MenuEdit = ({ params }: { params: { id: string } }) => {
       form.setValue('menuName', menuItem!.name);
       form.setValue('menuDescription', menuItem!.description);
       form.setValue('menuImage', menuItem!.images);
-      form.setValue('menuSize', menuItem!.size);
       form.setValue('menuCategory', menuItem!.categoryIDs);
       form.setValue('menuPrice', menuItem!.price);
     }
@@ -171,7 +161,6 @@ const MenuEdit = ({ params }: { params: { id: string } }) => {
         menuName: '',
         menuDescription: '',
         menuImage: [],
-        menuSize: undefined,
         menuCategory: [],
         menuPrice: ''
       });
@@ -189,7 +178,6 @@ const MenuEdit = ({ params }: { params: { id: string } }) => {
           menuName: data.menuName,
           menuDescription: data.menuDescription,
           menuImage: data.menuImage,
-          menuSize: data.menuSize,
           menuCategory: data.menuCategory,
           menuPrice: data.menuPrice
         })
@@ -337,29 +325,6 @@ const MenuEdit = ({ params }: { params: { id: string } }) => {
                     }}
                   />
                 ))}
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="menuSize"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Size</FormLabel>
-                <Select onValueChange={field.onChange}>
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select a size to display" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    <SelectGroup>
-                      <SelectItem value="SMALL">Small</SelectItem>
-                      <SelectItem value="NORMAL">Normal</SelectItem>
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
-                <FormMessage />
               </FormItem>
             )}
           />

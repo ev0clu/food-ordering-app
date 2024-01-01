@@ -11,7 +11,6 @@ export async function POST(req: Request) {
       menuName,
       menuDescription,
       menuImage,
-      menuSize,
       menuCategory,
       menuPrice
     } = menuFormSchema.parse(body);
@@ -56,7 +55,6 @@ export async function POST(req: Request) {
         name: menuName,
         description: menuDescription,
         images: { create: menuImage },
-        size: menuSize,
         price: formattedPrice,
         categories: {
           connect: categoryIds

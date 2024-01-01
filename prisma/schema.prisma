@@ -69,7 +69,6 @@ model Menu {
   updatedAt   DateTime   @updatedAt
   name        String     @unique
   description String
-  size        Size
   price       String
   images      Image[]
   categories  Category[] @relation(fields: [categoryIDs], references: [id])
@@ -99,9 +98,4 @@ enum Role {
 enum Provider {
   GOOGLE
   CREDENTIALS
-}
-
-enum Size {
-  SMALL
-  NORMAL
 }

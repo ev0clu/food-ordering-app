@@ -19,7 +19,6 @@ export const menuFormSchema = z.object({
       })
     )
     .max(3, 'Maximum 3 piece of image can be set'),
-  menuSize: z.enum(['SMALL', 'NORMAL']),
   menuCategory: z
     .array(z.string())
     .refine((value) => value.some((item) => item), {
