@@ -5,6 +5,7 @@ import { Category } from '@prisma/client';
 import { Input } from '@/components/ui/input';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
+import { Textarea } from '@/components/ui/textarea';
 import {
   Form,
   FormControl,
@@ -165,14 +166,16 @@ const MenuEdit = ({ params }: { params: { id: string } }) => {
   };
 
   useEffect(() => {
-    form.reset({
-      menuName: '',
-      menuDescription: '',
-      menuImage: [],
-      menuSize: undefined,
-      menuCategory: [],
-      menuPrice: ''
-    });
+    if (form.formState.isSubmitSuccessful) {
+      form.reset({
+        menuName: '',
+        menuDescription: '',
+        menuImage: [],
+        menuSize: undefined,
+        menuCategory: [],
+        menuPrice: ''
+      });
+    }
   }, [form.formState.isSubmitSuccessful]);
 
   const onSubmit = async (data: z.infer<typeof menuFormSchema>) => {
@@ -232,7 +235,7 @@ const MenuEdit = ({ params }: { params: { id: string } }) => {
   }
 
   return (
-    <div>
+    <div className="w-[320px]">
       <h1 className="text-top my-5 text-4xl font-bold">Update</h1>
       <Form {...form}>
         <form
@@ -264,10 +267,10 @@ const MenuEdit = ({ params }: { params: { id: string } }) => {
               <FormItem>
                 <FormLabel>Description</FormLabel>
                 <FormControl>
-                  <Input
+                  <Textarea
                     disabled={isSubmitting}
                     placeholder="Menu description"
-                    type="text"
+                    className="resize-none"
                     {...field}
                   />
                 </FormControl>
@@ -343,10 +346,7 @@ const MenuEdit = ({ params }: { params: { id: string } }) => {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Size</FormLabel>
-                <Select
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                >
+                <Select onValueChange={field.onChange}>
                   <FormControl>
                     <SelectTrigger>
                       <SelectValue placeholder="Select a size to display" />
