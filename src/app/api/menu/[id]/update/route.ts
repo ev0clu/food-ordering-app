@@ -1,7 +1,6 @@
 import { NextResponse } from 'next/server';
 import prisma from '../../../../../../prisma/client';
 import { menuFormSchema } from '@/lib/validation/menuFormSchema';
-import { formatPrice } from '@/lib/utils';
 
 export const revalidate = 0;
 
@@ -25,11 +24,6 @@ export async function PUT(
         id: categoryId
       })
     );
-
-    const formattedPrice = formatPrice(menuPrice, {
-      currency: 'EUR',
-      notation: 'compact'
-    });
 
     // Retrieve existing images associated with the menu
     const existingImages = await prisma.image.findMany({
@@ -77,12 +71,15 @@ export async function PUT(
     // Perform the database operations
     await prisma.$transaction([...newImages]);
 
+    const fixedPrice = parseFloat(menuPrice).toFixed(2);
+    const numericPrice = parseFloat(fixedPrice);
+
     const updatedMenu = await prisma.menu.update({
       where: { id: params.id },
       data: {
         name: menuName,
         description: menuDescription,
-        price: formattedPrice,
+        price: numericPrice,
         categories: {
           set: categoryIds
         }

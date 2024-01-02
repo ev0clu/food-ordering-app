@@ -285,7 +285,7 @@ const MenuCreate = ({
           name="menuPrice"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Price</FormLabel>
+              <FormLabel>Price (€)</FormLabel>
               <FormControl>
                 <Input
                   disabled={isSubmitting}

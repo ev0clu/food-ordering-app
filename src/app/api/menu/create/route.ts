@@ -1,7 +1,6 @@
 import { NextResponse } from 'next/server';
 import prisma from '../../../../../prisma/client';
 import { menuFormSchema } from '@/lib/validation/menuFormSchema';
-import { formatPrice } from '@/lib/utils';
 
 export async function POST(req: Request) {
   try {
@@ -44,18 +43,15 @@ export async function POST(req: Request) {
         id: categoryId
       })
     );
-
-    const formattedPrice = formatPrice(menuPrice, {
-      currency: 'EUR',
-      notation: 'compact'
-    });
+    const fixedPrice = parseFloat(menuPrice).toFixed(2);
+    const numericPrice = parseFloat(fixedPrice);
 
     const newMenu = await prisma.menu.create({
       data: {
         name: menuName,
         description: menuDescription,
         images: { create: menuImage },
-        price: formattedPrice,
+        price: numericPrice,
         categories: {
           connect: categoryIds
         }

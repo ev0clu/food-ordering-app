@@ -130,7 +130,7 @@ const MenuEdit = ({ params }: { params: { id: string } }) => {
       form.setValue('menuDescription', menuItem!.description);
       form.setValue('menuImage', menuItem!.images);
       form.setValue('menuCategory', menuItem!.categoryIDs);
-      form.setValue('menuPrice', menuItem!.price);
+      form.setValue('menuPrice', menuItem!.price.toString());
     }
   }, [isLoading]);
 
@@ -386,7 +386,7 @@ const MenuEdit = ({ params }: { params: { id: string } }) => {
             name="menuPrice"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Price</FormLabel>
+                <FormLabel>Price (€)</FormLabel>
                 <FormControl>
                   <Input
                     disabled={isSubmitting}

@@ -69,7 +69,7 @@ model Menu {
   updatedAt   DateTime   @updatedAt
   name        String     @unique
   description String
-  price       String
+  price       Float
   images      Image[]
   categories  Category[] @relation(fields: [categoryIDs], references: [id])
   categoryIDs String[]

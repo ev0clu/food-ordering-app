@@ -28,14 +28,8 @@ export async function GET(
       );
     }
 
-    // Remove the last 2 characters from the size property
-    const unformattedPrice = menuItem.price
-      .slice(0, -2)
-      .replace(/,/g, '.');
-
     const modifiedMenuItem = {
       ...menuItem,
-      price: unformattedPrice,
       images: menuItem.images.map((image) => ({ ...image })),
       categories: menuItem.categories.map((category) => ({
         ...category,
