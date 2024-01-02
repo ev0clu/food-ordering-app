@@ -26,7 +26,7 @@ export const menuFormSchema = z.object({
     }),
   menuPrice: z
     .string()
-    .refine((val) => Number(val) > 0.1 && Number(val) < 999.9, {
-      message: 'Menu price should be between 0.1 ... 999.9'
+    .refine((val) => Number(val) >= 0.1 && Number(val) <= 999.9, {
+      message: 'Menu price should be between 0.10 ... 999.99'
     })
 });
