@@ -24,6 +24,7 @@ import { Button, buttonVariants } from '@/components/ui/button';
 import { signOut, useSession } from 'next-auth/react';
 import { Separator } from '@/components/ui/separator';
 import Loading from './Loading';
+import Cart from './Cart';
 
 const Navbar = () => {
   const { status, data: session } = useSession();
@@ -186,6 +187,7 @@ const Navbar = () => {
             </>
           )}
           <Separator orientation="vertical" />
+          <Cart />
           <ToggleTheme />
         </div>
       </div>
