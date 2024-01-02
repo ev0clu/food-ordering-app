@@ -1,14 +1,20 @@
 import noImageUrl from '../../../public/no-image.png';
 import Image from 'next/image';
 import { ExtendedMenu } from '@/types/menu';
+import { formatPrice } from '@/lib/utils';
 
 type ListMenuProps = {
   menu: ExtendedMenu;
+  toggleDialog: (index: number) => void;
+  index: number;
 };
 
-const MenuCard = ({ menu }: ListMenuProps) => {
+const MenuCard = ({ menu, toggleDialog, index }: ListMenuProps) => {
   return (
-    <div className="flex flex-row gap-5 rounded-xl border-[1px] p-2 shadow shadow-zinc-600/70 duration-200 hover:scale-105">
+    <div
+      onClick={() => toggleDialog(index)}
+      className="flex flex-row gap-5 rounded-xl border-[1px] p-2 shadow shadow-zinc-600/70 duration-200 hover:scale-105"
+    >
       {menu.images.length === 0 ? (
         <div className="flex h-[210px] flex-col justify-center p-1">
           <Image
@@ -44,7 +50,10 @@ const MenuCard = ({ menu }: ListMenuProps) => {
           </p>
         </div>
         <span className="mr-3 flex justify-end text-sky-400">
-          {menu.price}
+          {formatPrice(menu.price, {
+            currency: 'EUR',
+            notation: 'compact'
+          })}
         </span>
       </div>
     </div>
