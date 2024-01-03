@@ -18,9 +18,9 @@ type CartAction = {
     size: string,
     quantity: number
   ) => void;
-  removeFromCart: (menuId: string) => void;
-  increaseQuantity: (menuId: string) => void;
-  decreaseQuantity: (menuId: string) => void;
+  removeFromCart: (menuId: string, size: string) => void;
+  increaseQuantity: (menuId: string, size: string) => void;
+  decreaseQuantity: (menuId: string, size: string) => void;
   clearCart: () => void;
 };
 
@@ -32,22 +32,26 @@ export const useCartStore = create<CartState & CartAction>()(
         set((state) => ({
           cart: [...state.cart, { menu, size, quantity }]
         })),
-      removeFromCart: (menuId) =>
+      removeFromCart: (menuId, size) =>
         set((state) => ({
-          cart: state.cart.filter((item) => item.menu.id !== menuId)
+          cart: state.cart.filter(
+            (item) => !(item.menu.id === menuId && item.size === size)
+          )
         })),
-      increaseQuantity: (menuId) =>
+      increaseQuantity: (menuId, size) =>
         set((state) => ({
           cart: state.cart.map((item) =>
-            item.menu.id === menuId
+            item.menu.id === menuId && item.size === size
               ? { ...item, quantity: item.quantity + 1 }
               : item
           )
         })),
-      decreaseQuantity: (menuId) =>
+      decreaseQuantity: (menuId, size) =>
         set((state) => ({
           cart: state.cart.map((item) =>
-            item.menu.id === menuId && item.quantity > 1
+            item.menu.id === menuId &&
+            item.size === size &&
+            item.quantity > 1
               ? { ...item, quantity: item.quantity - 1 }
               : item
           )

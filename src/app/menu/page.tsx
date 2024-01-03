@@ -56,7 +56,7 @@ const MenuPage = () => {
   const [dialogOpen, setDialogOpen] = useState<boolean[]>(
     new Array(menuList.length).fill(false)
   );
-  const { addToCart } = useCartStore();
+  const { cart, addToCart, increaseQuantity } = useCartStore();
 
   const fetchMenu = async () => {
     try {
@@ -87,6 +87,15 @@ const MenuPage = () => {
   useEffect(() => {
     fetchMenu();
   }, []);
+
+  const totalItemPrice = (price: number) => {
+    const totalPrice = price * quantity;
+    const formattedPrice = formatPrice(totalPrice, {
+      currency: 'EUR',
+      notation: 'compact'
+    });
+    return formattedPrice;
+  };
 
   const toggleDialog = (index: number) => {
     setDialogOpen((prev) => {
@@ -135,6 +144,8 @@ const MenuPage = () => {
                     onOpenChange={(isOpen) => {
                       if (!isOpen) {
                         toggleDialog(index);
+                      } else {
+                        setQuantity(1);
                       }
                     }}
                   >
@@ -256,10 +267,19 @@ const MenuPage = () => {
                           className="flex w-40 flex-row justify-between gap-3"
                           onClick={() => {
                             if (size !== undefined) {
-                              addToCart(menu, size, quantity);
+                              if (
+                                cart.some(
+                                  (item) =>
+                                    item.menu.id === menu.id &&
+                                    item.size === size
+                                )
+                              ) {
+                                increaseQuantity(menu.id, size);
+                              } else {
+                                addToCart(menu, size, quantity);
+                              }
                               setSize(undefined);
                               setIsSizeError(false);
-                              setQuantity(1);
                               toggleDialog(index);
                             } else {
                               setIsSizeError(true);
@@ -267,12 +287,7 @@ const MenuPage = () => {
                           }}
                         >
                           <div>Add</div>
-                          <span>
-                            {formatPrice(menu.price, {
-                              currency: 'EUR',
-                              notation: 'compact'
-                            })}
-                          </span>
+                          <span>{totalItemPrice(menu.price)}</span>
                         </Button>
                       </div>
                     </DialogContent>

@@ -12,6 +12,7 @@ import {
   SheetTitle,
   SheetTrigger
 } from '@/components/ui/sheet';
+import { Separator } from '@/components/ui/separator';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { Minus, Plus, ShoppingCart, X } from 'lucide-react';
@@ -85,93 +86,105 @@ const Cart = () => {
             ) : (
               <div className="my-5">
                 <ScrollArea className="h-96">
-                  <div className="space-y-4">
+                  <div className="space-y-2">
                     {cart.map((item, index) => (
-                      <div
-                        key={item.menu.id + index}
-                        className="flex flex-row items-center justify-between gap-1"
-                      >
-                        <div className="flex flex-row items-center gap-2">
-                          {item.menu.images.length === 0 ? (
-                            <div className="flex h-[50px] flex-col justify-center p-1">
-                              <Image
-                                src={noImageUrl}
-                                alt="No image"
-                                width="50"
-                                height="50"
-                                placeholder="blur"
-                                blurDataURL={`${noImageUrl}`}
-                                loading="lazy"
-                                className="rounded-md"
-                              />
+                      <div key={item.menu.id + index}>
+                        <div className="flex flex-row items-center justify-between gap-3">
+                          <div className="flex flex-row items-center gap-2">
+                            {item.menu.images.length === 0 ? (
+                              <div className="hidden h-[50px] flex-col justify-center p-1 sm:flex">
+                                <Image
+                                  src={noImageUrl}
+                                  alt="No image"
+                                  width="50"
+                                  height="50"
+                                  placeholder="blur"
+                                  blurDataURL={`${noImageUrl}`}
+                                  loading="lazy"
+                                  className="rounded-md"
+                                />
+                              </div>
+                            ) : (
+                              <div className="hidden h-[50px] flex-col justify-center p-1 sm:flex">
+                                <Image
+                                  src={`${item.menu.images[0].url}`}
+                                  alt={item.menu.images[0].id}
+                                  width="50"
+                                  height="50"
+                                  placeholder="blur"
+                                  blurDataURL={`${item.menu.images[0].url}`}
+                                  loading="lazy"
+                                  className="rounded-md"
+                                />
+                              </div>
+                            )}
+                            <div className="space-y-1">
+                              <h1>{item.menu.name}</h1>
+                              <div className="text-sm text-muted-foreground">
+                                {item.size}
+                              </div>
+                              <span className="text-sky-400">
+                                {formatPrice(item.menu.price, {
+                                  currency: 'EUR',
+                                  notation: 'compact'
+                                })}
+                              </span>
                             </div>
-                          ) : (
-                            <div className="flex h-[50px] flex-col justify-center p-1">
-                              <Image
-                                src={`${item.menu.images[0].url}`}
-                                alt={item.menu.images[0].id}
-                                width="50"
-                                height="50"
-                                placeholder="blur"
-                                blurDataURL={`${item.menu.images[0].url}`}
-                                loading="lazy"
-                                className="rounded-md"
-                              />
-                            </div>
-                          )}
-                          <div className="space-y-1">
-                            <h1>{item.menu.name}</h1>
-                            <span className="text-sky-400">
-                              {formatPrice(item.menu.price, {
-                                currency: 'EUR',
-                                notation: 'compact'
-                              })}
-                            </span>
                           </div>
-                        </div>
-                        <div className="flex flex-row gap-3">
-                          <div className="flex flex-row items-center gap-1">
-                            <Button
-                              disabled={
-                                item.quantity === 1 ? true : false
-                              }
-                              type="button"
-                              size="icon"
-                              className="h-7 w-7"
-                              onClick={() => {
-                                if (item.quantity > 1) {
-                                  decreaseQuantity(item.menu.id);
+                          <div className="flex flex-row gap-3">
+                            <div className="flex flex-row items-center gap-1">
+                              <Button
+                                disabled={
+                                  item.quantity === 1 ? true : false
                                 }
-                              }}
-                            >
-                              <Minus className="h-5 w-5" />
-                            </Button>
-                            <span className="w-8 text-center">
-                              {item.quantity}
-                            </span>
+                                type="button"
+                                size="icon"
+                                className="h-7 w-7"
+                                onClick={() => {
+                                  if (item.quantity > 1) {
+                                    decreaseQuantity(
+                                      item.menu.id,
+                                      item.size
+                                    );
+                                  }
+                                }}
+                              >
+                                <Minus className="h-5 w-5" />
+                              </Button>
+                              <span className="w-8 text-center">
+                                {item.quantity}
+                              </span>
+                              <Button
+                                type="button"
+                                size="icon"
+                                className="h-7 w-7"
+                                onClick={() =>
+                                  increaseQuantity(
+                                    item.menu.id,
+                                    item.size
+                                  )
+                                }
+                              >
+                                <Plus className="h-5 w-5" />
+                              </Button>
+                            </div>
                             <Button
                               type="button"
+                              variant="ghost"
                               size="icon"
-                              className="h-7 w-7"
+                              className="mr-2 h-7 w-7"
                               onClick={() =>
-                                increaseQuantity(item.menu.id)
+                                removeFromCart(
+                                  item.menu.id,
+                                  item.size
+                                )
                               }
                             >
-                              <Plus className="h-5 w-5" />
+                              <X className="h-5 w-5" />
                             </Button>
                           </div>
-                          <Button
-                            type="button"
-                            variant="ghost"
-                            size="icon"
-                            className="h-7 w-7"
-                            onClick={() =>
-                              removeFromCart(item.menu.id)
-                            }
-                          >
-                            <X className="h-5 w-5" />
-                          </Button>
                         </div>
+                        <Separator className="mt-2" />
                       </div>
                     ))}
                   </div>
@@ -180,7 +193,7 @@ const Cart = () => {
                   <div>Total:</div>
                   <span> {formattedTotalCartPrice}</span>
                 </div>
-                <SheetFooter className="mt-10">
+                <SheetFooter className="mt-10 flex flex-col gap-2 sm:flex-row">
                   <Button type="button" onClick={clearCart}>
                     Clear Cart
                   </Button>
