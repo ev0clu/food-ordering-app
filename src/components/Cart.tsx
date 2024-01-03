@@ -14,7 +14,7 @@ import {
 } from '@/components/ui/sheet';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Button, buttonVariants } from '@/components/ui/button';
-import { Minus, Plus, ShoppingCart } from 'lucide-react';
+import { Minus, Plus, ShoppingCart, X } from 'lucide-react';
 import { useCartStore } from '@/lib/store';
 import noImageUrl from '../../public/no-image.png';
 import Loading from '@/components/Loading';
@@ -24,7 +24,8 @@ const Cart = () => {
   const { cart, clearCart } = useCartStore();
   const [mounted, setMounted] = useState(false);
 
-  const { increaseQuantity, decreaseQuantity } = useCartStore();
+  const { increaseQuantity, decreaseQuantity, removeFromCart } =
+    useCartStore();
 
   useEffect(() => {
     setMounted(true);
@@ -53,7 +54,7 @@ const Cart = () => {
         <Button size="icon" variant={'outline'} className="relative">
           <ShoppingCart />
           {mounted && cart.length > 0 ? (
-            <span className="absolute -top-1 left-5 flex h-6 w-6 items-center justify-center rounded-full bg-red-700">
+            <span className="absolute -top-1 left-5 flex h-6 w-6 items-center justify-center rounded-full bg-red-600 text-white">
               {totalCartItems}
             </span>
           ) : (
@@ -128,34 +129,47 @@ const Cart = () => {
                             </span>
                           </div>
                         </div>
-                        <div className="flex flex-row items-center gap-1">
-                          <Button
-                            disabled={
-                              item.quantity === 1 ? true : false
-                            }
-                            type="button"
-                            size="icon"
-                            className="h-7 w-7"
-                            onClick={() => {
-                              if (item.quantity > 1) {
-                                decreaseQuantity(item.menu.id);
+                        <div className="flex flex-row gap-3">
+                          <div className="flex flex-row items-center gap-1">
+                            <Button
+                              disabled={
+                                item.quantity === 1 ? true : false
                               }
-                            }}
-                          >
-                            <Minus className="h-5 w-5" />
-                          </Button>
-                          <span className="w-8 text-center">
-                            {item.quantity}
-                          </span>
+                              type="button"
+                              size="icon"
+                              className="h-7 w-7"
+                              onClick={() => {
+                                if (item.quantity > 1) {
+                                  decreaseQuantity(item.menu.id);
+                                }
+                              }}
+                            >
+                              <Minus className="h-5 w-5" />
+                            </Button>
+                            <span className="w-8 text-center">
+                              {item.quantity}
+                            </span>
+                            <Button
+                              type="button"
+                              size="icon"
+                              className="h-7 w-7"
+                              onClick={() =>
+                                increaseQuantity(item.menu.id)
+                              }
+                            >
+                              <Plus className="h-5 w-5" />
+                            </Button>
+                          </div>
                           <Button
                             type="button"
+                            variant="ghost"
                             size="icon"
                             className="h-7 w-7"
                             onClick={() =>
-                              increaseQuantity(item.menu.id)
+                              removeFromCart(item.menu.id)
                             }
                           >
-                            <Plus className="h-5 w-5" />
+                            <X className="h-5 w-5" />
                           </Button>
                         </div>
                       </div>
