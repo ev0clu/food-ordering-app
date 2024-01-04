@@ -6,16 +6,58 @@ export async function DELETE(
   { params }: { params: { id: string } }
 ) {
   try {
-    const deleteCategoryItem = await prisma.category.delete({
+    const deletedCategoryItem = await prisma.category.delete({
       where: {
         id: params.id
+      },
+      include: {
+        menus: true
       }
+    });
+
+    const deletedCategoryMenuIDs = deletedCategoryItem.menus.map(
+      (menu) => menu.id
+    );
+
+    // Fetch the existing menu items that contain the deleted category ID
+    const existingMenus = await prisma.menu.findMany({
+      where: {
+        id: {
+          in: deletedCategoryMenuIDs
+        }
+      },
+      select: {
+        id: true,
+        categories: {
+          select: {
+            id: true
+          }
+        }
+      }
+    });
+
+    // Update each menu item to keep only category IDs that are not deleted
+    const updatePromises = existingMenus.map(async (menu) => {
+      const remainingCategoryIDs = menu.categories
+        .map((category) => category.id)
+        .filter((categoryId) => categoryId !== params.id);
+
+      await prisma.menu.update({
+        where: {
+          id: menu.id
+        },
+        data: {
+          categoryIDs: {
+            set: remainingCategoryIDs
+          }
+        }
+      });
     });
 
     return NextResponse.json(
       {
         categoryItem: null,
-        message: `Category: ${deleteCategoryItem.name} with ${params.id} has been removed from the database`
+        message: `Category: ${deletedCategoryItem.name} with ${params.id} has been removed from the database`
       },
       { status: 201 }
     );
