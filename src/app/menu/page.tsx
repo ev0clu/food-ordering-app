@@ -171,7 +171,7 @@ const MenuPage = () => {
               setFilterCategory={setFilterCategory}
             />
 
-            <div className="grid grid-cols-1 gap-10 px-10 py-4 md:grid-cols-2 xl:grid-cols-3">
+            <div className="mt-14 grid grid-cols-1 gap-10 px-10 py-4 md:grid-cols-2 xl:grid-cols-3">
               {menuList
                 .filter(
                   (item) =>

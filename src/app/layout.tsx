@@ -38,7 +38,7 @@ export default function RootLayout({
             <Toaster position="bottom-right" />
             <main className="relative mx-auto flex min-h-screen max-w-screen-xl flex-col px-5 py-2">
               <Navbar />
-              <div className="flex flex-grow flex-col items-center justify-center">
+              <div className="flex flex-grow flex-col items-center">
                 {children}
               </div>
               <Footer />

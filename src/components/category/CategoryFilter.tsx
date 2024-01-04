@@ -31,71 +31,74 @@ const CategoryFilter = ({
   const selectedValues = new Set(selectedCategoryList as string[]);
 
   return (
-    <Popover>
-      <PopoverTrigger asChild>
-        <Button
-          variant="outline"
-          size="sm"
-          className="ml-10 w-[150px] justify-start"
-        >
-          <Filter className="mr-3 h-4 w-4" />
-          Category filter
-        </Button>
-      </PopoverTrigger>
-      <PopoverContent className="w-48">
-        <Command>
-          <CommandInput placeholder="Select category" />
-          <CommandList>
-            <CommandEmpty>No results found.</CommandEmpty>
-            <CommandGroup>
-              {categoryList.map((category) => {
-                const isSelected = selectedValues.has(category.id);
-                return (
-                  <CommandItem
-                    key={category.id}
-                    onSelect={() => {
-                      if (isSelected) {
-                        selectedValues.delete(category.id);
-                      } else {
-                        selectedValues.add(category.id);
-                      }
-                      const filterValues = Array.from(selectedValues);
-                      setFilterCategory(filterValues);
-                    }}
-                  >
-                    <div
-                      className={cn(
-                        'mr-2 flex h-4 w-4 items-center justify-center rounded-sm border border-primary',
-                        isSelected
-                          ? 'bg-primary text-primary-foreground'
-                          : 'opacity-50 [&_svg]:invisible'
-                      )}
+    <div className="absolute left-[60px] top-14 mt-5">
+      <Popover>
+        <PopoverTrigger asChild>
+          <Button
+            variant="outline"
+            size="sm"
+            className="w-[150px] justify-start"
+          >
+            <Filter className="mr-3 h-4 w-4" />
+            Category filter
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent className="w-48">
+          <Command>
+            <CommandInput placeholder="Select category" />
+            <CommandList>
+              <CommandEmpty>No results found.</CommandEmpty>
+              <CommandGroup>
+                {categoryList.map((category) => {
+                  const isSelected = selectedValues.has(category.id);
+                  return (
+                    <CommandItem
+                      key={category.id}
+                      onSelect={() => {
+                        if (isSelected) {
+                          selectedValues.delete(category.id);
+                        } else {
+                          selectedValues.add(category.id);
+                        }
+                        const filterValues =
+                          Array.from(selectedValues);
+                        setFilterCategory(filterValues);
+                      }}
                     >
-                      <CheckIcon className={cn('h-4 w-4')} />
-                    </div>
+                      <div
+                        className={cn(
+                          'mr-2 flex h-4 w-4 items-center justify-center rounded-sm border border-primary',
+                          isSelected
+                            ? 'bg-primary text-primary-foreground'
+                            : 'opacity-50 [&_svg]:invisible'
+                        )}
+                      >
+                        <CheckIcon className={cn('h-4 w-4')} />
+                      </div>
 
-                    <span>{category.name}</span>
-                  </CommandItem>
-                );
-              })}
-            </CommandGroup>
-            {selectedValues.size > 0 && (
-              <>
-                <CommandSeparator />
-                <CommandGroup>
-                  <CommandItem
-                    onSelect={() => setFilterCategory(undefined)}
-                    className="justify-center text-center"
-                  >
-                    Clear filters
-                  </CommandItem>
-                </CommandGroup>
-              </>
-            )}
-          </CommandList>
-        </Command>
-      </PopoverContent>
-    </Popover>
+                      <span>{category.name}</span>
+                    </CommandItem>
+                  );
+                })}
+              </CommandGroup>
+              {selectedValues.size > 0 && (
+                <>
+                  <CommandSeparator />
+                  <CommandGroup>
+                    <CommandItem
+                      onSelect={() => setFilterCategory(undefined)}
+                      className="justify-center text-center"
+                    >
+                      Clear filters
+                    </CommandItem>
+                  </CommandGroup>
+                </>
+              )}
+            </CommandList>
+          </Command>
+        </PopoverContent>
+      </Popover>
+    </div>
   );
 };
 
