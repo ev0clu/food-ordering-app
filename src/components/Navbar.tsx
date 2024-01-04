@@ -72,6 +72,15 @@ const Navbar = () => {
             Contact
           </Link>
           <Link
+            href="/support"
+            className={cn(
+              buttonVariants({ variant: 'ghost' }),
+              'w-16'
+            )}
+          >
+            Support
+          </Link>
+          <Link
             href="/about"
             className={cn(
               buttonVariants({ variant: 'ghost' }),
@@ -91,7 +100,7 @@ const Navbar = () => {
               <Menu />
             </MenubarTrigger>
             <MenubarContent>
-              <MenubarItem asChild>
+              <MenubarItem>
                 <Link href="/">Home</Link>
               </MenubarItem>
               <MenubarItem>
@@ -101,7 +110,10 @@ const Navbar = () => {
               <MenubarItem>
                 <Link href="/contact">Contact</Link>
               </MenubarItem>
-              <MenubarItem asChild>
+              <MenubarItem>
+                <Link href="/support">Support</Link>
+              </MenubarItem>
+              <MenubarItem>
                 <Link href="/about">About</Link>
               </MenubarItem>
             </MenubarContent>
