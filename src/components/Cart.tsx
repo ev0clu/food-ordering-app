@@ -19,14 +19,20 @@ import { Minus, Plus, ShoppingCart, X } from 'lucide-react';
 import { useCartStore } from '@/lib/store';
 import noImageUrl from '../../public/no-image.png';
 import Loading from '@/components/Loading';
-import { formatPrice } from '@/lib/utils';
+import { cn, formatPrice } from '@/lib/utils';
+import { useSession } from 'next-auth/react';
 
 const Cart = () => {
-  const { cart, clearCart } = useCartStore();
   const [mounted, setMounted] = useState(false);
+  const { data: session } = useSession();
 
-  const { increaseQuantity, decreaseQuantity, removeFromCart } =
-    useCartStore();
+  const {
+    cart,
+    clearCart,
+    increaseQuantity,
+    decreaseQuantity,
+    removeFromCart
+  } = useCartStore();
 
   useEffect(() => {
     setMounted(true);
@@ -54,7 +60,7 @@ const Cart = () => {
       <SheetTrigger asChild>
         <Button size="icon" variant={'outline'} className="relative">
           <ShoppingCart />
-          {mounted && cart.length > 0 ? (
+          {mounted && cart.length > 0 && session?.user ? (
             <span className="absolute -top-1 left-5 flex h-6 w-6 items-center justify-center rounded-full bg-red-600 text-white">
               {totalCartItems}
             </span>
@@ -69,7 +75,24 @@ const Cart = () => {
         </SheetHeader>
         <div className="space-y-3">
           {mounted ? (
-            cart.length === 0 ? (
+            !session?.user ? (
+              <div className="mt-16 flex flex-col items-center justify-center gap-5">
+                <p className="text-muted-foreground">
+                  You are not logged in. Please log in first.
+                </p>
+                <SheetClose asChild>
+                  <Link
+                    href="/auth/login"
+                    className={cn(
+                      buttonVariants({ variant: 'default' }),
+                      'w-28'
+                    )}
+                  >
+                    Log in
+                  </Link>
+                </SheetClose>
+              </div>
+            ) : cart.length === 0 ? (
               <div className="spaxe-y-1 flex flex-col items-center justify-center">
                 <p className="m-auto my-5 text-lg">Cart is empty</p>
                 <Link
@@ -197,9 +220,8 @@ const Cart = () => {
                   <Button type="button" onClick={clearCart}>
                     Clear Cart
                   </Button>
-                  <SheetClose asChild>
-                    <Button type="button">Checkout</Button>
-                  </SheetClose>
+
+                  <Button type="button">Checkout</Button>
                 </SheetFooter>
               </div>
             )
