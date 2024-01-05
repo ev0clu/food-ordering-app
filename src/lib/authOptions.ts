@@ -82,6 +82,9 @@ export const authOptions: NextAuthOptions = {
             id: existUserByEmail.id,
             username: existUserByEmail.username,
             email: existUserByEmail.email,
+            street: existUserByEmail.street,
+            city: existUserByEmail.city,
+            phone: existUserByEmail.phone,
             role: existUserByEmail.role,
             provider: existUserByEmail.provider
           };
@@ -97,12 +100,24 @@ export const authOptions: NextAuthOptions = {
           username: user.username,
           role: user.role,
           id: user.id,
-          provider: user.provider
+          provider: user.provider,
+          street: user.street,
+          city: user.city,
+          phone: user.phone
         };
       }
 
       if (trigger === 'update') {
-        return { ...token, ...session.user };
+        token.username = session.username;
+        token.email = session.email;
+        token.street = session.street;
+        token.city = session.city;
+        token.phone = session.phone;
+
+        return {
+          ...token,
+          ...session.user
+        };
       }
 
       return token;
@@ -115,7 +130,10 @@ export const authOptions: NextAuthOptions = {
           username: token.username,
           role: token.role,
           id: token.id,
-          provider: token.provider
+          provider: token.provider,
+          street: token.street,
+          city: token.city,
+          phone: token.phone
         }
       };
     },

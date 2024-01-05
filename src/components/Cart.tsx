@@ -21,10 +21,14 @@ import noImageUrl from '../../public/no-image.png';
 import Loading from '@/components/Loading';
 import { cn, formatPrice } from '@/lib/utils';
 import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
 
 const Cart = () => {
   const [mounted, setMounted] = useState(false);
   const { data: session } = useSession();
+
+  const router = useRouter();
 
   const {
     cart,
@@ -54,6 +58,23 @@ const Cart = () => {
     currency: 'EUR',
     notation: 'compact'
   });
+
+  const handleCheckoutClick = () => {
+    if (
+      session?.user.city === '' ||
+      session?.user.street === '' ||
+      session?.user.phone === ''
+    ) {
+      router.push(`/user/${session.user.id}/profile`);
+      toast.error('Fill out the City, Street and Phone addresses!');
+    } else {
+      console.log(
+        session?.user.city,
+        session?.user.street,
+        session?.user.phone
+      );
+    }
+  };
 
   return (
     <Sheet>
@@ -220,8 +241,9 @@ const Cart = () => {
                   <Button type="button" onClick={clearCart}>
                     Clear Cart
                   </Button>
-
-                  <Button type="button">Checkout</Button>
+                  <Button type="button" onClick={handleCheckoutClick}>
+                    Checkout
+                  </Button>
                 </SheetFooter>
               </div>
             )
