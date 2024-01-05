@@ -52,6 +52,7 @@ model User {
   updatedAt DateTime  @updatedAt
   accounts  Account[]
   sessions  Session[]
+  orders    Order[]
 }
 
 model Category {
@@ -73,6 +74,8 @@ model Menu {
   images      Image[]
   categories  Category[] @relation(fields: [categoryIDs], references: [id])
   categoryIDs String[]
+  order       Order?     @relation(fields: [orderId], references: [id])
+  orderId     String?
 }
 
 model Image {
@@ -80,6 +83,16 @@ model Image {
   url    String
   menu   Menu   @relation(fields: [menuId], references: [id])
   menuId String
+}
+
+model Order {
+  id        String   @id @default(cuid()) @map("_id")
+  paid      Boolean
+  menus     Menu[]
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model VerificationToken {
