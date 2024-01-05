@@ -107,7 +107,6 @@ const MenuCreate = ({
         );
       } else {
         setSubmitting(false);
-        setSubmitting(false);
         const body = await response.json();
         if (body.message) {
           toast.error(body.message);
@@ -116,7 +115,6 @@ const MenuCreate = ({
         }
       }
     } catch (error) {
-      setSubmitting(false);
       setSubmitting(false);
       toast.error('An unexpected error is occured');
     }
