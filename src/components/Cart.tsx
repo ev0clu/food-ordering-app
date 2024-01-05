@@ -7,6 +7,7 @@ import {
   Sheet,
   SheetClose,
   SheetContent,
+  SheetDescription,
   SheetFooter,
   SheetHeader,
   SheetTitle,
@@ -81,7 +82,7 @@ const Cart = () => {
       <SheetTrigger asChild>
         <Button size="icon" variant={'outline'} className="relative">
           <ShoppingCart />
-          {mounted && cart.length > 0 && session?.user ? (
+          {mounted && cart.length > 0 ? (
             <span className="absolute -top-1 left-5 flex h-6 w-6 items-center justify-center rounded-full bg-red-600 text-white">
               {totalCartItems}
             </span>
@@ -96,24 +97,7 @@ const Cart = () => {
         </SheetHeader>
         <div className="space-y-3">
           {mounted ? (
-            !session?.user ? (
-              <div className="mt-16 flex flex-col items-center justify-center gap-5">
-                <p className="text-muted-foreground">
-                  You are not logged in. Please log in first.
-                </p>
-                <SheetClose asChild>
-                  <Link
-                    href="/auth/login"
-                    className={cn(
-                      buttonVariants({ variant: 'default' }),
-                      'w-28'
-                    )}
-                  >
-                    Log in
-                  </Link>
-                </SheetClose>
-              </div>
-            ) : cart.length === 0 ? (
+            cart.length === 0 ? (
               <div className="spaxe-y-1 flex flex-col items-center justify-center">
                 <p className="m-auto my-5 text-lg">Cart is empty</p>
                 <Link
@@ -233,17 +217,39 @@ const Cart = () => {
                     ))}
                   </div>
                 </ScrollArea>
-                <div className="flex flex-row justify-end gap-2">
+                <div className="mb-10 flex flex-row justify-end gap-2">
                   <div>Total:</div>
                   <span> {formattedTotalCartPrice}</span>
                 </div>
-                <SheetFooter className="mt-10 flex flex-col gap-2 sm:flex-row">
+                {!session?.user && (
+                  <SheetDescription className="mb-3 text-right">
+                    You should log in before checkout!
+                  </SheetDescription>
+                )}
+                <SheetFooter className="flex flex-col gap-2 sm:flex-row">
                   <Button type="button" onClick={clearCart}>
                     Clear Cart
                   </Button>
-                  <Button type="button" onClick={handleCheckoutClick}>
-                    Checkout
-                  </Button>
+                  <SheetClose asChild>
+                    {!session?.user ? (
+                      <Link
+                        href="/auth/login"
+                        className={cn(
+                          buttonVariants({ variant: 'default' }),
+                          'w-28'
+                        )}
+                      >
+                        Log in
+                      </Link>
+                    ) : (
+                      <Button
+                        type="button"
+                        onClick={handleCheckoutClick}
+                      >
+                        Checkout
+                      </Button>
+                    )}
+                  </SheetClose>
                 </SheetFooter>
               </div>
             )
