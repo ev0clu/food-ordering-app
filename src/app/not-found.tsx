@@ -2,7 +2,7 @@ import { Separator } from '@/components/ui/separator';
 
 const NotFound = () => {
   return (
-    <div className="flex flex-row items-center justify-center font-sans">
+    <div className="flex flex-grow flex-row items-center justify-center font-sans">
       <h1 className="mr-5 block pr-6 align-top text-2xl font-medium leading-[49px]">
         404
       </h1>
