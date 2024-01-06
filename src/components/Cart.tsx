@@ -7,7 +7,6 @@ import {
   Sheet,
   SheetClose,
   SheetContent,
-  SheetDescription,
   SheetFooter,
   SheetHeader,
   SheetTitle,
@@ -21,15 +20,16 @@ import { useCartStore } from '@/lib/store';
 import noImageUrl from '../../public/no-image.png';
 import Loading from '@/components/Loading';
 import { cn, formatPrice } from '@/lib/utils';
-import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
-import { toast } from 'sonner';
+
+const deliveryFee = 2;
+
+const formattedDeliveryFee = formatPrice(deliveryFee, {
+  currency: 'EUR',
+  notation: 'compact'
+});
 
 const Cart = () => {
   const [mounted, setMounted] = useState(false);
-  const { data: session } = useSession();
-
-  const router = useRouter();
 
   const {
     cart,
@@ -55,27 +55,13 @@ const Cart = () => {
     return total + itemPrice;
   }, initialPrice);
 
-  const formattedTotalCartPrice = formatPrice(totalCartPrice, {
-    currency: 'EUR',
-    notation: 'compact'
-  });
-
-  const handleCheckoutClick = () => {
-    if (
-      session?.user.city === '' ||
-      session?.user.street === '' ||
-      session?.user.phone === ''
-    ) {
-      router.push(`/user/${session.user.id}/profile`);
-      toast.error('Fill out the City, Street and Phone addresses!');
-    } else {
-      console.log(
-        session?.user.city,
-        session?.user.street,
-        session?.user.phone
-      );
+  const formattedTotalCartPrice = formatPrice(
+    totalCartPrice + deliveryFee,
+    {
+      currency: 'EUR',
+      notation: 'compact'
     }
-  };
+  );
 
   return (
     <Sheet>
@@ -217,38 +203,30 @@ const Cart = () => {
                     ))}
                   </div>
                 </ScrollArea>
-                <div className="mb-10 flex flex-row justify-end gap-2">
-                  <div>Total:</div>
-                  <span> {formattedTotalCartPrice}</span>
+                <div>
+                  <div className="mb-2 flex flex-row justify-end gap-2">
+                    <div>Delivery:</div>
+                    <span>{formattedDeliveryFee}</span>
+                  </div>
+                  <div className="mb-10 flex flex-row justify-end gap-2">
+                    <div>Total:</div>
+                    <span> {formattedTotalCartPrice}</span>
+                  </div>
                 </div>
-                {!session?.user && (
-                  <SheetDescription className="mb-3 text-right">
-                    You should log in before checkout!
-                  </SheetDescription>
-                )}
                 <SheetFooter className="flex flex-col gap-2 sm:flex-row">
                   <Button type="button" onClick={clearCart}>
                     Clear Cart
                   </Button>
                   <SheetClose asChild>
-                    {!session?.user ? (
-                      <Link
-                        href="/auth/login"
-                        className={cn(
-                          buttonVariants({ variant: 'default' }),
-                          'w-28'
-                        )}
-                      >
-                        Log in
-                      </Link>
-                    ) : (
-                      <Button
-                        type="button"
-                        onClick={handleCheckoutClick}
-                      >
-                        Checkout
-                      </Button>
-                    )}
+                    <Link
+                      href="/checkout"
+                      className={cn(
+                        buttonVariants({ variant: 'default' }),
+                        'w-28'
+                      )}
+                    >
+                      Checkout
+                    </Link>
                   </SheetClose>
                 </SheetFooter>
               </div>
