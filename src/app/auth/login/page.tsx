@@ -1,6 +1,6 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -23,15 +23,13 @@ type formType = z.infer<typeof loginFormSchema>;
 const Login = () => {
   const router = useRouter();
   const { status } = useSession();
+  const searchParams = useSearchParams();
+
+  const redirect = searchParams.get('redirect');
 
   const [isSubmittingCredentials, setSubmittingCredentials] =
     useState(false);
   const [isSubmittingGoogle, setSubmittingGoogle] = useState(false);
-
-  /*const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [email, setEmail] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');*/
 
   const {
     register,
@@ -54,7 +52,11 @@ const Login = () => {
         redirect: false
       });
       if (response?.ok) {
-        router.push('/');
+        if (redirect === 'checkout') {
+          router.push('/checkout');
+        } else {
+          router.push('/');
+        }
       }
       if (response?.error) {
         setSubmittingCredentials(false);
@@ -137,7 +139,7 @@ const Login = () => {
           onClick={async () => {
             setSubmittingGoogle(true);
             const response = await signIn('google', {
-              callbackUrl: '/'
+              callbackUrl: redirect === 'checkout' ? '/checkout' : '/'
             });
           }}
           disabled={isSubmittingCredentials || isSubmittingGoogle}

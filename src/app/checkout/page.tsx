@@ -12,11 +12,11 @@ import {
 } from '@/components/ui/form';
 import { Separator } from '@/components/ui/separator';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { Button } from '@/components/ui/button';
+import { Button, buttonVariants } from '@/components/ui/button';
 import { Loader2, Minus, Plus, X } from 'lucide-react';
 import { useCartStore } from '@/lib/store';
 import noImageUrl from '../../../public/no-image.png';
-import { formatPrice } from '@/lib/utils';
+import { cn, formatPrice } from '@/lib/utils';
 import { useSession } from 'next-auth/react';
 
 import { toast } from 'sonner';
@@ -25,6 +25,8 @@ import { z } from 'zod';
 import { orderFormSchema } from '@/lib/validation/orderFormSchema';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import Link from 'next/link';
+import Loading from '@/components/Loading';
 
 type formType = z.infer<typeof orderFormSchema>;
 
@@ -36,9 +38,8 @@ const formattedDeliveryFee = formatPrice(deliveryFee, {
 });
 
 const Cart = () => {
-  const [mount, setMount] = useState(false);
   const [isSubmitting, setSubmitting] = useState(false);
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
 
   const { cart, increaseQuantity, decreaseQuantity, removeFromCart } =
     useCartStore();
@@ -55,24 +56,19 @@ const Cart = () => {
   });
 
   useEffect(() => {
-    setMount(true);
-  }, []);
-
-  useEffect(() => {
-    if (mount) {
-      form.setValue('username', session?.user.username || '');
-      form.setValue('email', session?.user.email || '');
+    if (status !== 'loading' && status === 'authenticated') {
+      form.setValue('username', session?.user.username);
+      form.setValue('email', session?.user.email!);
       form.setValue('street', session?.user.street || '');
       form.setValue('city', session?.user.city || '');
       form.setValue('phone', session?.user.phone || '');
     }
-  }, [mount]);
+  }, [status]);
 
-  const initialPrice = 0;
   const totalCartPrice = cart.reduce((total, item) => {
     const itemPrice = item.menu.price * item.quantity;
     return total + itemPrice;
-  }, initialPrice);
+  }, 0);
 
   const formattedTotalCartPrice = formatPrice(
     totalCartPrice + deliveryFee,
@@ -118,10 +114,18 @@ const Cart = () => {
     }
   };
 
+  if (status === 'loading') {
+    return (
+      <div className="m-auto mt-20">
+        <Loading />
+      </div>
+    );
+  }
+
   return (
-    <div className="flex flex-col gap-5 md:flex-row">
+    <div className="flex flex-col md:flex-row md:gap-10">
       <div className="my-5">
-        <ScrollArea className="h-96">
+        <ScrollArea className="max-h-80">
           <div className="space-y-2">
             {cart.map((item, index) => (
               <div key={item.menu.id + index}>
@@ -215,7 +219,7 @@ const Cart = () => {
           </div>
         </ScrollArea>
         <div>
-          <div className="mb-2 flex flex-row justify-end gap-2">
+          <div className="mb-2 mt-4 flex flex-row justify-end gap-2">
             <div>Delivery:</div>
             <span>{formattedDeliveryFee}</span>
           </div>
@@ -225,116 +229,136 @@ const Cart = () => {
           </div>
         </div>
       </div>
-
-      <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          className="mx-auto mb-8 mt-5 flex max-w-md flex-col gap-3"
-        >
-          <FormField
-            control={form.control}
-            name="username"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Name</FormLabel>
-                <FormControl>
-                  <Input
-                    disabled={isSubmitting}
-                    type="text"
-                    placeholder="username"
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Email</FormLabel>
-                <FormControl>
-                  <Input
-                    disabled={isSubmitting}
-                    type="email"
-                    placeholder="example@email.com"
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="street"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Street</FormLabel>
-                <FormControl>
-                  <Input
-                    disabled={isSubmitting}
-                    type="text"
-                    placeholder="street"
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="city"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>City</FormLabel>
-                <FormControl>
-                  <Input
-                    disabled={isSubmitting}
-                    type="text"
-                    placeholder="city"
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="phone"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Phone</FormLabel>
-                <FormControl>
-                  <Input
-                    disabled={isSubmitting}
-                    type="tel"
-                    placeholder="+4859657"
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <div className="flex justify-end">
-            <Button
-              type="submit"
-              className="flex w-28 gap-1 text-right"
-              disabled={isSubmitting}
+      {session?.user ? (
+        <div className="flex flex-col">
+          <h1 className="text-top my-5 text-2xl font-bold">
+            Order Informations
+          </h1>
+          <Form {...form}>
+            <form
+              onSubmit={form.handleSubmit(onSubmit)}
+              className="mx-auto mb-8 flex max-w-md flex-col gap-3"
             >
-              {isSubmitting && (
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              )}
-              Pay
-            </Button>
-          </div>
-        </form>
-      </Form>
+              <FormField
+                control={form.control}
+                name="username"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Name</FormLabel>
+                    <FormControl>
+                      <Input
+                        disabled={isSubmitting}
+                        type="text"
+                        placeholder="username"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Email</FormLabel>
+                    <FormControl>
+                      <Input
+                        disabled={isSubmitting}
+                        type="email"
+                        placeholder="example@email.com"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="street"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Street</FormLabel>
+                    <FormControl>
+                      <Input
+                        disabled={isSubmitting}
+                        type="text"
+                        placeholder="street"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="city"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>City</FormLabel>
+                    <FormControl>
+                      <Input
+                        disabled={isSubmitting}
+                        type="text"
+                        placeholder="city"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="phone"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Phone</FormLabel>
+                    <FormControl>
+                      <Input
+                        disabled={isSubmitting}
+                        type="tel"
+                        placeholder="+4859657"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <div className="flex justify-end">
+                <Button
+                  type="submit"
+                  className="flex w-28 gap-1 text-right"
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting && (
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  )}
+                  Pay
+                </Button>
+              </div>
+            </form>
+          </Form>
+        </div>
+      ) : (
+        <div className="mb-10 mt-5 text-center">
+          Please
+          <Link
+            href="/auth/login?redirect=checkout"
+            className={cn(
+              buttonVariants({ variant: 'link', size: 'sm' }),
+              'p-1'
+            )}
+          >
+            log in
+          </Link>
+          before you will be redirected to payment!
+        </div>
+      )}
     </div>
   );
 };
