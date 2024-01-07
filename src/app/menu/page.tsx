@@ -160,7 +160,7 @@ const MenuPage = () => {
     <div>
       {!isError ? (
         menuList.length == 0 ? (
-          <p className="m-auto my-5 text-lg">
+          <p className="m-auto my-10 text-center text-lg">
             There is still no any menu. Please come back later.
           </p>
         ) : (
