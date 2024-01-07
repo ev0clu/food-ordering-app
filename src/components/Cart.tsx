@@ -21,13 +21,6 @@ import noImageUrl from '../../public/no-image.png';
 import Loading from '@/components/Loading';
 import { cn, formatPrice } from '@/lib/utils';
 
-const deliveryFee = 2;
-
-const formattedDeliveryFee = formatPrice(deliveryFee, {
-  currency: 'EUR',
-  notation: 'compact'
-});
-
 const Cart = () => {
   const [mounted, setMounted] = useState(false);
 
@@ -55,13 +48,10 @@ const Cart = () => {
     return total + itemPrice;
   }, initialPrice);
 
-  const formattedTotalCartPrice = formatPrice(
-    totalCartPrice + deliveryFee,
-    {
-      currency: 'EUR',
-      notation: 'compact'
-    }
-  );
+  const formattedTotalCartPrice = formatPrice(totalCartPrice, {
+    currency: 'EUR',
+    notation: 'compact'
+  });
 
   return (
     <Sheet>
@@ -203,15 +193,9 @@ const Cart = () => {
                     ))}
                   </div>
                 </ScrollArea>
-                <div>
-                  <div className="mb-2 flex flex-row justify-end gap-2">
-                    <div>Delivery:</div>
-                    <span>{formattedDeliveryFee}</span>
-                  </div>
-                  <div className="mb-10 flex flex-row justify-end gap-2">
-                    <div>Total:</div>
-                    <span> {formattedTotalCartPrice}</span>
-                  </div>
+                <div className="mb-10 flex flex-row justify-end gap-2">
+                  <div>Total:</div>
+                  <span> {formattedTotalCartPrice}</span>
                 </div>
                 <SheetFooter className="flex flex-col gap-2 sm:flex-row">
                   <Button type="button" onClick={clearCart}>
