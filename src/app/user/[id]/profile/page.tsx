@@ -25,7 +25,7 @@ type ProfileProps = {
 
 const Profile = ({ params }: { params: { id: string } }) => {
   const router = useRouter();
-  const { status, update } = useSession();
+  const { status, update, data: session } = useSession();
   const { id } = params;
 
   const [isError, setIsError] = useState(false);
@@ -80,7 +80,7 @@ const Profile = ({ params }: { params: { id: string } }) => {
     fetchData();
   }, []);
 
-  const handleUpdateContact = (
+  const handleUpdateContact = async (
     street: string,
     city: string,
     phone: string
@@ -90,15 +90,35 @@ const Profile = ({ params }: { params: { id: string } }) => {
       city: city,
       phone: phone
     });
-    update({ street: street, city: city, phone: phone });
+
+    await update({
+      ...session,
+      user: {
+        ...session?.user,
+        street: street,
+        city: city,
+        phone: phone
+      }
+    });
   };
 
-  const handleUpdateAuth = (username: string, email: string) => {
+  const handleUpdateAuth = async (
+    username: string,
+    email: string
+  ) => {
     setAuthProfile({
       username: username,
       email: email
     });
-    update({ username: username, email: email });
+
+    await update({
+      ...session,
+      user: {
+        ...session?.user,
+        username: username,
+        email: email
+      }
+    });
   };
 
   if (isLoading) {

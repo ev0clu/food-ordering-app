@@ -94,29 +94,27 @@ export const authOptions: NextAuthOptions = {
   ],
   callbacks: {
     async jwt({ token, user, trigger, session }) {
+      if (trigger === 'update') {
+        token.username = session.user.username;
+        token.email = session.user.email;
+        token.street = session.user.street;
+        token.city = session.user.city;
+        token.phone = session.user.phone;
+
+        return token;
+      }
+
       if (user) {
         return {
           ...token,
           username: user.username,
+          email: user.email,
           role: user.role,
           id: user.id,
           provider: user.provider,
           street: user.street,
           city: user.city,
           phone: user.phone
-        };
-      }
-
-      if (trigger === 'update') {
-        token.username = session.username;
-        token.email = session.email;
-        token.street = session.street;
-        token.city = session.city;
-        token.phone = session.phone;
-
-        return {
-          ...token,
-          ...session.user
         };
       }
 
@@ -128,6 +126,7 @@ export const authOptions: NextAuthOptions = {
         user: {
           ...session.user,
           username: token.username,
+          email: token.email,
           role: token.role,
           id: token.id,
           provider: token.provider,
