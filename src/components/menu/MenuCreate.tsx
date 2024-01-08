@@ -134,10 +134,10 @@ const MenuCreate = ({
               <FormLabel>Name</FormLabel>
               <FormControl>
                 <Input
-                  disabled={isSubmitting}
                   placeholder="Menu name"
                   type="text"
                   {...field}
+                  disabled={isSubmitting}
                 />
               </FormControl>
               <FormMessage />
@@ -152,10 +152,10 @@ const MenuCreate = ({
               <FormLabel>Description</FormLabel>
               <FormControl>
                 <Textarea
-                  disabled={isSubmitting}
                   placeholder="Menu description"
                   className="resize-none"
                   {...field}
+                  disabled={isSubmitting}
                 />
               </FormControl>
               <FormMessage />
@@ -199,10 +199,10 @@ const MenuCreate = ({
                         <div className="flex flex-grow flex-row gap-4">
                           <FormControl>
                             <Input
-                              disabled={isSubmitting}
                               placeholder="https://example.com/image1.jpg"
                               type="text"
                               {...field}
+                              disabled={isSubmitting}
                             />
                           </FormControl>
                           <Button
@@ -286,10 +286,10 @@ const MenuCreate = ({
               <FormLabel>Price (€)</FormLabel>
               <FormControl>
                 <Input
-                  disabled={isSubmitting}
-                  placeholder="Menu name"
+                  placeholder="0.99"
                   type="number"
                   {...field}
+                  disabled={isSubmitting}
                 />
               </FormControl>
               <FormMessage />

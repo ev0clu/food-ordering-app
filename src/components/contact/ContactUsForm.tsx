@@ -92,10 +92,10 @@ const ContactUsForm = () => {
               <FormLabel>Name</FormLabel>
               <FormControl>
                 <Input
-                  disabled={isSubmitting}
                   placeholder="Contact name"
                   type="text"
                   {...field}
+                  disabled={isSubmitting}
                 />
               </FormControl>
               <FormMessage />
@@ -110,10 +110,10 @@ const ContactUsForm = () => {
               <FormLabel>Email</FormLabel>
               <FormControl>
                 <Input
-                  disabled={isSubmitting}
                   placeholder="example@email.com"
                   type="email"
                   {...field}
+                  disabled={isSubmitting}
                 />
               </FormControl>
               <FormMessage />
@@ -128,10 +128,10 @@ const ContactUsForm = () => {
               <FormLabel>Subject</FormLabel>
               <FormControl>
                 <Input
-                  disabled={isSubmitting}
                   placeholder="Subject"
                   type="text"
                   {...field}
+                  disabled={isSubmitting}
                 />
               </FormControl>
               <FormMessage />
@@ -146,10 +146,10 @@ const ContactUsForm = () => {
               <FormLabel>Message</FormLabel>
               <FormControl>
                 <Textarea
-                  disabled={isSubmitting}
                   placeholder="Type message..."
                   className="resize-none"
                   {...field}
+                  disabled={isSubmitting}
                 />
               </FormControl>
               <FormMessage />

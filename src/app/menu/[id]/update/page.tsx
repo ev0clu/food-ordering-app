@@ -238,10 +238,10 @@ const MenuEdit = ({ params }: { params: { id: string } }) => {
                 <FormLabel>Name</FormLabel>
                 <FormControl>
                   <Input
-                    disabled={isSubmitting}
                     placeholder="Menu name"
                     type="text"
                     {...field}
+                    disabled={isSubmitting}
                   />
                 </FormControl>
                 <FormMessage />
@@ -256,10 +256,10 @@ const MenuEdit = ({ params }: { params: { id: string } }) => {
                 <FormLabel>Description</FormLabel>
                 <FormControl>
                   <Textarea
-                    disabled={isSubmitting}
                     placeholder="Menu description"
                     className="resize-none"
                     {...field}
+                    disabled={isSubmitting}
                   />
                 </FormControl>
                 <FormMessage />
@@ -303,10 +303,10 @@ const MenuEdit = ({ params }: { params: { id: string } }) => {
                           <div className="flex flex-grow flex-row gap-4">
                             <FormControl>
                               <Input
-                                disabled={isSubmitting}
                                 placeholder="https://example.com/image1.jpg"
                                 type="text"
                                 {...field}
+                                disabled={isSubmitting}
                               />
                             </FormControl>
                             <Button
@@ -350,6 +350,7 @@ const MenuEdit = ({ params }: { params: { id: string } }) => {
                           >
                             <FormControl>
                               <Checkbox
+                                disabled={isSubmitting}
                                 checked={field.value?.includes(
                                   category.id
                                 )}
@@ -389,10 +390,10 @@ const MenuEdit = ({ params }: { params: { id: string } }) => {
                 <FormLabel>Price (€)</FormLabel>
                 <FormControl>
                   <Input
-                    disabled={isSubmitting}
-                    placeholder="Menu name"
+                    placeholder="0.99"
                     type="number"
                     {...field}
+                    disabled={isSubmitting}
                   />
                 </FormControl>
                 <FormMessage />
