@@ -27,7 +27,7 @@ export async function PUT(
       {
         message: `Category id:${params.id} is updated`
       },
-      { status: 201 }
+      { status: 200 }
     );
   } catch (error) {
     return NextResponse.json(

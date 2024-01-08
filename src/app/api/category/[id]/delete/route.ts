@@ -59,7 +59,7 @@ export async function DELETE(
         categoryItem: null,
         message: `Category: ${deletedCategoryItem.name} with ${params.id} has been removed from the database`
       },
-      { status: 201 }
+      { status: 200 }
     );
   } catch (error) {
     return NextResponse.json(

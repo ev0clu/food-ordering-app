@@ -12,7 +12,7 @@ export async function GET(req: Request) {
         categoryList: categoryList,
         message: `Category list with records are returned`
       },
-      { status: 201 }
+      { status: 200 }
     );
   } catch (error) {
     return NextResponse.json(

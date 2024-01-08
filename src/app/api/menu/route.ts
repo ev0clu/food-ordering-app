@@ -20,7 +20,7 @@ export async function GET(req: Request) {
         menuList: menuList,
         message: 'All menu with records are returned'
       },
-      { status: 201 }
+      { status: 200 }
     );
   } catch (error) {
     return NextResponse.json(

@@ -23,7 +23,7 @@ export async function DELETE(
         menuItem: null,
         message: `Menu: ${deleteMenuItem.name} with ${params.id} has been removed from the database`
       },
-      { status: 201 }
+      { status: 200 }
     );
   } catch (error) {
     return NextResponse.json(

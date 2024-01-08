@@ -42,7 +42,7 @@ export async function GET(
         menuItem: modifiedMenuItem,
         message: `Menu: ${params.id} with records are returned`
       },
-      { status: 201 }
+      { status: 200 }
     );
   } catch (error) {
     return NextResponse.json(

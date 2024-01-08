@@ -15,7 +15,7 @@ export async function GET(
         profile: userProfile,
         message: `User id:${params.id} records are returned`
       },
-      { status: 201 }
+      { status: 200 }
     );
   } catch (error) {
     return NextResponse.json(
