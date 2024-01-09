@@ -8,7 +8,7 @@ const Footer = () => {
     <footer className="flex flex-col items-center gap-10 border-t-2">
       <div className="mt-10 flex flex-col gap-3 md:flex-row md:gap-14">
         <div className="flex flex-col gap-1 md:gap-5">
-          <label className="text-center font-bold opacity-60">
+          <label className="font-bold opacity-60">
             Partner with us
           </label>
           <ul className="flex flex-col gap-1">
@@ -17,7 +17,10 @@ const Footer = () => {
                 href="#"
                 target="_blank"
                 rel="noreferrer"
-                className={cn(buttonVariants({ variant: 'link' }))}
+                className={cn(
+                  buttonVariants({ variant: 'link' }),
+                  'p-0'
+                )}
               >
                 For couriers
               </a>
@@ -27,7 +30,10 @@ const Footer = () => {
                 href="#"
                 target="_blank"
                 rel="noreferrer"
-                className={cn(buttonVariants({ variant: 'link' }))}
+                className={cn(
+                  buttonVariants({ variant: 'link' }),
+                  'p-0'
+                )}
               >
                 For restaurant
               </a>
@@ -35,16 +41,17 @@ const Footer = () => {
           </ul>
         </div>
         <div className="flex flex-col gap-1 md:gap-5">
-          <label className="text-center font-bold opacity-60">
-            Useful Links
-          </label>
+          <label className="font-bold opacity-60">Useful Links</label>
           <ul className="flex flex-col gap-1">
             <li>
               <a
                 href="#"
                 target="_blank"
                 rel="noreferrer"
-                className={cn(buttonVariants({ variant: 'link' }))}
+                className={cn(
+                  buttonVariants({ variant: 'link' }),
+                  'p-0'
+                )}
               >
                 Support
               </a>
@@ -54,7 +61,10 @@ const Footer = () => {
                 href="#"
                 target="_blank"
                 rel="noreferrer"
-                className={cn(buttonVariants({ variant: 'link' }))}
+                className={cn(
+                  buttonVariants({ variant: 'link' }),
+                  'p-0'
+                )}
               >
                 Promo codes
               </a>
@@ -64,7 +74,10 @@ const Footer = () => {
                 href="#"
                 target="_blank"
                 rel="noreferrer"
-                className={cn(buttonVariants({ variant: 'link' }))}
+                className={cn(
+                  buttonVariants({ variant: 'link' }),
+                  'p-0'
+                )}
               >
                 Developers
               </a>
@@ -72,15 +85,16 @@ const Footer = () => {
           </ul>
         </div>
         <div className="flex flex-col gap-1 md:gap-5">
-          <label className="text-center font-bold opacity-60">
-            Follow us
-          </label>
-          <div className="flex flex-col gap-1">
+          <label className="font-bold opacity-60">Follow us</label>
+          <div className="flex flex-col items-start gap-1">
             <a
               href="#"
               target="_blank"
               rel="noreferrer"
-              className={cn(buttonVariants({ variant: 'link' }))}
+              className={cn(
+                buttonVariants({ variant: 'link' }),
+                'p-0'
+              )}
             >
               <span className="flex flex-row gap-1">
                 <Facebook />
@@ -91,7 +105,10 @@ const Footer = () => {
               href="#"
               target="_blank"
               rel="noreferrer"
-              className={cn(buttonVariants({ variant: 'link' }))}
+              className={cn(
+                buttonVariants({ variant: 'link' }),
+                'p-0'
+              )}
             >
               <span className="flex flex-row gap-1">
                 <Instagram />
