@@ -150,7 +150,7 @@ const MenuPage = () => {
 
   if (isLoading) {
     return (
-      <div className="m-auto mt-20">
+      <div className="m-auto my-20">
         <Loading />
       </div>
     );
@@ -342,7 +342,7 @@ const MenuPage = () => {
           </div>
         )
       ) : (
-        <p className="m-auto text-lg">Something went wrong</p>
+        <p className="m-auto mt-10 text-lg">Something went wrong</p>
       )}
     </div>
   );
