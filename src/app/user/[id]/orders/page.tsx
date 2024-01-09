@@ -70,25 +70,27 @@ const Orders = () => {
             </h1>
             <ScrollArea className="h-[400px] rounded-md border p-2">
               <div className="flex flex-row gap-1 p-2 md:flex-col">
-                <div className="hidden flex-row gap-3 md:flex">
-                  <OrderTableContentWrapper className="border-b-2 font-bold text-primary">
-                    ID
+                <div className="hidden flex-row gap-3 px-3 md:flex">
+                  <OrderTableContentWrapper className="font-bold text-primary">
+                    Item
                   </OrderTableContentWrapper>
-                  <OrderTableContentWrapper className="border-b-2 font-bold text-primary">
+                  <OrderTableContentWrapper className="font-bold text-primary">
                     Email
                   </OrderTableContentWrapper>
-                  <OrderTableContentWrapper className="border-b-2 font-bold text-primary">
+                  <OrderTableContentWrapper className="font-bold text-primary">
                     Date
                   </OrderTableContentWrapper>
-                  <OrderTableContentWrapper className="border-b-2 font-bold text-primary md:w-20">
+                  <OrderTableContentWrapper className="font-bold text-primary md:w-20">
                     Status
                   </OrderTableContentWrapper>
                 </div>
                 <div className="mt-3 space-y-2">
                   {orderList.map((order) => (
-                    <div key={order.id}>
+                    <div
+                      key={order.id}
+                      className="rounded-sm bg-muted-foreground/15 px-3 py-1"
+                    >
                       <OrderItem order={order} />
-                      <Separator className="mt-2" />
                     </div>
                   ))}
                 </div>
