@@ -157,7 +157,7 @@ const Checkout = () => {
       )}
       <div className="flex flex-col md:flex-row md:gap-10">
         <div className="my-5">
-          <ScrollArea className="max-h-80">
+          <ScrollArea className="h-96">
             <div className="space-y-2">
               {cart.map((item, index) => (
                 <div key={item.menu.id + index}>
