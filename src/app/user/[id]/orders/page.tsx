@@ -2,7 +2,6 @@
 
 import Loading from '@/components/Loading';
 import OrderItem from '@/components/order/OrderItem';
-import { Separator } from '@/components/ui/separator';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { ExtendedOrder } from '@/types/order';
 import { useEffect, useState } from 'react';
@@ -77,7 +76,7 @@ const Orders = () => {
                   <OrderTableContentWrapper className="font-bold text-primary">
                     Email
                   </OrderTableContentWrapper>
-                  <OrderTableContentWrapper className="font-bold text-primary">
+                  <OrderTableContentWrapper className="font-bold text-primary md:w-[200px]">
                     Date
                   </OrderTableContentWrapper>
                   <OrderTableContentWrapper className="font-bold text-primary md:w-20">

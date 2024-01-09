@@ -21,7 +21,7 @@ const OrderItem = ({ order }: OrderItemProps) => {
       <OrderTableContentWrapper>
         {order.email}
       </OrderTableContentWrapper>
-      <OrderTableContentWrapper>
+      <OrderTableContentWrapper className="md:w-[200px]">
         {format(new Date(order.createdAt), 'hh:mmaaa MMM do, yyyy')}
       </OrderTableContentWrapper>
       <OrderTableContentWrapper className="flex flex-row justify-center md:w-20">
