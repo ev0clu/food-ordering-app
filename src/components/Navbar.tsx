@@ -147,6 +147,17 @@ const Navbar = () => {
                       Profile
                     </Link>
                   </DropdownMenuItem>
+                  <DropdownMenuItem
+                    asChild
+                    className="hover:cursor-pointer hover:bg-accent hover:text-accent-foreground"
+                  >
+                    <Link
+                      className="w-full"
+                      href={`/user/${session.user.id}/orders`}
+                    >
+                      Orders
+                    </Link>
+                  </DropdownMenuItem>
                   {session.user.role === 'ADMIN' && (
                     <DropdownMenuItem
                       asChild
@@ -162,7 +173,6 @@ const Navbar = () => {
                   )}
                 </DropdownMenuContent>
               </DropdownMenu>
-
               <Button
                 variant="outline"
                 size="icon"
