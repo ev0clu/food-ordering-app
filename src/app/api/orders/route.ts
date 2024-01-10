@@ -1,11 +1,11 @@
 import { NextResponse } from 'next/server';
 import prisma from '../../../../prisma/client';
-import { getSession } from 'next-auth/react';
+import { getServerSession } from 'next-auth';
 
 export const revalidate = 0;
 
 export async function GET() {
-  const session = await getSession();
+  const session = await getServerSession();
   try {
     const orderListbyUserId = await prisma.order.findMany({
       where: {
