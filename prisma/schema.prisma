@@ -64,6 +64,13 @@ model Category {
   menuIDs   String[]
 }
 
+model Image {
+  id     String @id @default(cuid()) @map("_id")
+  url    String
+  menu   Menu   @relation(fields: [menuId], references: [id])
+  menuId String
+}
+
 model Menu {
   id          String     @id @default(cuid()) @map("_id")
   createdAt   DateTime   @default(now())
@@ -74,31 +81,32 @@ model Menu {
   images      Image[]
   categories  Category[] @relation(fields: [categoryIDs], references: [id])
   categoryIDs String[]
-  orders      Order[]    @relation(fields: [orderIDs], references: [id])
-  orderIDs    String[]
-}
-
-model Image {
-  id     String @id @default(cuid()) @map("_id")
-  url    String
-  menu   Menu   @relation(fields: [menuId], references: [id])
-  menuId String
+  cartItems   CartItem[]
 }
 
 model Order {
-  id           String   @id @default(cuid()) @map("_id")
+  id           String     @id @default(cuid()) @map("_id")
   paid         Boolean
-  menus        Menu[]   @relation(fields: [menuIDs], references: [id])
-  menuIDs      String[]
-  user         User     @relation(fields: [userId], references: [id])
+  cartItems    CartItem[]
+  user         User       @relation(fields: [userId], references: [id])
   userId       String
   customerName String
   email        String
   street       String
   city         String
   phone        String
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+}
+
+model CartItem {
+  id       String @id @default(cuid()) @map("_id")
+  menu     Menu   @relation(fields: [menuID], references: [id])
+  menuID   String
+  size     String
+  quantity Int
+  order    Order  @relation(fields: [orderId], references: [id])
+  orderId  String
 }
 
 model VerificationToken {
