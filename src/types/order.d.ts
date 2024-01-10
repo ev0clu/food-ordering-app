@@ -1,5 +1,6 @@
 import { CartItem } from '@/lib/store';
-import { Order, Menu, User } from '@prisma/client';
+import { Order, User } from '@prisma/client';
+import { CartItem as CartItemModel } from '@prisma/client';
 
 export type OrderSchema = {
   cart: CartItem[];
@@ -11,7 +12,11 @@ export type OrderSchema = {
   phone: string;
 };
 
+interface ExtendedCartItemModel extends CartItemModel {
+  menu: Menu;
+}
+
 export interface ExtendedOrder extends Order {
-  menus: Menu[];
+  cartItems: ExtendedCartItemModel[];
   user: User;
 }

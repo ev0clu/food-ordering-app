@@ -11,8 +11,17 @@ export async function GET() {
       where: {
         userId: session?.user.id
       },
-
-      include: { user: true, menus: true }
+      orderBy: {
+        createdAt: 'desc'
+      },
+      include: {
+        user: true,
+        cartItems: {
+          include: {
+            menu: true // Include Menu details within cartItems
+          }
+        }
+      }
     });
 
     return NextResponse.json(

@@ -17,8 +17,12 @@ export async function POST(req: NextRequest) {
     const newOrder = await prisma.order.create({
       data: {
         paid: false,
-        menus: {
-          connect: cart.map((item) => ({ id: item.menu.id }))
+        cartItems: {
+          create: cart.map((item) => ({
+            menu: { connect: { id: item.menu.id } },
+            size: item.size,
+            quantity: item.quantity
+          }))
         },
         user: { connect: { id: userId } },
         customerName: customerName,
