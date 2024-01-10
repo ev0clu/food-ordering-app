@@ -57,27 +57,23 @@ const Orders = () => {
 
   return (
     <div className="py-5">
+      <h1 className="text-top my-5 text-4xl font-bold">Orders</h1>
       {!isError ? (
         orderList.length == 0 ? (
-          <div>
-            <h1 className="text-top my-5 text-4xl font-bold">
-              Orders
-            </h1>
-            <p className="m-auto my-10 text-center text-lg">
-              There is still no any orders.
-            </p>
-          </div>
+          <p className="m-auto my-10 text-center text-lg">
+            There is still no any orders.
+          </p>
         ) : (
           <div className="rounded-md border">
             <div className="hidden flex-row gap-3 px-6 pt-3 md:flex">
               <OrderTableContentWrapper className="font-bold text-primary">
-                Item
-              </OrderTableContentWrapper>
-              <OrderTableContentWrapper className="font-bold text-primary">
-                Email
+                ID
               </OrderTableContentWrapper>
               <OrderTableContentWrapper className="font-bold text-primary md:w-[200px]">
                 Date
+              </OrderTableContentWrapper>
+              <OrderTableContentWrapper className="font-bold text-primary md:w-24">
+                Price
               </OrderTableContentWrapper>
               <OrderTableContentWrapper className="font-bold text-primary md:w-20">
                 Status
