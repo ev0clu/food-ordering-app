@@ -56,43 +56,43 @@ const Orders = () => {
   }
 
   return (
-    <div>
+    <div className="py-5">
       {!isError ? (
         orderList.length == 0 ? (
-          <p className="m-auto my-10 text-center text-lg">
-            There is still no any orders.
-          </p>
-        ) : (
           <div>
             <h1 className="text-top my-5 text-4xl font-bold">
               Orders
             </h1>
-            <ScrollArea className="h-[400px] rounded-md border p-2">
-              <div className="flex flex-row gap-1 p-2 md:flex-col">
-                <div className="hidden flex-row gap-3 px-3 md:flex">
-                  <OrderTableContentWrapper className="font-bold text-primary">
-                    Item
-                  </OrderTableContentWrapper>
-                  <OrderTableContentWrapper className="font-bold text-primary">
-                    Email
-                  </OrderTableContentWrapper>
-                  <OrderTableContentWrapper className="font-bold text-primary md:w-[200px]">
-                    Date
-                  </OrderTableContentWrapper>
-                  <OrderTableContentWrapper className="font-bold text-primary md:w-20">
-                    Status
-                  </OrderTableContentWrapper>
-                </div>
-                <div className="mt-3 space-y-2">
-                  {orderList.map((order) => (
-                    <div
-                      key={order.id}
-                      className="rounded-sm bg-muted-foreground/15 px-3 py-1"
-                    >
-                      <OrderItem order={order} />
-                    </div>
-                  ))}
-                </div>
+            <p className="m-auto my-10 text-center text-lg">
+              There is still no any orders.
+            </p>
+          </div>
+        ) : (
+          <div className="rounded-md border">
+            <div className="hidden flex-row gap-3 px-6 pt-3 md:flex">
+              <OrderTableContentWrapper className="font-bold text-primary">
+                Item
+              </OrderTableContentWrapper>
+              <OrderTableContentWrapper className="font-bold text-primary">
+                Email
+              </OrderTableContentWrapper>
+              <OrderTableContentWrapper className="font-bold text-primary md:w-[200px]">
+                Date
+              </OrderTableContentWrapper>
+              <OrderTableContentWrapper className="font-bold text-primary md:w-20">
+                Status
+              </OrderTableContentWrapper>
+            </div>
+            <ScrollArea className="h-[400px] px-3">
+              <div className="mt-3 space-y-2">
+                {orderList.map((order) => (
+                  <div
+                    key={order.id}
+                    className="rounded-sm bg-muted-foreground/15 px-3 py-2"
+                  >
+                    <OrderItem order={order} />
+                  </div>
+                ))}
               </div>
             </ScrollArea>
           </div>
