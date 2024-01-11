@@ -10,6 +10,7 @@ const About = () => {
         className="hidden max-w-[30%] md:block"
         placeholder="blur"
         blurDataURL={`${aboutPic}`}
+        loading="lazy"
       />
       <div className="flex flex-col justify-center gap-10">
         <h1 className="text-center text-2xl font-bold">About Us</h1>

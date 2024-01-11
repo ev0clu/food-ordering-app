@@ -12,6 +12,7 @@ const Contact = () => {
         className="mx-auto mt-5 h-auto max-w-full"
         placeholder="blur"
         blurDataURL={`${contactPic}`}
+        loading="lazy"
       />
       <div className="mb-8 mt-8 flex flex-col gap-4">
         <div>

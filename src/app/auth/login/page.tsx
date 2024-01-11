@@ -171,6 +171,7 @@ const Login = () => {
             width="0"
             height="0"
             className="mx-auto mr-3 h-auto w-5"
+            loading="lazy"
           />
           Sign in with Google
         </Button>

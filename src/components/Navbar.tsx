@@ -100,20 +100,20 @@ const Navbar = () => {
               <Menu />
             </MenubarTrigger>
             <MenubarContent>
-              <MenubarItem>
+              <MenubarItem asChild>
                 <Link href="/">Home</Link>
               </MenubarItem>
-              <MenubarItem>
+              <MenubarItem asChild>
                 <Link href="/menu">Menu</Link>
               </MenubarItem>
               <MenubarSeparator />
-              <MenubarItem>
+              <MenubarItem asChild>
                 <Link href="/contact">Contact</Link>
               </MenubarItem>
-              <MenubarItem>
+              <MenubarItem asChild>
                 <Link href="/support">Support</Link>
               </MenubarItem>
-              <MenubarItem>
+              <MenubarItem asChild>
                 <Link href="/about">About</Link>
               </MenubarItem>
             </MenubarContent>
