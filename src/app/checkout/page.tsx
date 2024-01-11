@@ -13,7 +13,14 @@ import {
 import { Separator } from '@/components/ui/separator';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Button, buttonVariants } from '@/components/ui/button';
-import { Loader2, Minus, Plus, X } from 'lucide-react';
+import {
+  CheckCircle,
+  Loader2,
+  Minus,
+  Plus,
+  X,
+  XCircle
+} from 'lucide-react';
 import { useCartStore } from '@/lib/store';
 import noImageUrl from '../../../public/no-image.png';
 import { cn, formatPrice } from '@/lib/utils';
@@ -54,6 +61,7 @@ const Checkout = () => {
 
   const success = searchParams.get('success');
   const canceled = searchParams.get('canceled');
+  const orderId = searchParams.get('orderId');
 
   const form = useForm<formType>({
     resolver: zodResolver(orderFormSchema),
@@ -154,294 +162,330 @@ const Checkout = () => {
   }
 
   return (
-    <div className="flex flex-col gap-3">
-      {success === 'true' && (
-        <p
-          className="mt-3 bg-green-600 p-1 text-center
-        text-white"
-        >
-          Thank you for your order. Menu will be at you soon.
-        </p>
-      )}
-      {canceled === 'true' && (
-        <p
-          className="mt-3 bg-red-600 p-1 text-center
-        text-white"
-        >
-          Something went wrong during payment. Please try again.
-        </p>
-      )}
-      <div className="flex flex-col md:flex-row md:gap-10">
-        <div className="my-5">
-          <ScrollArea className="h-96">
-            <div className="space-y-2">
-              {cart.map((item, index) => (
-                <div key={item.menu.id + index}>
-                  <div className="flex flex-row items-center justify-between gap-3">
-                    <div className="flex flex-row items-center gap-2">
-                      {item.menu.images.length === 0 ? (
-                        <div className="hidden h-[100px] flex-col justify-center p-1 sm:flex">
-                          <Image
-                            src={noImageUrl}
-                            alt="No image"
-                            width="100"
-                            height="100"
-                            placeholder="blur"
-                            blurDataURL={`${noImageUrl}`}
-                            loading="lazy"
-                            className="rounded-md"
-                          />
+    <div className="flex flex-grow flex-col gap-3">
+      {success === 'true' || canceled === 'true' ? (
+        <div className="flex flex-grow flex-col items-center justify-center gap-20">
+          {success === 'true' && (
+            <>
+              <div>
+                <p className="mt-3 p-1 text-center text-3xl">
+                  Thank you for your order. Menu will be at you soon.
+                </p>
+                <p className="mt-3 p-1 text-center text-xl">
+                  Order ID:{' '}
+                  <span className="text-muted-foreground">
+                    {orderId}
+                  </span>
+                </p>
+              </div>
+              <CheckCircle className="h-40 w-40 text-green-600" />
+            </>
+          )}
+          {canceled === 'true' && (
+            <>
+              <p className="mt-3 p-1 text-center text-3xl">
+                Something went wrong during payment. Please try again.
+              </p>
+              <XCircle className="h-40 w-40 text-red-600" />
+            </>
+          )}
+        </div>
+      ) : cart.length === 0 ? (
+        <div className="spaxe-y-1 flex flex-col items-center justify-center">
+          <p className="m-auto my-5 text-lg">Cart is empty</p>
+          <Link
+            href="/menu"
+            className={buttonVariants({
+              variant: 'link',
+              size: 'sm',
+              className: 'text-sm text-muted-foreground'
+            })}
+          >
+            Add menu to your cart before checkout
+          </Link>
+        </div>
+      ) : (
+        <div className="flex flex-col md:flex-row md:gap-10">
+          <div className="my-5">
+            <ScrollArea className="h-96">
+              <div className="space-y-2">
+                {cart.map((item, index) => (
+                  <div key={item.menu.id + index}>
+                    <div className="flex flex-row items-center justify-between gap-3">
+                      <div className="flex flex-row items-center gap-2">
+                        {item.menu.images.length === 0 ? (
+                          <div className="hidden h-[100px] flex-col justify-center p-1 sm:flex">
+                            <Image
+                              src={noImageUrl}
+                              alt="No image"
+                              width="100"
+                              height="100"
+                              placeholder="blur"
+                              blurDataURL={`${noImageUrl}`}
+                              loading="lazy"
+                              className="rounded-md"
+                            />
+                          </div>
+                        ) : (
+                          <div className="hidden h-[100px] flex-col justify-center p-1 sm:flex">
+                            <Image
+                              src={`${item.menu.images[0].url}`}
+                              alt={item.menu.images[0].id}
+                              width="100"
+                              height="100"
+                              placeholder="blur"
+                              blurDataURL={`${item.menu.images[0].url}`}
+                              loading="lazy"
+                              className="rounded-md"
+                            />
+                          </div>
+                        )}
+                        <div className="space-y-1">
+                          <div className="w-40 md:w-60">
+                            <h1 className="line-clamp-1">
+                              {item.menu.name}
+                            </h1>
+                          </div>
+                          <div className="text-sm text-muted-foreground">
+                            {item.size}
+                          </div>
+                          <span className="text-sky-400">
+                            {formatPrice(item.menu.price, {
+                              currency: 'EUR',
+                              notation: 'compact'
+                            })}
+                          </span>
                         </div>
-                      ) : (
-                        <div className="hidden h-[100px] flex-col justify-center p-1 sm:flex">
-                          <Image
-                            src={`${item.menu.images[0].url}`}
-                            alt={item.menu.images[0].id}
-                            width="100"
-                            height="100"
-                            placeholder="blur"
-                            blurDataURL={`${item.menu.images[0].url}`}
-                            loading="lazy"
-                            className="rounded-md"
-                          />
-                        </div>
-                      )}
-                      <div className="space-y-1">
-                        <h1>{item.menu.name}</h1>
-                        <div className="text-sm text-muted-foreground">
-                          {item.size}
-                        </div>
-                        <span className="text-sky-400">
-                          {formatPrice(item.menu.price, {
-                            currency: 'EUR',
-                            notation: 'compact'
-                          })}
-                        </span>
                       </div>
-                    </div>
-                    <div className="flex flex-row gap-3">
-                      <div className="flex flex-row items-center gap-1">
-                        {success !== 'true' && (
-                          <Button
-                            disabled={
-                              isSubmitting || item.quantity === 1
-                                ? true
-                                : false
-                            }
-                            type="button"
-                            size="icon"
-                            className="h-7 w-7"
-                            onClick={() => {
-                              if (item.quantity > 1) {
-                                decreaseQuantity(
+                      <div className="flex flex-row gap-3">
+                        <div className="flex flex-row items-center gap-1">
+                          {success !== 'true' && (
+                            <Button
+                              disabled={
+                                isSubmitting || item.quantity === 1
+                                  ? true
+                                  : false
+                              }
+                              type="button"
+                              size="icon"
+                              className="h-7 w-7"
+                              onClick={() => {
+                                if (item.quantity > 1) {
+                                  decreaseQuantity(
+                                    item.menu.id,
+                                    item.size
+                                  );
+                                }
+                              }}
+                            >
+                              <Minus className="h-5 w-5" />
+                            </Button>
+                          )}
+                          <span
+                            className={cn('w-8 text-center', {
+                              'w-12': success === 'true'
+                            })}
+                          >
+                            Qty {item.quantity}
+                          </span>
+                          {success !== 'true' && (
+                            <Button
+                              disabled={isSubmitting}
+                              type="button"
+                              size="icon"
+                              className="h-7 w-7"
+                              onClick={() =>
+                                increaseQuantity(
                                   item.menu.id,
                                   item.size
-                                );
+                                )
                               }
-                            }}
-                          >
-                            <Minus className="h-5 w-5" />
-                          </Button>
-                        )}
-                        <span
-                          className={cn('w-8 text-center', {
-                            'w-12': success === 'true'
-                          })}
-                        >
-                          Qty {item.quantity}
-                        </span>
+                            >
+                              <Plus className="h-5 w-5" />
+                            </Button>
+                          )}
+                        </div>
                         {success !== 'true' && (
-                          <Button
-                            disabled={isSubmitting}
-                            type="button"
-                            size="icon"
-                            className="h-7 w-7"
-                            onClick={() =>
-                              increaseQuantity(
-                                item.menu.id,
-                                item.size
-                              )
-                            }
-                          >
-                            <Plus className="h-5 w-5" />
-                          </Button>
+                          <div className="flex items-center justify-center">
+                            <Button
+                              disabled={isSubmitting}
+                              type="button"
+                              variant="ghost"
+                              size="icon"
+                              className="mr-2 h-7 w-7"
+                              onClick={() =>
+                                removeFromCart(
+                                  item.menu.id,
+                                  item.size
+                                )
+                              }
+                            >
+                              <X className="h-5 w-5" />
+                            </Button>
+                          </div>
                         )}
                       </div>
-                      {success !== 'true' && (
-                        <Button
-                          disabled={isSubmitting}
-                          type="button"
-                          variant="ghost"
-                          size="icon"
-                          className="mr-2 h-7 w-7"
-                          onClick={() =>
-                            removeFromCart(item.menu.id, item.size)
-                          }
-                        >
-                          <X className="h-5 w-5" />
-                        </Button>
-                      )}
                     </div>
+                    <Separator className="mt-2" />
                   </div>
-                  <Separator className="mt-2" />
-                </div>
-              ))}
-            </div>
-          </ScrollArea>
-          <div>
-            <div className="mb-2 mt-4 flex flex-row justify-end gap-2">
-              <div>Delivery:</div>
-              <span>{formattedDeliveryFee}</span>
-            </div>
-            <div className="mb-10 flex flex-row justify-end gap-2">
-              <div>Total:</div>
-              <span> {formattedTotalCartPrice}</span>
+                ))}
+              </div>
+            </ScrollArea>
+            <div>
+              <div className="mb-2 mt-4 flex flex-row justify-end gap-2">
+                <div>Delivery:</div>
+                <span>{formattedDeliveryFee}</span>
+              </div>
+              <div className="mb-10 flex flex-row justify-end gap-2">
+                <div>Total:</div>
+                <span> {formattedTotalCartPrice}</span>
+              </div>
             </div>
           </div>
-        </div>
-        {session?.user ? (
-          <div className="flex flex-col">
-            <h1 className="text-top my-5 text-2xl font-bold">
-              Order Informations
-            </h1>
-            <Form {...form}>
-              <form
-                onSubmit={form.handleSubmit(onSubmit)}
-                className="mx-auto mb-8 flex max-w-md flex-col gap-3"
-              >
-                <FormField
-                  control={form.control}
-                  name="username"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Name</FormLabel>
-                      <FormControl>
-                        <Input
-                          {...field}
-                          type="text"
-                          placeholder="username"
-                          disabled={
-                            isSubmitting || success === 'true'
-                          }
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
+          {session?.user ? (
+            <div className="flex flex-col">
+              <h1 className="text-top my-5 text-center text-2xl font-bold md:text-start">
+                Order Informations
+              </h1>
+              <Form {...form}>
+                <form
+                  onSubmit={form.handleSubmit(onSubmit)}
+                  className="mx-auto mb-8 flex max-w-md flex-col gap-3"
+                >
+                  <FormField
+                    control={form.control}
+                    name="username"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Name</FormLabel>
+                        <FormControl>
+                          <Input
+                            {...field}
+                            type="text"
+                            placeholder="username"
+                            disabled={
+                              isSubmitting || success === 'true'
+                            }
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="email"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Email</FormLabel>
+                        <FormControl>
+                          <Input
+                            {...field}
+                            type="email"
+                            placeholder="example@email.com"
+                            disabled={
+                              isSubmitting || success === 'true'
+                            }
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="street"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Street</FormLabel>
+                        <FormControl>
+                          <Input
+                            {...field}
+                            type="text"
+                            placeholder="street"
+                            disabled={
+                              isSubmitting || success === 'true'
+                            }
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="city"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>City</FormLabel>
+                        <FormControl>
+                          <Input
+                            {...field}
+                            type="text"
+                            placeholder="city"
+                            disabled={
+                              isSubmitting || success === 'true'
+                            }
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="phone"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Phone</FormLabel>
+                        <FormControl>
+                          <Input
+                            {...field}
+                            type="tel"
+                            placeholder="+4859657"
+                            disabled={
+                              isSubmitting || success === 'true'
+                            }
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  {success !== 'true' && (
+                    <div className="flex justify-end">
+                      <Button
+                        type="submit"
+                        className="flex w-28 gap-1 text-right"
+                        disabled={isSubmitting}
+                      >
+                        {isSubmitting && (
+                          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                        )}
+                        Pay
+                      </Button>
+                    </div>
                   )}
-                />
-                <FormField
-                  control={form.control}
-                  name="email"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Email</FormLabel>
-                      <FormControl>
-                        <Input
-                          {...field}
-                          type="email"
-                          placeholder="example@email.com"
-                          disabled={
-                            isSubmitting || success === 'true'
-                          }
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="street"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Street</FormLabel>
-                      <FormControl>
-                        <Input
-                          {...field}
-                          type="text"
-                          placeholder="street"
-                          disabled={
-                            isSubmitting || success === 'true'
-                          }
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="city"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>City</FormLabel>
-                      <FormControl>
-                        <Input
-                          {...field}
-                          type="text"
-                          placeholder="city"
-                          disabled={
-                            isSubmitting || success === 'true'
-                          }
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="phone"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Phone</FormLabel>
-                      <FormControl>
-                        <Input
-                          {...field}
-                          type="tel"
-                          placeholder="+4859657"
-                          disabled={
-                            isSubmitting || success === 'true'
-                          }
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                {success !== 'true' && (
-                  <div className="flex justify-end">
-                    <Button
-                      type="submit"
-                      className="flex w-28 gap-1 text-right"
-                      disabled={isSubmitting}
-                    >
-                      {isSubmitting && (
-                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                      )}
-                      Pay
-                    </Button>
-                  </div>
+                </form>
+              </Form>
+            </div>
+          ) : (
+            <div className="mb-10 mt-5 text-center">
+              Please
+              <Link
+                href="/auth/login?redirect=checkout"
+                className={cn(
+                  buttonVariants({ variant: 'link', size: 'sm' }),
+                  'p-1'
                 )}
-              </form>
-            </Form>
-          </div>
-        ) : (
-          <div className="mb-10 mt-5 text-center">
-            Please
-            <Link
-              href="/auth/login?redirect=checkout"
-              className={cn(
-                buttonVariants({ variant: 'link', size: 'sm' }),
-                'p-1'
-              )}
-            >
-              log in
-            </Link>
-            before you will be redirected to payment!
-          </div>
-        )}
-      </div>{' '}
+              >
+                log in
+              </Link>
+              before you will be redirected to payment!
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 };
