@@ -127,7 +127,7 @@ const Register = () => {
                 <Input
                   {...field}
                   placeholder="Street"
-                  type="email"
+                  type="text"
                   disabled={isSubmitting}
                 />
               </FormControl>
@@ -145,7 +145,7 @@ const Register = () => {
                 <Input
                   {...field}
                   placeholder="City"
-                  type="email"
+                  type="text"
                   disabled={isSubmitting}
                 />
               </FormControl>
