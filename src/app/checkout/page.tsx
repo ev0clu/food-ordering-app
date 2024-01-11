@@ -39,6 +39,7 @@ const formattedDeliveryFee = formatPrice(deliveryFee, {
 
 const Checkout = () => {
   const [isSubmitting, setSubmitting] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const { data: session, status } = useSession();
 
   const {
@@ -66,10 +67,14 @@ const Checkout = () => {
   });
 
   useEffect(() => {
-    if (success === 'true') {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (mounted && success === 'true') {
       clearCart();
     }
-  }, [success]);
+  }, [mounted, success]);
 
   useEffect(() => {
     if (status !== 'loading' && status === 'authenticated') {
