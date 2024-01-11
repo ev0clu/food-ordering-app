@@ -43,6 +43,7 @@ export async function POST(req: NextRequest) {
           currency: 'EUR',
           product_data: {
             name: item.menu.name,
+            description: item.size,
             metadata: {
               size: item.size
             }
