@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 export const menuFormSchema = z.object({
-  menuName: z.string().min(1, 'Menu name is required').max(20).trim(),
+  menuName: z.string().min(1, 'Menu name is required').trim(),
   menuDescription: z
     .string()
     .min(1, 'Menu description is required')
@@ -12,10 +12,15 @@ export const menuFormSchema = z.object({
         url: z
           .string()
           .url({ message: 'Invalid URL' })
-          .startsWith('https://www.allrecipes.com/thmb/', {
-            message:
-              "URL must start: 'https://www.allrecipes.com/thmb/'"
-          })
+          .refine(
+            (value) =>
+              value.startsWith('https://www.allrecipes.com/thmb/') ||
+              value.startsWith('https://imagesvc.meredithcorp.io/'),
+            {
+              message:
+                "URL must start with 'https://www.allrecipes.com/thmb/' or 'https://imagesvc.meredithcorp.io/"
+            }
+          )
       })
     )
     .max(3, 'Maximum 3 piece of image can be set'),
