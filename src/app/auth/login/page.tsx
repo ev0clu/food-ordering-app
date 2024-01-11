@@ -5,14 +5,20 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import ErrorMessage from '@/components/ErrorMessage';
 import { toast } from 'sonner';
 import Link from 'next/link';
 import { signIn, useSession } from 'next-auth/react';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { Loader2 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage
+} from '@/components/ui/form';
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
 import googleLogo from '../../../../public/google_logo.svg';
@@ -31,11 +37,7 @@ const Login = () => {
     useState(false);
   const [isSubmittingGoogle, setSubmittingGoogle] = useState(false);
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors }
-  } = useForm<formType>({
+  const form = useForm<formType>({
     resolver: zodResolver(loginFormSchema),
     defaultValues: {
       email: '',
@@ -75,35 +77,51 @@ const Login = () => {
   }
 
   return (
-    <>
+    <Form {...form}>
       <form
-        onSubmit={handleSubmit(onSubmit)}
+        onSubmit={form.handleSubmit(onSubmit)}
         className="mx-auto mt-5 flex max-w-sm flex-col gap-3"
       >
-        <div className="flex flex-col space-y-2">
-          <Label htmlFor="email">Email</Label>
-          <Input
-            id="email"
-            autoComplete="email"
-            className="rounded px-2 py-1"
-            type="email"
-            placeholder="email@example.com"
-            {...register('email')}
-          />
-          <ErrorMessage>{errors.email?.message}</ErrorMessage>
-        </div>
-        <div className="flex flex-col space-y-2">
-          <Label htmlFor="password">Password</Label>
-          <Input
-            id="password"
-            autoComplete="off"
-            className="rounded px-2 py-1"
-            type="password"
-            placeholder="Password"
-            {...register('password')}
-          />
-          <ErrorMessage>{errors.password?.message}</ErrorMessage>
-        </div>
+        <FormField
+          control={form.control}
+          name="email"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Email</FormLabel>
+              <FormControl>
+                <Input
+                  {...field}
+                  placeholder="email@example.com"
+                  type="email"
+                  disabled={
+                    isSubmittingCredentials || isSubmittingGoogle
+                  }
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="password"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Password</FormLabel>
+              <FormControl>
+                <Input
+                  {...field}
+                  placeholder="Password"
+                  type="password"
+                  disabled={
+                    isSubmittingCredentials || isSubmittingGoogle
+                  }
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
         <p>
           Do not have an account?{' '}
           <Link
@@ -157,7 +175,7 @@ const Login = () => {
           Sign in with Google
         </Button>
       </div>
-    </>
+    </Form>
   );
 };
 

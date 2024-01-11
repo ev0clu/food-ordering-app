@@ -1,14 +1,20 @@
 'use client';
 
-import { Label } from '@/components/ui/label';
 import { useEffect, useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage
+} from '@/components/ui/form';
 import { toast } from 'sonner';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import ErrorMessage from '@/components/ErrorMessage';
 import { Loader2 } from 'lucide-react';
 import { contactFormSchema } from '@/lib/validation/contactFormSchema';
 import { ContactProfileProps } from '@/types/profile';
@@ -33,12 +39,7 @@ const ContactProfile = ({
   const [isSubmitting, setSubmitting] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
 
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    formState: { errors }
-  } = useForm<formType>({
+  const form = useForm<formType>({
     resolver: zodResolver(contactFormSchema),
     defaultValues: {
       street: '',
@@ -48,9 +49,9 @@ const ContactProfile = ({
   });
 
   useEffect(() => {
-    setValue('street', contactProfile.street);
-    setValue('city', contactProfile.city);
-    setValue('phone', contactProfile.phone);
+    form.setValue('street', contactProfile.street);
+    form.setValue('city', contactProfile.city);
+    form.setValue('phone', contactProfile.phone);
   }, []);
 
   const onSubmit = async (
@@ -90,80 +91,99 @@ const ContactProfile = ({
   };
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="mx-auto mb-8 mt-5 flex max-w-md flex-col gap-3"
-    >
-      <div className="flex flex-col space-y-2">
-        <Label htmlFor="street">Street</Label>
-        <Input
-          disabled={!isEdit}
-          id="street"
-          autoComplete="street"
-          type="text"
-          placeholder="street"
-          {...register('street')}
+    <Form {...form}>
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="mx-auto mb-8 mt-5 flex max-w-md flex-col gap-3"
+      >
+        <FormField
+          control={form.control}
+          name="street"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Street</FormLabel>
+              <FormControl>
+                <Input
+                  {...field}
+                  placeholder="Street"
+                  type="text"
+                  disabled={!isEdit}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
         />
-        <ErrorMessage>{errors.street?.message}</ErrorMessage>
-      </div>
-      <div className="flex flex-col space-y-2">
-        <Label htmlFor="city">City</Label>
-        <Input
-          disabled={!isEdit}
-          id="city"
-          autoComplete="city"
-          type="city"
-          placeholder="city"
-          {...register('city')}
+        <FormField
+          control={form.control}
+          name="city"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>City</FormLabel>
+              <FormControl>
+                <Input
+                  {...field}
+                  placeholder="City"
+                  type="text"
+                  disabled={!isEdit}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
         />
-        <ErrorMessage>{errors.city?.message}</ErrorMessage>
-      </div>
-      <div className="flex flex-col space-y-2">
-        <Label htmlFor="phone">Phone</Label>
-        <Input
-          disabled={!isEdit}
-          id="phone"
-          autoComplete="phone"
-          type="tel"
-          placeholder="+4859657"
-          {...register('phone')}
+        <FormField
+          control={form.control}
+          name="phone"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Phone</FormLabel>
+              <FormControl>
+                <Input
+                  {...field}
+                  placeholder="+4859657"
+                  type="tel"
+                  disabled={!isEdit}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
         />
-        <ErrorMessage>{errors.phone?.message}</ErrorMessage>
-      </div>
-
-      {!isEdit ? (
-        <div className="my-5 text-right">
-          <Button
-            type="button"
-            className="mx-auto w-28"
-            onClick={() => setIsEdit(true)}
-          >
-            Edit
-          </Button>
-        </div>
-      ) : (
-        <div className="my-5 flex flex-row justify-between">
-          <Button
-            type="button"
-            className="w-28 text-left"
-            onClick={() => setIsEdit(false)}
-            disabled={isSubmitting}
-          >
-            Cancel
-          </Button>
-          <Button
-            type="submit"
-            className="flex w-28 gap-1 text-right"
-            disabled={isSubmitting}
-          >
-            {isSubmitting && (
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-            )}
-            Update
-          </Button>
-        </div>
-      )}
-    </form>
+        {!isEdit ? (
+          <div className="my-5 text-right">
+            <Button
+              type="button"
+              className="mx-auto w-28"
+              onClick={() => setIsEdit(true)}
+            >
+              Edit
+            </Button>
+          </div>
+        ) : (
+          <div className="my-5 flex flex-row justify-between">
+            <Button
+              type="button"
+              className="w-28 text-left"
+              onClick={() => setIsEdit(false)}
+              disabled={isSubmitting}
+            >
+              Cancel
+            </Button>
+            <Button
+              type="submit"
+              className="flex w-28 gap-1 text-right"
+              disabled={isSubmitting}
+            >
+              {isSubmitting && (
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              )}
+              Update
+            </Button>
+          </div>
+        )}
+      </form>
+    </Form>
   );
 };
 

@@ -6,12 +6,18 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import ErrorMessage from '@/components/ErrorMessage';
 import { toast } from 'sonner';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { Loader2 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage
+} from '@/components/ui/form';
 import { cn } from '@/lib/utils';
 import { registerFormSchema } from '@/lib/validation/registerFormSchema';
 
@@ -21,11 +27,7 @@ const Register = () => {
   const router = useRouter();
   const [isSubmitting, setSubmitting] = useState(false);
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors }
-  } = useForm<formType>({
+  const form = useForm<formType>({
     resolver: zodResolver(registerFormSchema),
     defaultValues: {
       username: '',
@@ -74,91 +76,137 @@ const Register = () => {
   };
 
   return (
-    <>
+    <Form {...form}>
       <form
-        onSubmit={handleSubmit(onSubmit)}
+        onSubmit={form.handleSubmit(onSubmit)}
         className="mx-auto mb-8 mt-5 flex max-w-sm flex-col gap-3"
       >
-        <div className="flex flex-col">
-          <Label htmlFor="username">Username</Label>
-          <Input
-            id="username"
-            autoComplete="username"
-            type="text"
-            placeholder="Username"
-            {...register('username')}
-          />
-          <ErrorMessage>{errors.username?.message}</ErrorMessage>
-        </div>
-        <div className="flex flex-col space-y-2">
-          <Label htmlFor="email">Email</Label>
-          <Input
-            id="email"
-            autoComplete="email"
-            type="email"
-            placeholder="email@example.com"
-            {...register('email')}
-          />
-          <ErrorMessage>{errors.email?.message}</ErrorMessage>
-        </div>
-        <div className="flex flex-col space-y-2">
-          <Label htmlFor="street">Street</Label>
-          <Input
-            id="street"
-            autoComplete="street"
-            type="text"
-            placeholder="street"
-            {...register('street')}
-          />
-          <ErrorMessage>{errors.street?.message}</ErrorMessage>
-        </div>
-        <div className="flex flex-col space-y-2">
-          <Label htmlFor="city">City</Label>
-          <Input
-            id="city"
-            autoComplete="city"
-            type="city"
-            placeholder="city"
-            {...register('city')}
-          />
-          <ErrorMessage>{errors.city?.message}</ErrorMessage>
-        </div>
-        <div className="flex flex-col space-y-2">
-          <Label htmlFor="phone">Phone</Label>
-          <Input
-            id="phone"
-            autoComplete="phone"
-            type="tel"
-            placeholder="+4859657"
-            {...register('phone')}
-          />
-          <ErrorMessage>{errors.phone?.message}</ErrorMessage>
-        </div>
-        <div className="flex flex-col space-y-2">
-          <Label htmlFor="password">Password</Label>
-          <Input
-            id="password"
-            autoComplete="off"
-            type="password"
-            placeholder="Password"
-            {...register('password')}
-          />
-          <ErrorMessage>{errors.password?.message}</ErrorMessage>
-        </div>
-        <div className="flex flex-col space-y-2">
-          <Label htmlFor="confirmPassword">Confirm Password</Label>
-          <Input
-            id="confirmPassword"
-            autoComplete="off"
-            type="password"
-            placeholder="Confirm Password"
-            {...register('confirmPassword')}
-          />
-          <ErrorMessage>
-            {errors.confirmPassword?.message}
-          </ErrorMessage>
-          <ErrorMessage>{errors.root?.message}</ErrorMessage>
-        </div>
+        <FormField
+          control={form.control}
+          name="username"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Username</FormLabel>
+              <FormControl>
+                <Input
+                  {...field}
+                  placeholder="Username"
+                  type="text"
+                  disabled={isSubmitting}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="email"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Email</FormLabel>
+              <FormControl>
+                <Input
+                  {...field}
+                  placeholder="email@example.com"
+                  type="email"
+                  disabled={isSubmitting}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="street"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Street</FormLabel>
+              <FormControl>
+                <Input
+                  {...field}
+                  placeholder="Street"
+                  type="email"
+                  disabled={isSubmitting}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="city"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>City</FormLabel>
+              <FormControl>
+                <Input
+                  {...field}
+                  placeholder="City"
+                  type="email"
+                  disabled={isSubmitting}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="phone"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Phone</FormLabel>
+              <FormControl>
+                <Input
+                  {...field}
+                  placeholder="+4859657"
+                  type="tel"
+                  disabled={isSubmitting}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="password"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Password</FormLabel>
+              <FormControl>
+                <Input
+                  {...field}
+                  placeholder="Password"
+                  type="password"
+                  disabled={isSubmitting}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="confirmPassword"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Confirm Password</FormLabel>
+              <FormControl>
+                <Input
+                  {...field}
+                  placeholder="Confirm Password"
+                  type="password"
+                  disabled={isSubmitting}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
         <p>
           Already have an account?{' '}
           <Link
@@ -179,7 +227,7 @@ const Register = () => {
           Register
         </Button>
       </form>
-    </>
+    </Form>
   );
 };
 

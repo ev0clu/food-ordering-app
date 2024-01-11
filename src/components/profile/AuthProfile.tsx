@@ -1,15 +1,21 @@
 'use client';
 
-import { Label } from '@/components/ui/label';
 import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage
+} from '@/components/ui/form';
 import { toast } from 'sonner';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import ErrorMessage from '@/components/ErrorMessage';
 import { Loader2 } from 'lucide-react';
 import { authFormSchema } from '@/lib/validation/authFormSchema';
 import { AuthProfileProps } from '@/types/profile';
@@ -32,12 +38,7 @@ const AuthProfile = ({
   const [isSubmitting, setSubmitting] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
 
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    formState: { errors }
-  } = useForm<formType>({
+  const form = useForm<formType>({
     resolver: zodResolver(authFormSchema),
     defaultValues: {
       username: '',
@@ -48,8 +49,8 @@ const AuthProfile = ({
   });
 
   useEffect(() => {
-    setValue('username', authProfile.username);
-    setValue('email', authProfile.email);
+    form.setValue('username', authProfile.username);
+    form.setValue('email', authProfile.email);
   }, []);
 
   const onSubmit = async (data: z.infer<typeof authFormSchema>) => {
@@ -87,102 +88,125 @@ const AuthProfile = ({
   };
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="mx-auto mb-8 mt-5 flex max-w-md flex-col gap-3"
-    >
-      <div className="flex flex-col space-y-2">
-        <Label htmlFor="username">Username</Label>
-        <Input
-          disabled={!isEdit}
-          id="username"
-          autoComplete="username"
-          type="text"
-          placeholder="Username"
-          {...register('username')}
-        />
-        <ErrorMessage>{errors.username?.message}</ErrorMessage>
-      </div>
-      <div className="flex flex-col space-y-2">
-        <Label htmlFor="email">Email</Label>
-        <Input
-          disabled={!isEdit}
-          id="email"
-          autoComplete="email"
-          type="email"
-          placeholder="email@example.com"
-          {...register('email')}
-        />
-        <ErrorMessage>{errors.email?.message}</ErrorMessage>
-      </div>
-      {session?.user.provider !== 'GOOGLE' && (
-        <>
-          <div className="flex flex-col space-y-2">
-            <Label htmlFor="password">Password</Label>
-            <Input
-              disabled={!isEdit}
-              id="password"
-              autoComplete="off"
-              type="password"
-              placeholder="Password"
-              {...register('password')}
-            />
-            <ErrorMessage>{errors.password?.message}</ErrorMessage>
-          </div>
-          <div className="flex flex-col space-y-2">
-            <Label htmlFor="confirmPassword">Confirm Password</Label>
-            <Input
-              disabled={!isEdit}
-              id="confirmPassword"
-              autoComplete="off"
-              type="password"
-              placeholder="Confirm Password"
-              {...register('confirmPassword')}
-            />
-            <ErrorMessage>
-              {errors.confirmPassword?.message}
-            </ErrorMessage>
-            <ErrorMessage>{errors.root?.message}</ErrorMessage>
-          </div>
-        </>
-      )}
-      {session?.user.provider !== 'GOOGLE' && (
-        <>
-          {!isEdit ? (
-            <div className="my-5 text-right">
-              <Button
-                type="button"
-                className="mx-auto w-28"
-                onClick={() => setIsEdit(true)}
-              >
-                Edit
-              </Button>
-            </div>
-          ) : (
-            <div className="my-5 flex flex-row justify-between">
-              <Button
-                type="button"
-                className="w-28 text-left"
-                onClick={() => setIsEdit(false)}
-                disabled={isSubmitting}
-              >
-                Cancel
-              </Button>
-              <Button
-                type="submit"
-                className="flex w-28 gap-1 text-right"
-                disabled={isSubmitting}
-              >
-                {isSubmitting && (
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                )}
-                Update
-              </Button>
-            </div>
+    <Form {...form}>
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="mx-auto mb-8 mt-5 flex max-w-md flex-col gap-3"
+      >
+        <FormField
+          control={form.control}
+          name="username"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Username</FormLabel>
+              <FormControl>
+                <Input
+                  {...field}
+                  placeholder="Username"
+                  type="text"
+                  disabled={!isEdit}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
           )}
-        </>
-      )}
-    </form>
+        />
+        <FormField
+          control={form.control}
+          name="email"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Email</FormLabel>
+              <FormControl>
+                <Input
+                  {...field}
+                  placeholder="email@example.com"
+                  type="email"
+                  disabled={!isEdit}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        {session?.user.provider !== 'GOOGLE' && (
+          <>
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Password</FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      placeholder="Password"
+                      type="password"
+                      disabled={!isEdit}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="confirmPassword"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Confirm Password</FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      placeholder="Confirm Password"
+                      type="password"
+                      disabled={!isEdit}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </>
+        )}
+        {session?.user.provider !== 'GOOGLE' && (
+          <>
+            {!isEdit ? (
+              <div className="my-5 text-right">
+                <Button
+                  type="button"
+                  className="mx-auto w-28"
+                  onClick={() => setIsEdit(true)}
+                >
+                  Edit
+                </Button>
+              </div>
+            ) : (
+              <div className="my-5 flex flex-row justify-between">
+                <Button
+                  type="button"
+                  className="w-28 text-left"
+                  onClick={() => setIsEdit(false)}
+                  disabled={isSubmitting}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  type="submit"
+                  className="flex w-28 gap-1 text-right"
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting && (
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  )}
+                  Update
+                </Button>
+              </div>
+            )}
+          </>
+        )}
+      </form>{' '}
+    </Form>
   );
 };
 

@@ -92,9 +92,9 @@ const ContactUsForm = () => {
               <FormLabel>Name</FormLabel>
               <FormControl>
                 <Input
+                  {...field}
                   placeholder="Contact name"
                   type="text"
-                  {...field}
                   disabled={isSubmitting}
                 />
               </FormControl>
@@ -110,9 +110,9 @@ const ContactUsForm = () => {
               <FormLabel>Email</FormLabel>
               <FormControl>
                 <Input
+                  {...field}
                   placeholder="example@email.com"
                   type="email"
-                  {...field}
                   disabled={isSubmitting}
                 />
               </FormControl>
@@ -128,9 +128,9 @@ const ContactUsForm = () => {
               <FormLabel>Subject</FormLabel>
               <FormControl>
                 <Input
+                  {...field}
                   placeholder="Subject"
                   type="text"
-                  {...field}
                   disabled={isSubmitting}
                 />
               </FormControl>
@@ -146,9 +146,9 @@ const ContactUsForm = () => {
               <FormLabel>Message</FormLabel>
               <FormControl>
                 <Textarea
+                  {...field}
                   placeholder="Type message..."
                   className="resize-none"
-                  {...field}
                   disabled={isSubmitting}
                 />
               </FormControl>

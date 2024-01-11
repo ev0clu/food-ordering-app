@@ -312,9 +312,9 @@ const Checkout = () => {
                       <FormLabel>Name</FormLabel>
                       <FormControl>
                         <Input
+                          {...field}
                           type="text"
                           placeholder="username"
-                          {...field}
                           disabled={
                             isSubmitting || success === 'true'
                           }
@@ -332,9 +332,9 @@ const Checkout = () => {
                       <FormLabel>Email</FormLabel>
                       <FormControl>
                         <Input
+                          {...field}
                           type="email"
                           placeholder="example@email.com"
-                          {...field}
                           disabled={
                             isSubmitting || success === 'true'
                           }
@@ -352,9 +352,9 @@ const Checkout = () => {
                       <FormLabel>Street</FormLabel>
                       <FormControl>
                         <Input
+                          {...field}
                           type="text"
                           placeholder="street"
-                          {...field}
                           disabled={
                             isSubmitting || success === 'true'
                           }
@@ -372,9 +372,9 @@ const Checkout = () => {
                       <FormLabel>City</FormLabel>
                       <FormControl>
                         <Input
+                          {...field}
                           type="text"
                           placeholder="city"
-                          {...field}
                           disabled={
                             isSubmitting || success === 'true'
                           }
@@ -392,9 +392,9 @@ const Checkout = () => {
                       <FormLabel>Phone</FormLabel>
                       <FormControl>
                         <Input
+                          {...field}
                           type="tel"
                           placeholder="+4859657"
-                          {...field}
                           disabled={
                             isSubmitting || success === 'true'
                           }

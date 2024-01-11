@@ -10,8 +10,14 @@ import { categoryFormSchema } from '@/lib/validation/categoryFormSchema';
 import { Category } from '@prisma/client';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage
+} from '@/components/ui/form';
 import DeleteCategoryModal from '@/components/category/DeleteCategoryModal';
-import ErrorMessage from '@/components/ErrorMessage';
 import {
   Tooltip,
   TooltipContent,
@@ -37,12 +43,7 @@ const CategoryItem = ({
   const [isSubmitting, setSubmitting] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
 
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    formState: { errors }
-  } = useForm<formType>({
+  const form = useForm<formType>({
     resolver: zodResolver(categoryFormSchema),
     defaultValues: {
       categoryName: ''
@@ -50,7 +51,7 @@ const CategoryItem = ({
   });
 
   useEffect(() => {
-    setValue('categoryName', category.name);
+    form.setValue('categoryName', category.name);
   }, []);
 
   const onSubmit = async (
@@ -99,94 +100,101 @@ const CategoryItem = ({
   };
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="mx-auto mb-8 mt-5 flex max-w-md flex-row gap-2"
-    >
-      <div className="flex flex-col space-y-2">
-        <Input
-          disabled={!isEdit || editId !== category.id}
-          id={`categoryName-${category.id}`}
-          autoComplete="off"
-          type="text"
-          placeholder="Category Name"
-          {...register('categoryName')}
+    <Form {...form}>
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="mx-auto mb-8 mt-5 flex max-w-md flex-row gap-2"
+      >
+        <FormField
+          control={form.control}
+          name="categoryName"
+          render={({ field }) => (
+            <FormItem>
+              <FormControl>
+                <Input
+                  {...field}
+                  placeholder="Category Name"
+                  type="text"
+                  disabled={!isEdit || editId !== category.id}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
         />
-        <ErrorMessage>{errors.categoryName?.message}</ErrorMessage>
-      </div>
-
-      {!isEdit || editId !== category.id ? (
-        <div className="flex flex-row gap-1">
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button
-                  type="button"
-                  variant="outline"
-                  size="icon"
-                  onClick={() => {
-                    setIsEdit(true);
-                    handleCategoryEdit(category.id);
-                  }}
-                >
-                  <Pencil />
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>Edit</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-          <DeleteCategoryModal
-            category={category}
-            handleCategoryRefetch={handleCategoryRefetch}
-          />
-        </div>
-      ) : (
-        <div className="flex flex-row gap-1">
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button
-                  type="button"
-                  variant="outline"
-                  size="icon"
-                  onClick={() => {
-                    setIsEdit(false);
-                    handleCategoryEdit('');
-                    setValue('categoryName', category.name);
-                  }}
-                  disabled={isSubmitting}
-                >
-                  <X />
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>Cancel</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button
-                  type="submit"
-                  variant="outline"
-                  size="icon"
-                  className="text-green-600 hover:text-green-600"
-                  disabled={isSubmitting}
-                >
-                  <Check />
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>Update</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-        </div>
-      )}
-    </form>
+        {!isEdit || editId !== category.id ? (
+          <div className="flex flex-row gap-1">
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="icon"
+                    onClick={() => {
+                      setIsEdit(true);
+                      handleCategoryEdit(category.id);
+                    }}
+                  >
+                    <Pencil />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Edit</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+            <DeleteCategoryModal
+              category={category}
+              handleCategoryRefetch={handleCategoryRefetch}
+            />
+          </div>
+        ) : (
+          <div className="flex flex-row gap-1">
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="icon"
+                    onClick={() => {
+                      setIsEdit(false);
+                      handleCategoryEdit('');
+                      form.setValue('categoryName', category.name);
+                    }}
+                    disabled={isSubmitting}
+                  >
+                    <X />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Cancel</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    type="submit"
+                    variant="outline"
+                    size="icon"
+                    className="text-green-600 hover:text-green-600"
+                    disabled={isSubmitting}
+                  >
+                    <Check />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Update</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          </div>
+        )}
+      </form>
+    </Form>
   );
 };
 
