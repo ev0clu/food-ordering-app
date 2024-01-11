@@ -76,16 +76,18 @@ const Cart = () => {
             cart.length === 0 ? (
               <div className="spaxe-y-1 flex flex-col items-center justify-center">
                 <p className="m-auto my-5 text-lg">Cart is empty</p>
-                <Link
-                  href="/menu"
-                  className={buttonVariants({
-                    variant: 'link',
-                    size: 'sm',
-                    className: 'text-sm text-muted-foreground'
-                  })}
-                >
-                  Add menu to your cart to checkout
-                </Link>
+                <SheetClose asChild>
+                  <Link
+                    href="/menu"
+                    className={buttonVariants({
+                      variant: 'link',
+                      size: 'sm',
+                      className: 'text-sm text-muted-foreground'
+                    })}
+                  >
+                    Add menu to your cart to checkout
+                  </Link>
+                </SheetClose>
               </div>
             ) : (
               <div className="my-5">
