@@ -70,7 +70,11 @@ const DeleteCategoryModal = ({
         </TooltipProvider>
         <AlertDialogContent className="max-w-[325px] md:max-w-[425px]">
           <AlertDialogHeader>
-            <AlertDialogTitle>{`Delete: ${category.name}`}</AlertDialogTitle>
+            <div className="w-64">
+              <AlertDialogTitle className="line-clamp-1 text-left">
+                {`Delete: ${category.name}`}
+              </AlertDialogTitle>
+            </div>
             <AlertDialogDescription>
               Are you sure you want to delete this category? You
               can&apos;t undo this.

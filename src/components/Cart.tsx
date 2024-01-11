@@ -125,7 +125,11 @@ const Cart = () => {
                               </div>
                             )}
                             <div className="space-y-1">
-                              <h1>{item.menu.name}</h1>
+                              <div className="w-32">
+                                <h1 className="line-clamp-1">
+                                  {item.menu.name}
+                                </h1>
+                              </div>
                               <div className="text-sm text-muted-foreground">
                                 {item.size}
                               </div>

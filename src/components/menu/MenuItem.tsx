@@ -51,9 +51,9 @@ const MenuItem = ({ menu, handleMenuRefetch }: MenuItemProps) => {
             />
           </div>
         )}
-        <h1 className="font bold overflow-hidden text-xl">
-          {menu.name}
-        </h1>
+        <div className="line-clamp-1 w-44">
+          <h1 className="text-lg">{menu.name}</h1>
+        </div>
       </div>
       <div className="flex flex-row gap-1">
         <TooltipProvider>

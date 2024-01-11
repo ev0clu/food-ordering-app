@@ -42,8 +42,12 @@ const MenuCard = ({ menu, toggleDialog, index }: ListMenuProps) => {
           />
         </div>
       )}
-      <div className="min-w-52 space-y-2">
-        <h1 className="text-left text-lg font-bold">{menu.name}</h1>
+      <div className="space-y-2">
+        <div className="w-52">
+          <h1 className="line-clamp-1 text-left text-lg font-bold">
+            {menu.name}
+          </h1>
+        </div>
         <div className="h-32 w-44">
           <p className="line-clamp-4 text-left text-muted-foreground">
             {menu.description}

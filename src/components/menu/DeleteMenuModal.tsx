@@ -70,7 +70,11 @@ const DeleteMenuModal = ({
         </TooltipProvider>
         <AlertDialogContent className="max-w-[325px] md:max-w-[425px]">
           <AlertDialogHeader>
-            <AlertDialogTitle>{`Delete: ${menu.name}`}</AlertDialogTitle>
+            <div className="w-64">
+              <AlertDialogTitle className="line-clamp-1 text-left">
+                {`Delete: ${menu.name}`}
+              </AlertDialogTitle>
+            </div>
             <AlertDialogDescription>
               Are you sure you want to delete this menu? You
               can&apos;t undo this.

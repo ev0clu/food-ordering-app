@@ -130,8 +130,8 @@ const OrderId = ({ params }: { params: { orderId: string } }) => {
             </Tooltip>
           </TooltipProvider>
           <div className="space-y-3">
-            <div className="flex h-8 flex-row items-center gap-3">
-              <h1 className="text-font flex flex-row items-center gap-1">
+            <div className="flex h-12 flex-row items-center gap-3 md:h-8">
+              <h1 className="text-font flex flex-col items-start gap-1 md:flex-row md:items-center">
                 Order Id:
                 <span className="text-muted-foreground">
                   {orderId}

@@ -208,8 +208,8 @@ const MenuPage = () => {
                                   <Image
                                     src={noImageUrl}
                                     alt="No image"
-                                    width="200"
-                                    height="200"
+                                    width="160"
+                                    height="160"
                                     placeholder="blur"
                                     blurDataURL={`${noImageUrl}`}
                                     loading="lazy"
@@ -229,8 +229,8 @@ const MenuPage = () => {
                                         `${image.url}` || noImageUrl
                                       }
                                       alt={image.id}
-                                      width="200"
-                                      height="200"
+                                      width="160"
+                                      height="160"
                                       placeholder="blur"
                                       blurDataURL={`${image.url}`}
                                       loading="lazy"
