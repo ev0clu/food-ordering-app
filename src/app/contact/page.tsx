@@ -15,7 +15,7 @@ const Contact = () => {
       />
       <div className="mb-8 mt-8 flex flex-col gap-4">
         <div>
-          We're here to make your food ordering experience
+          We&apos;re here to make your food ordering experience
           exceptional, and your feedback matters. Reach out to us
           anytime - whether you have a question, suggestion, or just
           want to say hello. Our dedicated customer support team is

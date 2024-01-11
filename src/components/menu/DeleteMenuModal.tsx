@@ -72,8 +72,8 @@ const DeleteMenuModal = ({
           <AlertDialogHeader>
             <AlertDialogTitle>{`Delete: ${menu.name}`}</AlertDialogTitle>
             <AlertDialogDescription>
-              Are you sure you want to delete this menu? You can't
-              undo this.
+              Are you sure you want to delete this menu? You
+              can&apos;t undo this.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>

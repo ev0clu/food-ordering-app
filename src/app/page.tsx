@@ -16,10 +16,10 @@ export default function Home() {
             At Fooder, we believe that great food should be just a
             click away. Welcome to our online food ordering platform,
             where we bring the finest local flavors right to your
-            doorstep. Whether you're craving comfort classics,
+            doorstep. Whether you&apos;re craving comfort classics,
             exploring exotic cuisines, or seeking healthier
-            alternatives, we've got a diverse menu curated with your
-            taste buds in mind.
+            alternatives, we&apos;ve got a diverse menu curated with
+            your taste buds in mind.
           </p>
           <div className="mx-auto mb-3">
             <Link
@@ -62,7 +62,7 @@ export default function Home() {
               Our user-friendly interface makes ordering your favorite
               dishes a breeze. Browse menus, customize your
               selections, and place an order with just a few clicks -
-              it's that simple!
+              it&apos;s that simple!
             </span>
           </div>
           <div>
