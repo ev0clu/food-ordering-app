@@ -2,7 +2,12 @@
 
 A food ordering app has built with Next.js framework. The app allows users to log in with previously registered credentials or with Google provider in order to order foods. After the checkout, stripe payment test mode let to test the payment process.
 
-### Demo: [Link]()
+### Demo: [Link](https://food-ordering-app-chi-nine.vercel.app/)
+
+### Demo account:
+
+Email: `admin@demo.com`
+Password: `1234`
 
 ## How run from local repository
 
@@ -22,8 +27,10 @@ A food ordering app has built with Next.js framework. The app allows users to lo
    `NEXT_SERVER_URL=http://localhost:3000`<br>
    `DELIVERY_FEE=2`
 5. Run `npx prisma generate`
-6. Run `npm run dev` command in your terminal
-7. Server running at `http://localhost:3000/`
+6. Setup Stripe webhook: [link](https://dashboard.stripe.com/test/webhooks)
+7. Setup Google auth: [link](https://console.developers.google.com/apis/credentials)
+8. Run `npm run dev` command in your terminal
+9. Server running at `http://localhost:3000/`
 
 ## Features
 
@@ -52,7 +59,8 @@ A food ordering app has built with Next.js framework. The app allows users to lo
 
 - Open SSL key generation:
   - You can use the following link to create open ssl key: `https://www.cryptool.org/en/cto/openssl` or you can install open ssl and generate key from terminal. To generate code you should run: `openssl rand -base64 32`
-- Google Provider config page: -[Google](https://console.developers.google.com/apis/credentials)
+- Google Provider config page:
+  - [Google](https://console.developers.google.com/apis/credentials)
 - React Hook Form usage with UI component needs to has `ref={null}` property to avoid ref warning:
   - [Stackoverflow](https://stackoverflow.com/questions/67877887/react-hook-form-v7-function-components-cannot-be-given-refs-attempts-to-access)
   - [GitHub](https://github.com/react-hook-form/react-hook-form/issues/3411)
@@ -94,7 +102,10 @@ A food ordering app has built with Next.js framework. The app allows users to lo
 
 ### Layout
 
-![layout picture](https://github.com/ev0clu/next-blog/blob/main/layout.png?raw=true)
+![layout-1 picture](https://github.com/ev0clu/next-blog/blob/main/layout-1.png?raw=true)<br>
+![layout-2 picture](https://github.com/ev0clu/next-blog/blob/main/layout-2.png?raw=true)<br>
+![layout-3 picture](https://github.com/ev0clu/next-blog/blob/main/layout-3.png?raw=true)<br>
+![layout-4  picture](https://github.com/ev0clu/next-blog/blob/main/layout-4.png?raw=true)<br>
 
 ### Assets
 
