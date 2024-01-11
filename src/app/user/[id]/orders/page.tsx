@@ -7,6 +7,7 @@ import { ExtendedOrder } from '@/types/order';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import OrderTableContentWrapper from '@/components/order/OrderTableContentWrapper';
+import { useSession } from 'next-auth/react';
 
 type ListOrderProps = {
   orderList: ExtendedOrder[];
@@ -17,15 +18,20 @@ const Orders = () => {
   const [orderList, setOrderList] = useState<ExtendedOrder[]>([]);
   const [isError, setIsError] = useState(false);
 
+  const { data: session } = useSession();
+
   const fetchOrder = async () => {
     try {
-      const response = await fetch(`/api/orders`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        cache: 'no-cache'
-      });
+      const response = await fetch(
+        `/api/user/${session?.user.id}/orders`,
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          cache: 'no-cache'
+        }
+      );
 
       if (response.ok) {
         const data: ListOrderProps = await response.json();

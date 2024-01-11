@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import prisma from '../../../../prisma/client';
+import prisma from '../../../../../../prisma/client';
 import { getServerSession } from 'next-auth';
 
 export const revalidate = 0;
