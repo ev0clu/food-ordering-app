@@ -41,8 +41,13 @@ const Checkout = () => {
   const [isSubmitting, setSubmitting] = useState(false);
   const { data: session, status } = useSession();
 
-  const { cart, increaseQuantity, decreaseQuantity, removeFromCart } =
-    useCartStore();
+  const {
+    cart,
+    increaseQuantity,
+    decreaseQuantity,
+    removeFromCart,
+    clearCart
+  } = useCartStore();
 
   const searchParams = useSearchParams();
 
@@ -59,6 +64,12 @@ const Checkout = () => {
       phone: ''
     }
   });
+
+  useEffect(() => {
+    if (success === 'true') {
+      clearCart();
+    }
+  }, [success]);
 
   useEffect(() => {
     if (status !== 'loading' && status === 'authenticated') {
