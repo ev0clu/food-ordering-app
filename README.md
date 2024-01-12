@@ -6,7 +6,7 @@ A food ordering app has built with Next.js framework. The app allows users to lo
 
 ### Demo account:
 
-Email: `admin@demo.com`
+Email: `admin@demo.com`<br>
 Password: `1234`
 
 ## How run from local repository
