@@ -91,11 +91,13 @@ const Cart = () => {
               </div>
             ) : (
               <div className="my-5">
-                <ScrollArea className="h-96">
+                <ScrollArea
+                  className={cn({ 'h-96': cart.length > 4 })}
+                >
                   <div className="space-y-2">
                     {cart.map((item, index) => (
                       <div key={item.menu.id + index}>
-                        <div className="flex flex-row items-center justify-between gap-3">
+                        <div className="flex flex-row items-center justify-between gap-1">
                           <div className="flex flex-row items-center gap-2">
                             {item.menu.images.length === 0 ? (
                               <div className="hidden h-[50px] flex-col justify-center p-1 sm:flex">
@@ -125,7 +127,7 @@ const Cart = () => {
                               </div>
                             )}
                             <div className="space-y-1">
-                              <div className="w-32">
+                              <div className="w-28 sm:w-32">
                                 <h1 className="line-clamp-1">
                                   {item.menu.name}
                                 </h1>
@@ -141,7 +143,7 @@ const Cart = () => {
                               </span>
                             </div>
                           </div>
-                          <div className="flex flex-row gap-3">
+                          <div className="flex flex-row gap-1">
                             <div className="flex flex-row items-center gap-1">
                               <Button
                                 disabled={
@@ -149,7 +151,7 @@ const Cart = () => {
                                 }
                                 type="button"
                                 size="icon"
-                                className="h-7 w-7"
+                                className="h-6 w-6"
                                 onClick={() => {
                                   if (item.quantity > 1) {
                                     decreaseQuantity(
@@ -159,7 +161,7 @@ const Cart = () => {
                                   }
                                 }}
                               >
-                                <Minus className="h-5 w-5" />
+                                <Minus className="h-4 w-4" />
                               </Button>
                               <span className="w-8 text-center">
                                 {item.quantity}
@@ -167,7 +169,7 @@ const Cart = () => {
                               <Button
                                 type="button"
                                 size="icon"
-                                className="h-7 w-7"
+                                className="h-6 w-6"
                                 onClick={() =>
                                   increaseQuantity(
                                     item.menu.id,
@@ -175,14 +177,14 @@ const Cart = () => {
                                   )
                                 }
                               >
-                                <Plus className="h-5 w-5" />
+                                <Plus className="h-4 w-4" />
                               </Button>
                             </div>
                             <Button
                               type="button"
                               variant="ghost"
                               size="icon"
-                              className="mr-2 h-7 w-7"
+                              className="mr-2 h-6 w-6"
                               onClick={() =>
                                 removeFromCart(
                                   item.menu.id,
@@ -190,7 +192,7 @@ const Cart = () => {
                                 )
                               }
                             >
-                              <X className="h-5 w-5" />
+                              <X className="h-4 w-4" />
                             </Button>
                           </div>
                         </div>
@@ -211,8 +213,7 @@ const Cart = () => {
                     <Link
                       href="/checkout"
                       className={cn(
-                        buttonVariants({ variant: 'default' }),
-                        'w-28'
+                        buttonVariants({ variant: 'default' })
                       )}
                     >
                       Checkout

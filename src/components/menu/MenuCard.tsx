@@ -16,7 +16,7 @@ const MenuCard = ({ menu, toggleDialog, index }: ListMenuProps) => {
       className="flex flex-row gap-5 rounded-xl border-[1px] p-2 shadow shadow-zinc-600/70 duration-200 hover:scale-105"
     >
       {menu.images.length === 0 ? (
-        <div className="flex h-[210px] flex-col justify-center p-1">
+        <div className="hidden h-[210px] flex-col justify-center p-1 sm:flex">
           <Image
             src={noImageUrl}
             alt="No image"
@@ -29,7 +29,7 @@ const MenuCard = ({ menu, toggleDialog, index }: ListMenuProps) => {
           />
         </div>
       ) : (
-        <div className="flex h-[210px] flex-col justify-center p-1">
+        <div className="hidden h-[210px] flex-col justify-center p-1 sm:flex">
           <Image
             src={`${menu.images[0].url}` || noImageUrl}
             alt={menu.images[0].id}

@@ -92,7 +92,7 @@ const OrderId = ({ params }: { params: { orderId: string } }) => {
 
   if (status === 'loading' || isLoading) {
     return (
-      <div className="m-auto mt-20">
+      <div className="m-auto my-20">
         <Loading />
       </div>
     );
@@ -152,8 +152,12 @@ const OrderId = ({ params }: { params: { orderId: string } }) => {
             <div className="flex flex-col gap-3">
               <div className="flex flex-col md:flex-row md:gap-10">
                 <div className="mb-5">
-                  <ScrollArea className="h-96">
-                    <div className="space-y-2">
+                  <ScrollArea
+                    className={cn({
+                      'h-96': order?.cartItems.length! > 3
+                    })}
+                  >
+                    <div className="mr-3 space-y-2">
                       {order?.cartItems.map((item, index) => (
                         <div key={item.id}>
                           <div className="flex flex-row items-center justify-between gap-3">
@@ -186,7 +190,11 @@ const OrderId = ({ params }: { params: { orderId: string } }) => {
                                 </div>
                               )}
                               <div className="space-y-1">
-                                <h1>{item.menu.name}</h1>
+                                <div className="w-40 md:w-60">
+                                  <h1 className="line-clamp-1">
+                                    {item.menu.name}
+                                  </h1>
+                                </div>
                                 <div className="text-sm text-muted-foreground">
                                   {item.size}
                                 </div>

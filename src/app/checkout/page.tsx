@@ -155,7 +155,7 @@ const Checkout = () => {
 
   if (status === 'loading') {
     return (
-      <div className="m-auto mt-20">
+      <div className="m-auto my-20">
         <Loading />
       </div>
     );
@@ -164,7 +164,7 @@ const Checkout = () => {
   return (
     <div className="flex flex-grow flex-col gap-3">
       {success === 'true' || canceled === 'true' ? (
-        <div className="flex flex-grow flex-col items-center justify-center gap-20">
+        <div className="my-5 flex flex-grow flex-col items-center justify-center gap-20">
           {success === 'true' && (
             <>
               <div>
@@ -207,7 +207,7 @@ const Checkout = () => {
       ) : (
         <div className="flex flex-col md:flex-row md:gap-10">
           <div className="my-5">
-            <ScrollArea className="h-96">
+            <ScrollArea className={cn({ 'h-96': cart.length > 3 })}>
               <div className="space-y-2">
                 {cart.map((item, index) => (
                   <div key={item.menu.id + index}>

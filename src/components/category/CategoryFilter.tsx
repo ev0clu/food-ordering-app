@@ -31,7 +31,7 @@ const CategoryFilter = ({
   const selectedValues = new Set(selectedCategoryList as string[]);
 
   return (
-    <div className="absolute left-[60px] top-14 mt-5">
+    <div className="absolute left-1/2 top-14 mt-5 -translate-x-1/2 transform sm:left-[60px] sm:translate-x-0">
       <Popover>
         <PopoverTrigger asChild>
           <Button
