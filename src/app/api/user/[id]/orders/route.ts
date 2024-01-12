@@ -1,15 +1,16 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import prisma from '../../../../../../prisma/client';
-import { getServerSession } from 'next-auth';
 
 export const revalidate = 0;
 
-export async function GET() {
-  const session = await getServerSession();
+export async function GET(
+  req: NextRequest,
+  { params }: { params: { id: string } }
+) {
   try {
     const orderListbyUserId = await prisma.order.findMany({
       where: {
-        userId: session?.user.id
+        userId: params.id
       },
       orderBy: {
         createdAt: 'desc'
@@ -27,7 +28,7 @@ export async function GET() {
     return NextResponse.json(
       {
         orderList: orderListbyUserId,
-        message: `All orders to userId: ${session?.user.id} are returned`
+        message: `All orders to userId: ${params.id} are returned`
       },
       { status: 200 }
     );
