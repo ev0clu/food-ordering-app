@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import OrderTableContentWrapper from '@/components/order/OrderTableContentWrapper';
 import { useSession } from 'next-auth/react';
+import { cn } from '@/lib/utils';
 
 type ListOrderProps = {
   orderList: ExtendedOrder[];
@@ -18,7 +19,7 @@ const Orders = () => {
   const [orderList, setOrderList] = useState<ExtendedOrder[]>([]);
   const [isError, setIsError] = useState(false);
 
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
 
   const fetchOrder = async () => {
     try {
@@ -50,8 +51,10 @@ const Orders = () => {
   };
 
   useEffect(() => {
-    fetchOrder();
-  }, []);
+    if (status === 'authenticated') {
+      fetchOrder();
+    }
+  }, [status]);
 
   if (isLoading) {
     return (
@@ -70,7 +73,7 @@ const Orders = () => {
             There is still no any orders.
           </p>
         ) : (
-          <div className="rounded-md border">
+          <div className="rounded-md border pb-3">
             <div className="hidden flex-row gap-3 px-6 pt-3 md:flex">
               <OrderTableContentWrapper className="font-bold text-primary">
                 ID
@@ -85,7 +88,11 @@ const Orders = () => {
                 Status
               </OrderTableContentWrapper>
             </div>
-            <ScrollArea className="h-[400px] px-3">
+            <ScrollArea
+              className={cn('px-3', {
+                'h-[400px]': orderList.length > 4
+              })}
+            >
               <div className="mt-3 space-y-2">
                 {orderList.map((order) => (
                   <div
