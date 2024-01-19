@@ -1,6 +1,6 @@
 # **Next.js Food ordering App**
 
-A food ordering app has built with Next.js framework. The app allows users to log in with previously registered credentials or with Google provider in order to order foods. After the checkout, stripe payment test mode let to test the payment process.
+A food ordering app has built with Next.js framework. The app allows users to log in with previously registered credentials or with Google provider in order to order foods. After the checkout, stripe payment test mode let to test the payment process. New category and food can be add dynamically into the database with admin role. User profile can be updated. Filtering option is available for foods.
 
 ### Demo: [Link](https://food-ordering-app-chi-nine.vercel.app/)
 
@@ -8,29 +8,6 @@ A food ordering app has built with Next.js framework. The app allows users to lo
 
 Email: `admin@demo.com`<br>
 Password: `1234`
-
-## How run from local repository
-
-1. Clone the repository
-2. Run `npm install` command in your terminal
-3. Set up MongoDB database, Google provider config, Resend, Stripe with webhook
-4. Create .env file and add enviromental variables:
-   open ssl key should generate to NEXTAUTH_SECRET
-   `DATABASE_URL=`<br>
-   `NEXTAUTH_SECRET=`<br>
-   `GOOGLE_CLIENT_ID=`<br>
-   `GOOGLE_CLIENT_SECRET=`<br>
-   `RESEND_API_KEY=`<br>
-   `STRIPE_PUBLIC_KEY=`<br>
-   `STRIPE_SECRET_KEY=`<br>
-   `STRIPE_SIGNATURE_SECRET=`<br>
-   `NEXT_SERVER_URL=http://localhost:3000`<br>
-   `DELIVERY_FEE=2`
-5. Run `npx prisma generate`
-6. Setup Stripe webhook: [link](https://dashboard.stripe.com/test/webhooks)
-7. Setup Google auth: [link](https://console.developers.google.com/apis/credentials)
-8. Run `npm run dev` command in your terminal
-9. Server running at `http://localhost:3000/`
 
 ## Features
 
@@ -54,6 +31,29 @@ Password: `1234`
 - Render-as-you-fetch approach is used for Loading screen
 - Hosted on Vercel
 - Responsive design
+
+## How to run from local repository
+
+1. Clone the repository
+2. Run `npm install` command in your terminal
+3. Set up MongoDB database, Google provider config, Resend, Stripe with webhook
+4. Create .env file and add enviromental variables:
+   open ssl key should generate to NEXTAUTH_SECRET
+   `DATABASE_URL=`<br>
+   `NEXTAUTH_SECRET=`<br>
+   `GOOGLE_CLIENT_ID=`<br>
+   `GOOGLE_CLIENT_SECRET=`<br>
+   `RESEND_API_KEY=`<br>
+   `STRIPE_PUBLIC_KEY=`<br>
+   `STRIPE_SECRET_KEY=`<br>
+   `STRIPE_SIGNATURE_SECRET=`<br>
+   `NEXT_SERVER_URL=http://localhost:3000`<br>
+   `DELIVERY_FEE=2`
+5. Run `npx prisma generate`
+6. Setup Stripe webhook: [link](https://dashboard.stripe.com/test/webhooks)
+7. Setup Google auth: [link](https://console.developers.google.com/apis/credentials)
+8. Run `npm run dev` command in your terminal
+9. Server running at `http://localhost:3000/`
 
 ### Useful links and informations
 
@@ -102,10 +102,10 @@ Password: `1234`
 
 ### Layout
 
-![layout-1 picture](https://github.com/ev0clu/next-blog/blob/main/layout-1.png?raw=true)<br>
-![layout-2 picture](https://github.com/ev0clu/next-blog/blob/main/layout-2.png?raw=true)<br>
-![layout-3 picture](https://github.com/ev0clu/next-blog/blob/main/layout-3.png?raw=true)<br>
-![layout-4  picture](https://github.com/ev0clu/next-blog/blob/main/layout-4.png?raw=true)<br>
+![layout-1 picture](https://github.com/ev0clu/food-ordering-app/blob/main/layout-1.png?raw=true)<br>
+![layout-2 picture](https://github.com/ev0clu/food-ordering-app/blob/main/layout-2.png?raw=true)<br>
+![layout-3 picture](https://github.com/ev0clu/food-ordering-app/blob/main/layout-3.png?raw=true)<br>
+![layout-4  picture](https://github.com/ev0clu/food-ordering-app/blob/main/layout-4.png?raw=true)<br>
 
 ### Assets
 
